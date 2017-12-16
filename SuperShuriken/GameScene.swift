@@ -51,6 +51,7 @@ extension CGPoint {
 class GameScene: SKScene, SKPhysicsContactDelegate {
     
     let player = SKSpriteNode(imageNamed: "player")
+    var monstersDestroyed = 0
     
     override func didMove(to view: SKView) {
         backgroundColor = SKColor.white
@@ -63,6 +64,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         addChild(player)
         
         run(SKAction.repeatForever(SKAction.sequence([SKAction.run(addMonster), SKAction.wait(forDuration: TimeInterval(1.0))])))
+        
+        let backgroundMusic = SKAudioNode.init(fileNamed: "background-music-aac.caf")
+        backgroundMusic.autoplayLooped = true
+        addChild(backgroundMusic)
     }
     
     // MARK: helper methods
@@ -94,11 +99,23 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         let actionMove = SKAction.move(to: CGPoint(x: -monster.size.width/2, y: actualY), duration: TimeInterval(actualDuration))
         let actionDone = SKAction.removeFromParent()
         
-        monster.run(SKAction.sequence([actionMove, actionDone]))
+        let loseAction = SKAction.run {
+            let reveal = SKTransition.flipHorizontal(withDuration: 1)
+            let gameoverScene = GameOverScene.init(size: self.size, won: false)
+            self.view?.presentScene(gameoverScene, transition: reveal)
+        }
+        
+        monster.run(SKAction.sequence([actionMove, loseAction, actionDone]))
     }
     
     func projectileDidColideWithMonster (projectile: SKSpriteNode, monster: SKSpriteNode) {
         print("hit")
+        monstersDestroyed += 1
+        if monstersDestroyed > 30 {
+            let reveal = SKTransition.flipHorizontal(withDuration: 1)
+            let gameWonScene = GameOverScene.init(size: self.size, won: true)
+            self.view?.presentScene(gameWonScene, transition: reveal)
+        }
         projectile.removeFromParent()
         monster.removeFromParent()
     }
@@ -109,6 +126,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         guard let touch = touches.first else {
             return
         }
+        
+        run(SKAction.playSoundFileNamed("pew-pew-lei.caf", waitForCompletion: false))
+        
         let touchLocation = touch.location(in: self)
         
         let projectile = SKSpriteNode(imageNamed: "projectile")
@@ -148,6 +168,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         } else {
             firstBody = contact.bodyB
             secondBody = contact.bodyA
+        }
+        
+        if (firstBody.categoryBitMask & PhysicsCategory.Monster != 0) &&
+            (secondBody.categoryBitMask & PhysicsCategory.Projectile != 0) {
+            if let monster = firstBody.node as? SKSpriteNode, let projectile = secondBody.node as? SKSpriteNode {
+                projectileDidColideWithMonster(projectile: projectile, monster: monster)
+            }
         }
     }
 }
