@@ -153,7 +153,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         let actionMove = SKAction.move(to: destination, duration: 2.0)
         let actionMoveDone = SKAction.removeFromParent()
-        projectile.run(SKAction.sequence([actionMove, actionMoveDone]))
+        let projectileMovement = SKAction.sequence([actionMove, actionMoveDone])
+        let projectileRotation = SKAction.repeatForever(SKAction.rotate(byAngle: CGFloat(Double.pi), duration: 0.2))
+        projectile.run(SKAction.group([projectileMovement, projectileRotation]))
     }
     
     // MARK: Physics
