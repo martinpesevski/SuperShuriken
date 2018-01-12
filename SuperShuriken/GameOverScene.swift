@@ -17,19 +17,23 @@ class GameOverScene: SKScene {
         backgroundColor = SKColor.white
         
         let message = won ? "You Win!" : "You Lose :("
+        let retryMessage = "Tap anywhere to try again"
         
-        let label = SKLabelNode.init(fontNamed: "Chalkduster")
-        label.text = message
+        let label = CustomLabel.init(fontName: "Chalkduster", text: message)
         label.fontSize = 40
-        label.fontColor = SKColor.black
         label.position = CGPoint(x: size.width/2, y: size.height/2)
         addChild(label)
+        
+        let retryMessageLabel = CustomLabel.init(fontName: "Chalkduster", text: retryMessage)
+        retryMessageLabel.fontSize = 25
+        retryMessageLabel.position = CGPoint(x: size.width/2, y: size.height * 0.1)
+        addChild(retryMessageLabel)
         
         run(SKAction.sequence([
             SKAction.wait(forDuration: 3),
             SKAction.run {
                 let reveal = SKTransition.flipHorizontal(withDuration: 1)
-                let scene = SKScene.init(size: size)
+                let scene = MainMenu.init(size: size)
                 self.view?.presentScene(scene, transition: reveal)
             }]))
     }

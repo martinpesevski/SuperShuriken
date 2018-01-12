@@ -16,6 +16,9 @@
 		C796D2301F7AACAC00F770CF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C796D22E1F7AACAC00F770CF /* LaunchScreen.storyboard */; };
 		C796D23A1F7AAFC400F770CF /* background-music-aac.caf in Resources */ = {isa = PBXBuildFile; fileRef = C796D2381F7AAFC400F770CF /* background-music-aac.caf */; };
 		C796D23B1F7AAFC400F770CF /* pew-pew-lei.caf in Resources */ = {isa = PBXBuildFile; fileRef = C796D2391F7AAFC400F770CF /* pew-pew-lei.caf */; };
+		C7A4DF381FE6BD6C007DA58E /* MenuButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7A4DF371FE6BD6C007DA58E /* MenuButton.swift */; };
+		C7A4DF3C1FE6BDEB007DA58E /* CustomLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7A4DF3B1FE6BDEB007DA58E /* CustomLabel.swift */; };
+		C7D2DDC01FE5281E00A23537 /* MainMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7D2DDBF1FE5281E00A23537 /* MainMenu.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -30,6 +33,9 @@
 		C796D2311F7AACAC00F770CF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C796D2381F7AAFC400F770CF /* background-music-aac.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "background-music-aac.caf"; sourceTree = "<group>"; };
 		C796D2391F7AAFC400F770CF /* pew-pew-lei.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "pew-pew-lei.caf"; sourceTree = "<group>"; };
+		C7A4DF371FE6BD6C007DA58E /* MenuButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuButton.swift; sourceTree = "<group>"; };
+		C7A4DF3B1FE6BDEB007DA58E /* CustomLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomLabel.swift; sourceTree = "<group>"; };
+		C7D2DDBF1FE5281E00A23537 /* MainMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainMenu.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -65,8 +71,11 @@
 				C796D2371F7AAFC400F770CF /* Sounds */,
 				C796D21F1F7AACAC00F770CF /* AppDelegate.swift */,
 				C796D2251F7AACAC00F770CF /* GameScene.swift */,
+				C7D2DDBF1FE5281E00A23537 /* MainMenu.swift */,
 				C73BC62A1FA0C88F00A52DCF /* GameOverScene.swift */,
 				C796D2271F7AACAC00F770CF /* GameViewController.swift */,
+				C7A4DF371FE6BD6C007DA58E /* MenuButton.swift */,
+				C7A4DF3B1FE6BDEB007DA58E /* CustomLabel.swift */,
 				C796D2291F7AACAC00F770CF /* Main.storyboard */,
 				C796D22C1F7AACAC00F770CF /* Assets.xcassets */,
 				C796D22E1F7AACAC00F770CF /* LaunchScreen.storyboard */,
@@ -160,7 +169,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C7D2DDC01FE5281E00A23537 /* MainMenu.swift in Sources */,
 				C796D2261F7AACAC00F770CF /* GameScene.swift in Sources */,
+				C7A4DF381FE6BD6C007DA58E /* MenuButton.swift in Sources */,
+				C7A4DF3C1FE6BDEB007DA58E /* CustomLabel.swift in Sources */,
 				C796D2281F7AACAC00F770CF /* GameViewController.swift in Sources */,
 				C73BC62B1FA0C88F00A52DCF /* GameOverScene.swift in Sources */,
 				C796D2201F7AACAC00F770CF /* AppDelegate.swift in Sources */,
