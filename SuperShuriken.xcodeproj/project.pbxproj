@@ -12,6 +12,7 @@
 		C766D7F7200BC66400648287 /* CustomLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C766D7F6200BC66400648287 /* CustomLabel.swift */; };
 		C766D7F9200BC71C00648287 /* SettingsScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = C766D7F8200BC71C00648287 /* SettingsScene.sks */; };
 		C766D7FB200BC74C00648287 /* SettingsScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = C766D7FA200BC74C00648287 /* SettingsScene.swift */; };
+		C766D7FD200C0D2E00648287 /* GameScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = C766D7FC200C0D2E00648287 /* GameScene.sks */; };
 		C796D2201F7AACAC00F770CF /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C796D21F1F7AACAC00F770CF /* AppDelegate.swift */; };
 		C796D2261F7AACAC00F770CF /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = C796D2251F7AACAC00F770CF /* GameScene.swift */; };
 		C796D2281F7AACAC00F770CF /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C796D2271F7AACAC00F770CF /* GameViewController.swift */; };
@@ -30,6 +31,7 @@
 		C766D7F6200BC66400648287 /* CustomLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomLabel.swift; sourceTree = "<group>"; };
 		C766D7F8200BC71C00648287 /* SettingsScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = SettingsScene.sks; sourceTree = "<group>"; };
 		C766D7FA200BC74C00648287 /* SettingsScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsScene.swift; sourceTree = "<group>"; };
+		C766D7FC200C0D2E00648287 /* GameScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = GameScene.sks; sourceTree = "<group>"; };
 		C796D21C1F7AACAC00F770CF /* SuperShuriken.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SuperShuriken.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C796D21F1F7AACAC00F770CF /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		C796D2251F7AACAC00F770CF /* GameScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameScene.swift; sourceTree = "<group>"; };
@@ -77,6 +79,7 @@
 				C796D2371F7AAFC400F770CF /* Sounds */,
 				C796D21F1F7AACAC00F770CF /* AppDelegate.swift */,
 				C796D2251F7AACAC00F770CF /* GameScene.swift */,
+				C766D7FC200C0D2E00648287 /* GameScene.sks */,
 				C7D2DDBF1FE5281E00A23537 /* MainMenu.swift */,
 				C766D7F2200A392800648287 /* MainMenu.sks */,
 				C73BC62A1FA0C88F00A52DCF /* GameOverScene.swift */,
@@ -167,6 +170,7 @@
 				C766D7F3200A392800648287 /* MainMenu.sks in Resources */,
 				C766D7F9200BC71C00648287 /* SettingsScene.sks in Resources */,
 				C796D22B1F7AACAC00F770CF /* Main.storyboard in Resources */,
+				C766D7FD200C0D2E00648287 /* GameScene.sks in Resources */,
 				C796D22D1F7AACAC00F770CF /* Assets.xcassets in Resources */,
 				C796D23B1F7AAFC400F770CF /* pew-pew-lei.caf in Resources */,
 				C796D2301F7AACAC00F770CF /* LaunchScreen.storyboard in Resources */,

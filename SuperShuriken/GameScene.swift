@@ -48,6 +48,15 @@ extension CGPoint {
     }
 }
 
+extension SKSpriteNode {
+    func setupWithNode(node: SKSpriteNode){
+        self.position = node.position
+        self.zPosition = node.zPosition
+        self.size = node.size
+        node.removeFromParent()
+    }
+}
+
 class GameScene: SKScene, SKPhysicsContactDelegate {
     
     let player = SKSpriteNode(imageNamed: "player")
@@ -59,7 +68,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         physicsWorld.gravity = CGVector.zero
         physicsWorld.contactDelegate = self
         
-        player.position = CGPoint(x: size.width * 0.1, y: size.height * 0.5)
+        guard let spawnPoint = self.childNode(withName: "spawnPoint") as? SKSpriteNode else {
+            return
+        }
+        
+        player.setupWithNode(node: spawnPoint)
         
         addChild(player)
         

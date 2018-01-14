@@ -23,42 +23,39 @@ class MainMenu: SKScene {
         let buttonTexture = SKTexture.init(imageNamed: "button")
         let buttonClickedTexture = SKTexture.init(imageNamed: "buttonClicked")
 
-        guard let playPlaceholder = childNode(withName: "playPlaceholder") else {
+        guard let playPlaceholder = childNode(withName: "playPlaceholder") as? SKSpriteNode else {
             return
         }
         playButtonNode = ButtonNode.init(normalTexture: buttonTexture,
                                          selectedTexture: buttonClickedTexture,
                                          disabledTexture: nil)
-        playButtonNode.position = CGPoint.init(x: playPlaceholder.frame.origin.x, y: playPlaceholder.frame.origin.y)
-        playButtonNode.size = CGSize.init(width: 500, height: 100)
-        playButtonNode.zPosition = 2
+        playButtonNode.setupWithNode(node: playPlaceholder)
         playButtonNode.setButtonAction(target: self, triggerEvent: .TouchUp, action: #selector(onPlayTap))
         playButtonNode.setButtonLabel(title: "Play", font: "Chalkduster", fontSize: 20.0)
         playButtonNode.name = "playButton"
-        playPlaceholder.removeFromParent()
         self.addChild(playButtonNode)
         
-        guard let settingsPlaceholder = childNode(withName: "settingsPlaceholder") else {
+        guard let settingsPlaceholder = childNode(withName: "settingsPlaceholder") as? SKSpriteNode else {
             return
         }
         
         settingsButtonNode = ButtonNode.init(normalTexture: buttonTexture,
                                          selectedTexture: buttonClickedTexture,
                                          disabledTexture: nil)
-        settingsButtonNode.position = CGPoint.init(x: settingsPlaceholder.frame.origin.x, y: settingsPlaceholder.frame.origin.y)
-        settingsButtonNode.size = CGSize.init(width: 500, height: 100)
-        settingsButtonNode.zPosition = 2
+        settingsButtonNode.setupWithNode(node: settingsPlaceholder)
         settingsButtonNode.setButtonAction(target: self, triggerEvent: .TouchUp, action: #selector(onSettingsTap))
         settingsButtonNode.setButtonLabel(title: "Settings", font: "Chalkduster", fontSize: 20.0)
         settingsButtonNode.name = "settingsButton"
-        settingsPlaceholder.removeFromParent()
         self.addChild(settingsButtonNode)
     }
     
     @objc func onPlayTap() {
         let reveal = SKTransition.flipHorizontal(withDuration: 1)
-        let gameScene = GameScene.init(size: size)
-        self.view?.presentScene(gameScene, transition: reveal)
+        if let scene = GameScene(fileNamed: "GameScene") {
+            scene.scaleMode = .aspectFit
+            
+            self.view?.presentScene(scene, transition: reveal)
+        }
     }
     
     @objc func onSettingsTap() {

@@ -19,13 +19,12 @@ class SettingsScene : SKScene {
         menuButton = ButtonNode.init(normalTexture: SKTexture.init(imageNamed: "button"),
                                      selectedTexture: SKTexture.init(imageNamed: "buttonClicked"),
                                      disabledTexture: nil)
-        menuButton.position = CGPoint.init(x: menuPlaceholder.frame.origin.x, y: menuPlaceholder.frame.origin.y)
+        menuButton.position = menuPlaceholder.position
         menuButton.size = CGSize.init(width: 500, height: 100)
         menuButton.zPosition = 2
         menuButton.setButtonAction(target: self, triggerEvent: .TouchUp, action: #selector(onMenuTap))
         menuButton.setButtonLabel(title: "menu", font: "Chalkduster", fontSize: 20)
         
-        menuPlaceholder.removeFromParent()
         addChild(menuButton)
     }
     
