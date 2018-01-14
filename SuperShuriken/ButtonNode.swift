@@ -51,12 +51,12 @@ class ButtonNode: SKSpriteNode {
         self.label.horizontalAlignmentMode = SKLabelHorizontalAlignmentMode.center;
         self.label.zPosition = 2
         addChild(self.label)
-        
-        // Adding this node as an empty layer. Without it the touch functions are not being called
-        // The reason for this is unknown when this was implemented...?
-        let bugFixLayerNode = SKSpriteNode(texture: nil, color: UIColor.clear, size: defaultTexture.size())
-        bugFixLayerNode.position = self.position
-        addChild(bugFixLayerNode)
+
+//        // Adding this node as an empty layer. Without it the touch functions are not being called
+//        // The reason for this is unknown when this was implemented...?
+//        let bugFixLayerNode = SKSpriteNode(texture: nil, color: UIColor.clear, size: defaultTexture.size())
+//        bugFixLayerNode.position = self.position
+//        addChild(bugFixLayerNode)
         
     }
     

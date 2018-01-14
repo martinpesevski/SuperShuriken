@@ -32,7 +32,7 @@ class MainMenu: SKScene {
         playButtonNode.position = CGPoint.init(x: playPlaceholder.frame.origin.x, y: playPlaceholder.frame.origin.y)
         playButtonNode.size = CGSize.init(width: 500, height: 100)
         playButtonNode.zPosition = 2
-        playButtonNode.setButtonAction(target: self, triggerEvent: .TouchUp, action: #selector(onMenuTap))
+        playButtonNode.setButtonAction(target: self, triggerEvent: .TouchUp, action: #selector(onPlayTap))
         playButtonNode.setButtonLabel(title: "Play", font: "Chalkduster", fontSize: 20.0)
         playButtonNode.name = "playButton"
         playPlaceholder.removeFromParent()
@@ -55,7 +55,7 @@ class MainMenu: SKScene {
         self.addChild(settingsButtonNode)
     }
     
-    @objc func onMenuTap() {
+    @objc func onPlayTap() {
         let reveal = SKTransition.flipHorizontal(withDuration: 1)
         let gameScene = GameScene.init(size: size)
         self.view?.presentScene(gameScene, transition: reveal)
@@ -64,7 +64,7 @@ class MainMenu: SKScene {
     @objc func onSettingsTap() {
         let reveal = SKTransition.flipHorizontal(withDuration: 1)
         if let scene = SettingsScene(fileNamed: "SettingsScene") {
-            scene.scaleMode = .aspectFill
+            scene.scaleMode = .aspectFit
             
             self.view?.presentScene(scene, transition: reveal)
         }
