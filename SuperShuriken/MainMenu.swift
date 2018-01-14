@@ -12,7 +12,12 @@ import GameplayKit
 class MainMenu: SKScene {
     
     var playButtonNode : ButtonNode!
+    var settingsButtonNode : ButtonNode!
     var backgroundNode : SKSpriteNode!
+    
+    func initialize () {
+        scaleMode = .aspectFit
+    }
     
     override func didMove(to view: SKView) {
         let buttonTexture = SKTexture.init(imageNamed: "button")
@@ -32,11 +37,36 @@ class MainMenu: SKScene {
         playButtonNode.name = "playButton"
         playPlaceholder.removeFromParent()
         self.addChild(playButtonNode)
+        
+        guard let settingsPlaceholder = childNode(withName: "settingsPlaceholder") else {
+            return
+        }
+        
+        settingsButtonNode = ButtonNode.init(normalTexture: buttonTexture,
+                                         selectedTexture: buttonClickedTexture,
+                                         disabledTexture: nil)
+        settingsButtonNode.position = CGPoint.init(x: settingsPlaceholder.frame.origin.x, y: settingsPlaceholder.frame.origin.y)
+        settingsButtonNode.size = CGSize.init(width: 500, height: 100)
+        settingsButtonNode.zPosition = 2
+        settingsButtonNode.setButtonAction(target: self, triggerEvent: .TouchUp, action: #selector(onSettingsTap))
+        settingsButtonNode.setButtonLabel(title: "Settings", font: "Chalkduster", fontSize: 20.0)
+        settingsButtonNode.name = "settingsButton"
+        settingsPlaceholder.removeFromParent()
+        self.addChild(settingsButtonNode)
     }
     
     @objc func onMenuTap() {
         let reveal = SKTransition.flipHorizontal(withDuration: 1)
         let gameScene = GameScene.init(size: size)
         self.view?.presentScene(gameScene, transition: reveal)
+    }
+    
+    @objc func onSettingsTap() {
+        let reveal = SKTransition.flipHorizontal(withDuration: 1)
+        if let scene = SettingsScene(fileNamed: "SettingsScene") {
+            scene.scaleMode = .aspectFill
+            
+            self.view?.presentScene(scene, transition: reveal)
+        }
     }
 }

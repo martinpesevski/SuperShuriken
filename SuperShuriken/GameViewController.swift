@@ -20,7 +20,7 @@ class GameViewController: UIViewController {
         skView.ignoresSiblingOrder = true
         
         if let scene = MainMenu(fileNamed: "MainMenu") {
-            scene.scaleMode = .aspectFit
+            scene.initialize()
             skView.presentScene(scene)
         }
     }

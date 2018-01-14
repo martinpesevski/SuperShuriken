@@ -33,8 +33,10 @@ class GameOverScene: SKScene {
             SKAction.wait(forDuration: 3),
             SKAction.run {
                 let reveal = SKTransition.flipHorizontal(withDuration: 1)
-                let scene = MainMenu.init(size: size)
-                self.view?.presentScene(scene, transition: reveal)
+                if let scene = MainMenu(fileNamed: "MainMenu") {
+                    scene.initialize()
+                    self.view?.presentScene(scene, transition: reveal)
+                }
             }]))
     }
     
