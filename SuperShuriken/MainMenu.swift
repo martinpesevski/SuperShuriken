@@ -11,15 +11,11 @@ import GameplayKit
 
 class MainMenu: SKScene {
     
-    var playButtonNode : MenuButton!
+    var playButtonNode : SKSpriteNode!
+    var backgroundNode : SKSpriteNode!
     
     override func didMove(to view: SKView) {
-        backgroundColor = SKColor.white
-        
-        playButtonNode = MenuButton.init(color: UIColor.blue, size: CGSize.init(width: size.width/2, height: 70), text: "Play")
-        playButtonNode.position = CGPoint.init(x: size.width/2, y: size.height * 0.8)
-        
-        addChild(playButtonNode)
+        playButtonNode = self.childNode(withName: "playButton") as? SKSpriteNode
     }
     
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {

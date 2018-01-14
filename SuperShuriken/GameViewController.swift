@@ -14,14 +14,15 @@ class GameViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        let scene = MainMenu(size: view.bounds.size)
         let skView = view as! SKView
         skView.showsFPS = true
         skView.showsNodeCount = true
         skView.ignoresSiblingOrder = true
-        scene.scaleMode = .resizeFill
-        skView.presentScene(scene)
+        
+        if let scene = MainMenu(fileNamed: "MainMenu") {
+            scene.scaleMode = .aspectFit
+            skView.presentScene(scene)
+        }
     }
 
     override var prefersStatusBarHidden: Bool {
