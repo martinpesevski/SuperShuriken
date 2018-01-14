@@ -49,6 +49,7 @@ class ButtonNode: SKSpriteNode {
         //Creating and adding a blank label, centered on the button
         self.label.verticalAlignmentMode = SKLabelVerticalAlignmentMode.center;
         self.label.horizontalAlignmentMode = SKLabelHorizontalAlignmentMode.center;
+        self.label.zPosition = 2
         addChild(self.label)
         
         // Adding this node as an empty layer. Without it the touch functions are not being called
