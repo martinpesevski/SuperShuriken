@@ -101,15 +101,15 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         monster.physicsBody?.contactTestBitMask = PhysicsCategory.Projectile
         monster.physicsBody?.collisionBitMask = PhysicsCategory.None
         
-        let actualY = random(min: monster.size.height/2, max: size.height - monster.size.height/2)
+        let actualY = random(min: -size.height/2 - monster.size.height/2, max: size.height/2 + monster.size.height/2)
         
-        monster.position = CGPoint(x: size.width + monster.size.width/2, y: actualY)
+        monster.position = CGPoint(x: size.width/2 + monster.size.width/2, y: actualY)
         
         addChild(monster)
         
         let actualDuration = random(min: CGFloat(2.0), max: CGFloat(4.0))
         
-        let actionMove = SKAction.move(to: CGPoint(x: -monster.size.width/2, y: actualY), duration: TimeInterval(actualDuration))
+        let actionMove = SKAction.move(to: CGPoint(x: -size.width/2 - monster.size.width/2, y: actualY), duration: TimeInterval(actualDuration))
         let actionDone = SKAction.removeFromParent()
         
         let loseAction = SKAction.run {
@@ -131,7 +131,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     func endGame(didWin: Bool) {
         let reveal = SKTransition.flipHorizontal(withDuration: 1)
-        if let gameWonScene = GameOver(fileNamed: "GameOverScene") {
+        if let gameWonScene = GameOverScene(fileNamed: "GameOverScene") {
             gameWonScene.scaleMode = .aspectFit
             gameWonScene.setup(didWin: didWin)
             
@@ -146,7 +146,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             return
         }
         
-        run(SKAction.playSoundFileNamed("pew-pew-lei.caf", waitForCompletion: false))
+//        run(SKAction.playSoundFileNamed("pew-pew-lei.caf", waitForCompletion: false))
         
         let touchLocation = touch.location(in: self)
         
@@ -167,7 +167,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         addChild(projectile)
         let direction = offset.normalized()
-        let shootAmount = direction * 1000
+        let shootAmount = direction * 2000
         let destination = shootAmount + projectile.position
         
         let actionMove = SKAction.move(to: destination, duration: 2.0)

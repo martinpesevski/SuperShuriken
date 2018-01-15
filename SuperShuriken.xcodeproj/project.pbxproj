@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		0F735068200CACFB00EEFDD7 /* GameOverScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = 0F735067200CACFB00EEFDD7 /* GameOverScene.sks */; };
-		0F73506A200CAE0500EEFDD7 /* GameOver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F735069200CAE0500EEFDD7 /* GameOver.swift */; };
+		0F73506A200CAE0500EEFDD7 /* GameOverScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F735069200CAE0500EEFDD7 /* GameOverScene.swift */; };
 		C766D7F3200A392800648287 /* MainMenu.sks in Resources */ = {isa = PBXBuildFile; fileRef = C766D7F2200A392800648287 /* MainMenu.sks */; };
 		C766D7F7200BC66400648287 /* CustomLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C766D7F6200BC66400648287 /* CustomLabel.swift */; };
 		C766D7F9200BC71C00648287 /* SettingsScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = C766D7F8200BC71C00648287 /* SettingsScene.sks */; };
@@ -28,7 +28,7 @@
 
 /* Begin PBXFileReference section */
 		0F735067200CACFB00EEFDD7 /* GameOverScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = GameOverScene.sks; sourceTree = "<group>"; };
-		0F735069200CAE0500EEFDD7 /* GameOver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameOver.swift; sourceTree = "<group>"; };
+		0F735069200CAE0500EEFDD7 /* GameOverScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameOverScene.swift; sourceTree = "<group>"; };
 		C766D7F2200A392800648287 /* MainMenu.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = MainMenu.sks; sourceTree = "<group>"; };
 		C766D7F6200BC66400648287 /* CustomLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomLabel.swift; sourceTree = "<group>"; };
 		C766D7F8200BC71C00648287 /* SettingsScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = SettingsScene.sks; sourceTree = "<group>"; };
@@ -84,7 +84,7 @@
 				C766D7FC200C0D2E00648287 /* GameScene.sks */,
 				C7D2DDBF1FE5281E00A23537 /* MainMenu.swift */,
 				C766D7F2200A392800648287 /* MainMenu.sks */,
-				0F735069200CAE0500EEFDD7 /* GameOver.swift */,
+				0F735069200CAE0500EEFDD7 /* GameOverScene.swift */,
 				0F735067200CACFB00EEFDD7 /* GameOverScene.sks */,
 				C796D2271F7AACAC00F770CF /* GameViewController.swift */,
 				C766D7FA200BC74C00648287 /* SettingsScene.swift */,
@@ -191,7 +191,7 @@
 				C7D2DDC01FE5281E00A23537 /* MainMenu.swift in Sources */,
 				C796D2261F7AACAC00F770CF /* GameScene.swift in Sources */,
 				C7A4DF381FE6BD6C007DA58E /* ButtonNode.swift in Sources */,
-				0F73506A200CAE0500EEFDD7 /* GameOver.swift in Sources */,
+				0F73506A200CAE0500EEFDD7 /* GameOverScene.swift in Sources */,
 				C766D7F7200BC66400648287 /* CustomLabel.swift in Sources */,
 				C796D2281F7AACAC00F770CF /* GameViewController.swift in Sources */,
 				C766D7FB200BC74C00648287 /* SettingsScene.swift in Sources */,

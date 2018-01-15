@@ -8,7 +8,7 @@
 
 import SpriteKit
 
-class GameOver: SKScene {
+class GameOverScene: SKScene {
     var didWin : Bool!
     
     func setup(didWin: Bool) {
