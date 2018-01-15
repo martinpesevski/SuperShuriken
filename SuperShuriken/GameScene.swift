@@ -113,9 +113,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         let actionDone = SKAction.removeFromParent()
         
         let loseAction = SKAction.run {
-            let reveal = SKTransition.flipHorizontal(withDuration: 1)
-            let gameoverScene = GameOverScene.init(size: self.size, won: false)
-            self.view?.presentScene(gameoverScene, transition: reveal)
+            self.endGame(didWin: false)
         }
         
         monster.run(SKAction.sequence([actionMove, loseAction, actionDone]))
@@ -125,12 +123,20 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         print("hit")
         monstersDestroyed += 1
         if monstersDestroyed > 30 {
-            let reveal = SKTransition.flipHorizontal(withDuration: 1)
-            let gameWonScene = GameOverScene.init(size: self.size, won: true)
-            self.view?.presentScene(gameWonScene, transition: reveal)
+            endGame(didWin: true)
         }
         projectile.removeFromParent()
         monster.removeFromParent()
+    }
+    
+    func endGame(didWin: Bool) {
+        let reveal = SKTransition.flipHorizontal(withDuration: 1)
+        if let gameWonScene = GameOver(fileNamed: "GameOverScene") {
+            gameWonScene.scaleMode = .aspectFit
+            gameWonScene.setup(didWin: didWin)
+            
+            self.view?.presentScene(gameWonScene, transition: reveal)
+        }
     }
     
     // MARK: touches
