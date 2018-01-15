@@ -59,7 +59,7 @@ extension SKSpriteNode {
 
 class GameScene: SKScene, SKPhysicsContactDelegate {
     
-    let player = SKSpriteNode(imageNamed: "player")
+    var player : PlayerNode!
     var monstersDestroyed = 0
     
     override func didMove(to view: SKView) {
@@ -72,6 +72,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             return
         }
         
+        player = PlayerNode.init(texture: SKTexture(imageNamed: "player"))
         player.setupWithNode(node: spawnPoint)
         
         addChild(player)
