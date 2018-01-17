@@ -40,6 +40,8 @@ class AdsManager: NSObject, GADBannerViewDelegate, GADInterstitialDelegate{
     func showInterstitial() {
         if (interstitialView!.isReady) {
             interstitialView!.present(fromRootViewController: rootViewController)
+        } else {
+            interstitialDelegate?.didHideInterstitial()
         }
     }
     

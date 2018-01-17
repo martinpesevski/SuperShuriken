@@ -163,6 +163,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, adMobInterstitialDelegate {
         
         let projectile = SKSpriteNode(imageNamed: "projectile")
         projectile.position = player.position
+        projectile.size = CGSize.init(width: 20, height: 20)
         projectile.physicsBody = SKPhysicsBody(circleOfRadius: projectile.size.width/2)
         projectile.physicsBody?.isDynamic = true
         projectile.physicsBody?.categoryBitMask = PhysicsCategory.Projectile
