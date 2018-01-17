@@ -73,7 +73,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, adMobInterstitialDelegate {
             return
         }
         
-        player = PlayerNode.init(texture: SKTexture(imageNamed: "player"))
+        player = PlayerNode.init(texture: SKTexture(imageNamed: "ninja_stance"))
         player.setupWithNode(node: spawnPoint)
         
         addChild(player)
@@ -112,7 +112,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, adMobInterstitialDelegate {
         
         addChild(monster)
         
-        let actualDuration = random(min: CGFloat(2.0), max: CGFloat(4.0))
+        let actualDuration = random(min: CGFloat(5.0), max: CGFloat(7.0))
         
         let actionMove = SKAction.move(to: CGPoint(x: -size.width/2 - monster.size.width/2, y: actualY), duration: TimeInterval(actualDuration))
         let actionDone = SKAction.removeFromParent()
@@ -152,6 +152,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate, adMobInterstitialDelegate {
     
     // MARK: touches
     
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        player.texture = SKTexture.init(imageNamed: "ninja_throw")
+    }
+    
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         guard let touch = touches.first else {
             return
@@ -161,9 +165,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate, adMobInterstitialDelegate {
         
         let touchLocation = touch.location(in: self)
         
-        let projectile = SKSpriteNode(imageNamed: "projectile")
+        player.texture = SKTexture.init(imageNamed: "ninja_stance")
+        
+        let projectile = SKSpriteNode(imageNamed: "shuriken")
         projectile.position = player.position
-        projectile.size = CGSize.init(width: 20, height: 20)
+        projectile.size = CGSize.init(width: 30, height: 30)
         projectile.physicsBody = SKPhysicsBody(circleOfRadius: projectile.size.width/2)
         projectile.physicsBody?.isDynamic = true
         projectile.physicsBody?.categoryBitMask = PhysicsCategory.Projectile
