@@ -57,10 +57,11 @@ extension SKSpriteNode {
     }
 }
 
-class GameScene: SKScene, SKPhysicsContactDelegate {
+class GameScene: SKScene, SKPhysicsContactDelegate, adMobInterstitialDelegate {
     
     var player : PlayerNode!
     var monstersDestroyed = 0
+    var didWin = false
     
     override func didMove(to view: SKView) {
         backgroundColor = SKColor.white
@@ -82,6 +83,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         let backgroundMusic = SKAudioNode.init(fileNamed: "background-music-aac.caf")
         backgroundMusic.autoplayLooped = true
         addChild(backgroundMusic)
+        
+        AdsManager.sharedInstance.createAndLoadInterstitial()
+        AdsManager.sharedInstance.interstitialDelegate = self
     }
     
     // MARK: helper methods
@@ -131,6 +135,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     func endGame(didWin: Bool) {
+        scene?.view?.isPaused = true
+        AdsManager.sharedInstance.showInterstitial()
+    }
+    
+    func showGameOverScreen() {
+        scene?.view?.isPaused = false
         let reveal = SKTransition.flipHorizontal(withDuration: 1)
         if let gameWonScene = GameOverScene(fileNamed: "GameOverScene") {
             gameWonScene.scaleMode = .aspectFit
@@ -198,5 +208,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 projectileDidColideWithMonster(projectile: projectile, monster: monster)
             }
         }
+    }
+    
+    func didHideInterstitial() {
+        showGameOverScreen()
     }
 }

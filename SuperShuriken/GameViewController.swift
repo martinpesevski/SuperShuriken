@@ -9,9 +9,11 @@
 import UIKit
 import SpriteKit
 import GameplayKit
+import GoogleMobileAds
 
-class GameViewController: UIViewController {
-
+class GameViewController: UIViewController, GADBannerViewDelegate {
+    var bannerView : GADBannerView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         let skView = view as! SKView
@@ -23,6 +25,8 @@ class GameViewController: UIViewController {
             scene.initialize()
             skView.presentScene(scene)
         }
+        
+        AdsManager.sharedInstance.showBanner()
     }
 
     override var prefersStatusBarHidden: Bool {
