@@ -10,7 +10,7 @@ import SpriteKit
 
 class SettingsScene : SKScene {
     var menuButton : ButtonNode!
-    var soundButton : ButtonNode!
+    var soundCell : LabelWithSwitchNode!
     
     override func didMove(to view: SKView) {
         guard let menuPlaceholder = childNode(withName: "backPlaceholder") as? SKSpriteNode else {
@@ -27,15 +27,12 @@ class SettingsScene : SKScene {
         menuButton.setButtonAction(target: self, triggerEvent: .TouchUp, action: #selector(onMenuTap))
         menuButton.setButtonLabel(title: "menu", font: "Chalkduster", fontSize: 20)
         
-        soundButton = ButtonNode.init(normalTexture: SKTexture.init(imageNamed: "button"),
-                                     selectedTexture: SKTexture.init(imageNamed: "buttonClicked"),
-                                     disabledTexture: nil)
-        soundButton.setupWithNode(node: soundPlaceholder)
-        soundButton.setButtonAction(target: self, triggerEvent: .TouchUp, action: #selector(onSoundTap))
-        let soundOn = true
-        soundButton.setButtonLabel(title: "sound: \(soundOn)" as NSString, font: "Chalkduster", fontSize: 20)
+        soundCell = LabelWithSwitchNode()
+        soundCell.setupWithNode(node: soundPlaceholder)
+        soundCell.setupWithText(labelText: "Sound")
         
         addChild(menuButton)
+        addChild(soundCell)
     }
     
     @objc func onMenuTap() {
