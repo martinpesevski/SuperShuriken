@@ -20,8 +20,21 @@ class AdsManager: NSObject, GADBannerViewDelegate, GADInterstitialDelegate{
     var bannerView : GADBannerView!
     var interstitialView : GADInterstitial!
     var interstitialDelegate : adMobInterstitialDelegate?
+    var adsEnabled : Bool {
+        get {
+            return UserDefaults.standard.bool(forKey: "shurikenAdsEnabled")
+        }
+        set {
+            UserDefaults.standard.set(newValue, forKey: "shurikenAdsEnabled")
+            UserDefaults.standard.synchronize()
+        }
+    }
     
     func showBanner() {
+        if !adsEnabled {
+            return
+        }
+        
         bannerView = GADBannerView(adSize: kGADAdSizeSmartBannerLandscape)
         bannerView.adUnitID = "ca-app-pub-3940256099942544/2934735716"
         bannerView.rootViewController = rootViewController
@@ -38,6 +51,11 @@ class AdsManager: NSObject, GADBannerViewDelegate, GADInterstitialDelegate{
     }
     
     func showInterstitial() {
+        if !self.adsEnabled {
+            interstitialDelegate?.didHideInterstitial()
+            return
+        }
+        
         if (interstitialView!.isReady) {
             interstitialView!.present(fromRootViewController: rootViewController)
         } else {
@@ -45,10 +63,22 @@ class AdsManager: NSObject, GADBannerViewDelegate, GADInterstitialDelegate{
         }
     }
     
+    func removeAds() {
+        self.adsEnabled = false
+        bannerView.removeFromSuperview()
+        bannerView = nil
+    }
+    
+    func showAds() {
+        self.adsEnabled = true
+        self.showBanner()
+    }
+    
     private override init() {
+        super.init()
+        
         let appDelegate  = UIApplication.shared.delegate as! AppDelegate
         rootViewController = appDelegate.window!.rootViewController as UIViewController!
-        
     }
     
     func addBannerViewToView(_ bannerView: GADBannerView) {

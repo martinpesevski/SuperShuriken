@@ -24,7 +24,7 @@ class LabelWithSwitchNode: SKSpriteNode {
         
         switchNode = ButtonNode.init(normalTexture: SKTexture(imageNamed: "button"), selectedTexture: SKTexture(imageNamed: "buttonClicked"), disabledTexture: nil)
         switchNode.setButtonAction(target: self, triggerEvent: .TouchUp, action: #selector(onSwitchTap))
-        switchNode.setButtonLabel(title: "ON", font: "Chalkduster", fontSize: 30)
+        switchNode.setButtonLabel(title: switchIsOn ? "ON" : "OFF", font: "Chalkduster", fontSize: 30)
         switchNode.size = CGSize.init(width: 100, height: switchNode.size.height)
         switchNode.position = CGPoint(x: self.frame.maxX - switchNode.size.width/2, y: self.frame.midY - self.position.y)
         switchNode.zPosition = 2
@@ -41,8 +41,12 @@ class LabelWithSwitchNode: SKSpriteNode {
     }
     
     @objc func onSwitchTap() {
-        switchIsOn = !switchIsOn
-        switchNode.label.text = switchNode.label.text == "ON" ? "OFF" : "ON"
+        setSwitch(isOn: !switchIsOn)
         switchDelegate?.onSwitchTap(isOn: switchIsOn, sender: self)
+    }
+    
+    func setSwitch(isOn: Bool) {
+        switchIsOn = isOn
+        switchNode.label.text = isOn ? "ON" : "OFF"
     }
 }

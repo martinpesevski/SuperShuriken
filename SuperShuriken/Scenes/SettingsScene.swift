@@ -35,6 +35,7 @@ class SettingsScene : SKScene, switchNodeDelegate {
         adsCell = adsPlaceholder
         adsCell.setupWithText(labelText: "Enable ads")
         adsCell.switchDelegate = self
+        adsCell.setSwitch(isOn: AdsManager.sharedInstance.adsEnabled)
         
         addChild(menuButton)
     }
@@ -53,7 +54,7 @@ class SettingsScene : SKScene, switchNodeDelegate {
     }
     
     func onAdsTap(isOn: Bool) {
-        
+        isOn ? AdsManager.sharedInstance.showAds() : AdsManager.sharedInstance.removeAds()
     }
     
     func onSwitchTap(isOn: Bool, sender: SKNode) {
