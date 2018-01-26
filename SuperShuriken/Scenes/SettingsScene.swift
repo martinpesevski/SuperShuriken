@@ -9,15 +9,15 @@
 import SpriteKit
 import UIKit
 
-class SettingsScene : SKScene {
+class SettingsScene : SKScene, switchNodeDelegate {
     var menuButton : ButtonNode!
     var soundCell : LabelWithSwitchNode!
-    
+    var adsCell : LabelWithSwitchNode!
+
     override func didMove(to view: SKView) {
-        guard let menuPlaceholder = childNode(withName: "backPlaceholder") as? SKSpriteNode else {
-            return
-        }
-        guard let soundPlaceholder = childNode(withName: "soundPlaceholder") as? LabelWithSwitchNode else {
+        guard let soundPlaceholder = childNode(withName: "soundPlaceholder") as? LabelWithSwitchNode,
+            let adsPlaceholder = childNode(withName: "adsPlaceholder") as? LabelWithSwitchNode,
+            let menuPlaceholder = childNode(withName: "backPlaceholder") as? SKSpriteNode else {
             return
         }
         
@@ -29,11 +29,14 @@ class SettingsScene : SKScene {
         menuButton.setButtonLabel(title: "menu", font: "Chalkduster", fontSize: 20)
         
         soundCell = soundPlaceholder
-        soundCell.setupWithNode(node: soundPlaceholder)
         soundCell.setupWithText(labelText: "Sound")
+        soundCell.switchDelegate = self
+        
+        adsCell = adsPlaceholder
+        adsCell.setupWithText(labelText: "Enable ads")
+        adsCell.switchDelegate = self
         
         addChild(menuButton)
-        addChild(soundCell)
     }
     
     @objc func onMenuTap() {
@@ -45,6 +48,19 @@ class SettingsScene : SKScene {
         }
     }
     
-    @objc func onSoundTap() {
+    func onSoundTap(isOn: Bool) {
+        
+    }
+    
+    func onAdsTap(isOn: Bool) {
+        
+    }
+    
+    func onSwitchTap(isOn: Bool, sender: SKNode) {
+        if sender == soundCell {
+            onSoundTap(isOn: isOn)
+        } else if sender == adsCell {
+            onAdsTap(isOn: isOn)
+        }
     }
 }

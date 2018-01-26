@@ -9,7 +9,7 @@
 import SpriteKit
 
 protocol switchNodeDelegate {
-    func onSwitchTap(isOn: Bool)
+    func onSwitchTap(isOn: Bool, sender: SKNode)
 }
 
 class LabelWithSwitchNode: SKSpriteNode {
@@ -43,6 +43,6 @@ class LabelWithSwitchNode: SKSpriteNode {
     @objc func onSwitchTap() {
         switchIsOn = !switchIsOn
         switchNode.label.text = switchNode.label.text == "ON" ? "OFF" : "ON"
-        switchDelegate?.onSwitchTap(isOn: switchIsOn)
+        switchDelegate?.onSwitchTap(isOn: switchIsOn, sender: self)
     }
 }
