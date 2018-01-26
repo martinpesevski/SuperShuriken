@@ -7,6 +7,7 @@
 //
 
 import SpriteKit
+import UIKit
 
 class SettingsScene : SKScene {
     var menuButton : ButtonNode!
@@ -16,7 +17,7 @@ class SettingsScene : SKScene {
         guard let menuPlaceholder = childNode(withName: "backPlaceholder") as? SKSpriteNode else {
             return
         }
-        guard let soundPlaceholder = childNode(withName: "soundPlaceholder") as? SKSpriteNode else {
+        guard let soundPlaceholder = childNode(withName: "soundPlaceholder") as? LabelWithSwitchNode else {
             return
         }
         
@@ -27,7 +28,7 @@ class SettingsScene : SKScene {
         menuButton.setButtonAction(target: self, triggerEvent: .TouchUp, action: #selector(onMenuTap))
         menuButton.setButtonLabel(title: "menu", font: "Chalkduster", fontSize: 20)
         
-        soundCell = LabelWithSwitchNode()
+        soundCell = soundPlaceholder
         soundCell.setupWithNode(node: soundPlaceholder)
         soundCell.setupWithText(labelText: "Sound")
         
