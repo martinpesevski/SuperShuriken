@@ -20,18 +20,9 @@ class AdsManager: NSObject, GADBannerViewDelegate, GADInterstitialDelegate{
     var bannerView : GADBannerView!
     var interstitialView : GADInterstitial!
     var interstitialDelegate : adMobInterstitialDelegate?
-    var adsEnabled : Bool {
-        get {
-            return UserDefaults.standard.bool(forKey: "shurikenAdsEnabled")
-        }
-        set {
-            UserDefaults.standard.set(newValue, forKey: "shurikenAdsEnabled")
-            UserDefaults.standard.synchronize()
-        }
-    }
     
     func showBanner() {
-        if !adsEnabled {
+        if !Global.sharedInstance.adsEnabled {
             return
         }
         
@@ -51,7 +42,7 @@ class AdsManager: NSObject, GADBannerViewDelegate, GADInterstitialDelegate{
     }
     
     func showInterstitial() {
-        if !self.adsEnabled {
+        if !Global.sharedInstance.adsEnabled {
             interstitialDelegate?.didHideInterstitial()
             return
         }
@@ -64,13 +55,13 @@ class AdsManager: NSObject, GADBannerViewDelegate, GADInterstitialDelegate{
     }
     
     func removeAds() {
-        self.adsEnabled = false
+        Global.sharedInstance.adsEnabled = false
         bannerView.removeFromSuperview()
         bannerView = nil
     }
     
     func showAds() {
-        self.adsEnabled = true
+        Global.sharedInstance.adsEnabled = true
         self.showBanner()
     }
     

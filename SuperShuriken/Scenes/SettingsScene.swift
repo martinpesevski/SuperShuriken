@@ -27,6 +27,7 @@ class SettingsScene : SKScene, switchNodeDelegate {
         menuButton.setupWithNode(node: menuPlaceholder)
         menuButton.setButtonAction(target: self, triggerEvent: .TouchUp, action: #selector(onMenuTap))
         menuButton.setButtonLabel(title: "menu", font: "Chalkduster", fontSize: 20)
+        menuButton.zPosition = 2
         
         soundCell = soundPlaceholder
         soundCell.setupWithText(labelText: "Sound")
@@ -35,7 +36,7 @@ class SettingsScene : SKScene, switchNodeDelegate {
         adsCell = adsPlaceholder
         adsCell.setupWithText(labelText: "Enable ads")
         adsCell.switchDelegate = self
-        adsCell.setSwitch(isOn: AdsManager.sharedInstance.adsEnabled)
+        adsCell.setSwitch(isOn: Global.sharedInstance.adsEnabled)
         
         addChild(menuButton)
     }
