@@ -11,13 +11,23 @@ import UIKit
 class Global: NSObject {
     static let sharedInstance = Global()
 
+    var isFirstRun : Bool {
+        get {
+            return !UserDefaults.standard.bool(forKey: "wasLaunchedBefore")
+        }
+        set {
+            UserDefaults.standard.set(true, forKey: "wasLaunchedBefore")
+        }
+    }
+    
     var isSoundOn : Bool {
         get {
+            if isFirstRun { UserDefaults.standard.set(true, forKey: "isSoundOn")}
+
             return UserDefaults.standard.bool(forKey: "isSoundOn")
         }
         set {
             UserDefaults.standard.set(newValue, forKey: "isSoundOn")
-            UserDefaults.standard.synchronize()
         }
     }
     
@@ -27,7 +37,6 @@ class Global: NSObject {
         }
         set {
             UserDefaults.standard.set(newValue, forKey: "shurikenAdsEnabled")
-            UserDefaults.standard.synchronize()
         }
     }
 }

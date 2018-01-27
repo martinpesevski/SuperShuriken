@@ -32,7 +32,8 @@ class SettingsScene : SKScene, switchNodeDelegate {
         soundCell = soundPlaceholder
         soundCell.setupWithText(labelText: "Sound")
         soundCell.switchDelegate = self
-        
+        soundCell.setSwitch(isOn: Global.sharedInstance.isSoundOn)
+
         adsCell = adsPlaceholder
         adsCell.setupWithText(labelText: "Enable ads")
         adsCell.switchDelegate = self
@@ -51,7 +52,7 @@ class SettingsScene : SKScene, switchNodeDelegate {
     }
     
     func onSoundTap(isOn: Bool) {
-        
+        Global.sharedInstance.isSoundOn = isOn
     }
     
     func onAdsTap(isOn: Bool) {

@@ -35,6 +35,7 @@ class LabelWithSwitchNode: SKSpriteNode {
         labelNode.fontSize = 30
         labelNode.position = CGPoint(x: self.frame.minX + labelNode.frame.size.width, y: switchNode.frame.midY)
         labelNode.zPosition = 2
+        labelNode.horizontalAlignmentMode = .right
         
         addChild(labelNode)
         addChild(switchNode)

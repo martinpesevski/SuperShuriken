@@ -80,10 +80,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate, adMobInterstitialDelegate {
         
         run(SKAction.repeatForever(SKAction.sequence([SKAction.run(addMonster), SKAction.wait(forDuration: TimeInterval(1.0))])))
         
-        let backgroundMusic = SKAudioNode.init(fileNamed: "background-music-aac.caf")
-        backgroundMusic.autoplayLooped = true
-        addChild(backgroundMusic)
-        
+        if Global.sharedInstance.isSoundOn {
+            let backgroundMusic = SKAudioNode.init(fileNamed: "background-music-aac.caf")
+            backgroundMusic.autoplayLooped = true
+            addChild(backgroundMusic)
+        }
+
         AdsManager.sharedInstance.createAndLoadInterstitial()
         AdsManager.sharedInstance.interstitialDelegate = self
     }
