@@ -14,6 +14,7 @@ struct PhysicsCategory {
     static let All       : UInt32 = UInt32.max
     static let Monster   : UInt32 = 0b1       // 1
     static let Projectile: UInt32 = 0b10      // 2
+    static let Wall      : UInt32 = 0b11      // 3
 }
 
 func + (left: CGPoint, right: CGPoint) -> CGPoint {
@@ -73,7 +74,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, adMobInterstitialDelegate {
             return
         }
         
-        player = PlayerNode.init(texture: SKTexture(imageNamed: "ninja_stance"))
+        player = PlayerNode.init(texture: SKTexture(imageNamed: "ic_ninja_stance"))
         player.setupWithNode(node: spawnPoint)
         
         addChild(player)
@@ -100,8 +101,23 @@ class GameScene: SKScene, SKPhysicsContactDelegate, adMobInterstitialDelegate {
         return random() * (max - min) + min
     }
     
+    func setupWalls() {
+        guard let wallTop = self.childNode(withName: "wallTop") as? SKSpriteNode,
+        let wallBottom = self.childNode(withName: "wallBottom") else {
+            return
+        }
+        
+        wallTop.physicsBody?.categoryBitMask = PhysicsCategory.Wall
+        wallTop.physicsBody?.contactTestBitMask = PhysicsCategory.Projectile
+        wallTop.physicsBody?.collisionBitMask = PhysicsCategory.None
+        
+        wallBottom.physicsBody?.categoryBitMask = PhysicsCategory.Wall
+        wallBottom.physicsBody?.contactTestBitMask = PhysicsCategory.Projectile
+        wallBottom.physicsBody?.collisionBitMask = PhysicsCategory.None
+    }
+    
     func addMonster() {
-        let monster = SKSpriteNode(imageNamed: "monster")
+        let monster = SKSpriteNode(imageNamed: "ic_monster")
         monster.physicsBody = SKPhysicsBody(rectangleOf: monster.size)
         monster.physicsBody?.isDynamic = true
         monster.physicsBody?.categoryBitMask = PhysicsCategory.Monster
@@ -127,13 +143,16 @@ class GameScene: SKScene, SKPhysicsContactDelegate, adMobInterstitialDelegate {
     }
     
     func projectileDidColideWithMonster (projectile: SKSpriteNode, monster: SKSpriteNode) {
-        print("hit")
         monstersDestroyed += 1
         if monstersDestroyed > 30 {
             endGame(didWin: true)
         }
         projectile.removeFromParent()
         monster.removeFromParent()
+    }
+    
+    func projectileDidColideWithWall (projectile: SKSpriteNode, wall: SKSpriteNode) {
+        
     }
     
     func endGame(didWin: Bool) {
@@ -155,7 +174,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, adMobInterstitialDelegate {
     // MARK: touches
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        player.texture = SKTexture.init(imageNamed: "ninja_throw")
+        player.texture = SKTexture.init(imageNamed: "ic_ninja_throw")
     }
     
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -167,17 +186,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate, adMobInterstitialDelegate {
         
         let touchLocation = touch.location(in: self)
         
-        player.texture = SKTexture.init(imageNamed: "ninja_stance")
+        player.texture = SKTexture.init(imageNamed: "ic_ninja_stance")
         
-        let projectile = SKSpriteNode(imageNamed: "shuriken")
+        let projectile = ProjectileNode(imageNamed: "ic_shuriken")
         projectile.position = player.position
-        projectile.size = CGSize.init(width: 30, height: 30)
-        projectile.physicsBody = SKPhysicsBody(circleOfRadius: projectile.size.width/2)
-        projectile.physicsBody?.isDynamic = true
-        projectile.physicsBody?.categoryBitMask = PhysicsCategory.Projectile
-        projectile.physicsBody?.contactTestBitMask = PhysicsCategory.Monster
-        projectile.physicsBody?.collisionBitMask = PhysicsCategory.None
-        projectile.physicsBody?.usesPreciseCollisionDetection = true
+        projectile.setup()
         
         let offset = touchLocation - projectile.position
         
@@ -187,14 +200,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, adMobInterstitialDelegate {
         
         addChild(projectile)
         let direction = offset.normalized()
-        let shootAmount = direction * 2000
-        let destination = shootAmount + projectile.position
-        
-        let actionMove = SKAction.move(to: destination, duration: 2.0)
-        let actionMoveDone = SKAction.removeFromParent()
-        let projectileMovement = SKAction.sequence([actionMove, actionMoveDone])
-        let projectileRotation = SKAction.repeatForever(SKAction.rotate(byAngle: CGFloat(Double.pi), duration: 0.2))
-        projectile.run(SKAction.group([projectileMovement, projectileRotation]))
+        projectile.shootWithDirection(direction: direction)
     }
     
     // MARK: Physics
@@ -215,6 +221,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate, adMobInterstitialDelegate {
             (secondBody.categoryBitMask & PhysicsCategory.Projectile != 0) {
             if let monster = firstBody.node as? SKSpriteNode, let projectile = secondBody.node as? SKSpriteNode {
                 projectileDidColideWithMonster(projectile: projectile, monster: monster)
+            }
+        }else if (firstBody.categoryBitMask & PhysicsCategory.Wall != 0) &&
+            (secondBody.categoryBitMask & PhysicsCategory.Projectile != 0) {
+            if let wall = firstBody.node as? SKSpriteNode, let projectile = secondBody.node as? SKSpriteNode {
+                projectileDidColideWithWall(projectile: projectile, wall: wall)
             }
         }
     }

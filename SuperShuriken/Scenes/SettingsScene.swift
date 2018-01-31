@@ -21,8 +21,8 @@ class SettingsScene : SKScene, switchNodeDelegate {
             return
         }
         
-        menuButton = ButtonNode.init(normalTexture: SKTexture.init(imageNamed: "button"),
-                                     selectedTexture: SKTexture.init(imageNamed: "buttonClicked"),
+        menuButton = ButtonNode.init(normalTexture: SKTexture.init(imageNamed: "ic_button"),
+                                     selectedTexture: SKTexture.init(imageNamed: "ic_buttonClicked"),
                                      disabledTexture: nil)
         menuButton.setupWithNode(node: menuPlaceholder)
         menuButton.setButtonAction(target: self, triggerEvent: .TouchUp, action: #selector(onMenuTap))

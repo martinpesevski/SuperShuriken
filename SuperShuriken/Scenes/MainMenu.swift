@@ -20,8 +20,8 @@ class MainMenu: SKScene {
     }
     
     override func didMove(to view: SKView) {
-        let buttonTexture = SKTexture.init(imageNamed: "button")
-        let buttonClickedTexture = SKTexture.init(imageNamed: "buttonClicked")
+        let buttonTexture = SKTexture.init(imageNamed: "ic_button")
+        let buttonClickedTexture = SKTexture.init(imageNamed: "ic_buttonClicked")
 
         guard let playPlaceholder = childNode(withName: "playPlaceholder") as? SKSpriteNode else {
             return
