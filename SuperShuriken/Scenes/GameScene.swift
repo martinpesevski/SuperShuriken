@@ -13,8 +13,8 @@ struct PhysicsCategory {
     static let None      : UInt32 = 0
     static let All       : UInt32 = UInt32.max
     static let Monster   : UInt32 = 0b1       // 1
-    static let Projectile: UInt32 = 0b10      // 2
-    static let Wall      : UInt32 = 0b11      // 3
+    static let Wall      : UInt32 = 0b10      // 2
+    static let Projectile: UInt32 = 0b11     // 3
 }
 
 func + (left: CGPoint, right: CGPoint) -> CGPoint {
@@ -79,6 +79,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate, adMobInterstitialDelegate {
         
         addChild(player)
         
+        setupWalls()
+        
         run(SKAction.repeatForever(SKAction.sequence([SKAction.run(addMonster), SKAction.wait(forDuration: TimeInterval(1.0))])))
         
         if Global.sharedInstance.isSoundOn {
@@ -121,7 +123,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, adMobInterstitialDelegate {
         monster.physicsBody = SKPhysicsBody(rectangleOf: monster.size)
         monster.physicsBody?.isDynamic = true
         monster.physicsBody?.categoryBitMask = PhysicsCategory.Monster
-        monster.physicsBody?.contactTestBitMask = PhysicsCategory.Projectile
+        monster.physicsBody?.contactTestBitMask = PhysicsCategory.Projectile 
         monster.physicsBody?.collisionBitMask = PhysicsCategory.None
         
         let actualY = random(min: -size.height/2 - monster.size.height/2, max: size.height/2 + monster.size.height/2)
@@ -151,8 +153,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate, adMobInterstitialDelegate {
         monster.removeFromParent()
     }
     
-    func projectileDidColideWithWall (projectile: SKSpriteNode, wall: SKSpriteNode) {
-        
+    func projectileDidColideWithWall(projectile: ProjectileNode, wall: SKSpriteNode) {
+        let direction = CGPoint(x: projectile.destination.x, y: projectile.destination.y - ((projectile.destination.y - projectile.position.y) * 2))
+
+        projectile.shootWithDirection(direction: direction.normalized())
     }
     
     func endGame(didWin: Bool) {
@@ -222,9 +226,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate, adMobInterstitialDelegate {
             if let monster = firstBody.node as? SKSpriteNode, let projectile = secondBody.node as? SKSpriteNode {
                 projectileDidColideWithMonster(projectile: projectile, monster: monster)
             }
-        }else if (firstBody.categoryBitMask & PhysicsCategory.Wall != 0) &&
+        } else if (firstBody.categoryBitMask & PhysicsCategory.Wall != 0) &&
             (secondBody.categoryBitMask & PhysicsCategory.Projectile != 0) {
-            if let wall = firstBody.node as? SKSpriteNode, let projectile = secondBody.node as? SKSpriteNode {
+            if let wall = firstBody.node as? SKSpriteNode, let projectile = secondBody.node as? ProjectileNode {
                 projectileDidColideWithWall(projectile: projectile, wall: wall)
             }
         }

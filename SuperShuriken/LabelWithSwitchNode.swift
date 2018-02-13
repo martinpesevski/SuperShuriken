@@ -22,7 +22,7 @@ class LabelWithSwitchNode: SKSpriteNode {
     
     func setupWithText(labelText: String){
         
-        switchNode = ButtonNode.init(normalTexture: SKTexture(imageNamed: "button"), selectedTexture: SKTexture(imageNamed: "buttonClicked"), disabledTexture: nil)
+        switchNode = ButtonNode.init(normalTexture: SKTexture(imageNamed: "ic_button"), selectedTexture: SKTexture(imageNamed: "ic_buttonClicked"), disabledTexture: nil)
         switchNode.setButtonAction(target: self, triggerEvent: .TouchUp, action: #selector(onSwitchTap))
         switchNode.setButtonLabel(title: switchIsOn ? "ON" : "OFF", font: "Chalkduster", fontSize: 30)
         switchNode.size = CGSize.init(width: 100, height: switchNode.size.height)

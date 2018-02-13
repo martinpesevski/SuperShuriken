@@ -10,20 +10,22 @@ import UIKit
 import SpriteKit
 
 class ProjectileNode: SKSpriteNode {
+    var destination : CGPoint = CGPoint.zero
+    let distance : CGFloat = 2000
     
     func setup() {
         size = CGSize.init(width: 30, height: 30)
         physicsBody = SKPhysicsBody(circleOfRadius: size.width/2)
         physicsBody?.isDynamic = true
         physicsBody?.categoryBitMask = PhysicsCategory.Projectile
-        physicsBody?.contactTestBitMask = PhysicsCategory.Monster
+        physicsBody?.contactTestBitMask = PhysicsCategory.Monster | PhysicsCategory.Wall
         physicsBody?.collisionBitMask = PhysicsCategory.None
         physicsBody?.usesPreciseCollisionDetection = true
     }
     
     func shootWithDirection(direction: CGPoint) {
-        let shootAmount = direction * 2000
-        let destination = shootAmount + position
+        let shootAmount = direction * distance
+        self.destination = shootAmount + position
         
         let actionMove = SKAction.move(to: destination, duration: 2.0)
         let actionMoveDone = SKAction.removeFromParent()
