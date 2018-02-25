@@ -64,6 +64,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate, adMobInterstitialDelegate {
     var monstersDestroyed = 0
     var didWin = false
     
+    var monsterSpawner = SKSpriteNode()
+    
     override func didMove(to view: SKView) {
         backgroundColor = SKColor.white
         
@@ -72,6 +74,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate, adMobInterstitialDelegate {
         
         guard let spawnPoint = self.childNode(withName: "spawnPoint") as? SKSpriteNode else {
             return
+        }
+        
+        if let enemySpawner = self.childNode(withName: "enemySpawner") as? SKSpriteNode {
+            monsterSpawner = enemySpawner;
         }
         
         player = PlayerNode.init(texture: SKTexture(imageNamed: "ic_ninja_stance"))
@@ -126,9 +132,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate, adMobInterstitialDelegate {
         monster.physicsBody?.contactTestBitMask = PhysicsCategory.Projectile 
         monster.physicsBody?.collisionBitMask = PhysicsCategory.None
         
-        let actualY = random(min: -size.height/2 - monster.size.height/2, max: size.height/2 + monster.size.height/2)
+        let actualY = random(min: (monsterSpawner.frame.origin.y + monsterSpawner.size.height) - monster.size.height/2,
+                             max: monsterSpawner.frame.origin.y + monster.size.height/2)
         
-        monster.position = CGPoint(x: size.width/2 + monster.size.width/2, y: actualY)
+        monster.position = CGPoint(x: size.width + monster.size.width/2, y: actualY)
         
         addChild(monster)
         
@@ -154,9 +161,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, adMobInterstitialDelegate {
     }
     
     func projectileDidColideWithWall(projectile: ProjectileNode, wall: SKSpriteNode) {
-        let direction = CGPoint(x: projectile.destination.x, y: projectile.destination.y - ((projectile.destination.y - projectile.position.y) * 2))
 
-        projectile.shootWithDirection(direction: direction.normalized())
     }
     
     func endGame(didWin: Bool) {
