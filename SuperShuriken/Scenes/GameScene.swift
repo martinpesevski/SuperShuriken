@@ -75,6 +75,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, adMobInterstitialDelegate {
     
     var monsterSpawner = SKSpriteNode()
     var monsterGoal = SKSpriteNode()
+    var scoreLabel : SKLabelNode!
     
     override func didMove(to view: SKView) {
         backgroundColor = SKColor.white
@@ -93,6 +94,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate, adMobInterstitialDelegate {
         guard let monsterGoalPlaceholder = self.childNode(withName: "goal") as? SKSpriteNode else {
             return
         }
+        
+        scoreLabel = self.childNode(withName: "scoreLabel") as? SKLabelNode ?? SKLabelNode(text: "Score")
+        updateScore()
         
         player = PlayerNode.init(texture: SKTexture(imageNamed: "ic_ninja_stance"))
         player.setupWithNode(node: spawnPoint)
@@ -142,6 +146,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, adMobInterstitialDelegate {
     
     func addMonster() {
         let monster = MonsterNode(imageNamed: "ic_monster")
+        monster.scale(to: CGSize(width: monster.size.width * 2, height: monster.size.height * 2))
 
         let actualY = random(min: (monsterSpawner.frame.origin.y + monsterSpawner.size.height) - monster.size.height/2,
                              max: monsterSpawner.frame.origin.y + monster.size.height/2)
@@ -152,9 +157,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate, adMobInterstitialDelegate {
         monster.playRunAnimation()
     }
     
-    func projectileDidColideWithMonster (projectile: SKSpriteNode, monster: MonsterNode) {
+    func projectileDidColideWithMonster (projectile: ProjectileNode, monster: MonsterNode) {
         monstersDestroyed += 1
-        if monstersDestroyed > 30 {
+        updateScore()
+        
+        if monstersDestroyed >= 30 {
             endGame(didWin: true)
         }
         projectile.removeFromParent()
@@ -168,6 +175,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate, adMobInterstitialDelegate {
     func monsterDidReachGoal(monster: MonsterNode, goal: SKSpriteNode) {
         monster.removeFromParent()
         endGame(didWin: false)
+    }
+    
+    func updateScore() {
+        scoreLabel.text = "Score: \(monstersDestroyed)"
     }
     
     func endGame(didWin: Bool) {
@@ -235,7 +246,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, adMobInterstitialDelegate {
         
         if (firstBody.categoryBitMask & PhysicsCategory.Monster != 0) &&
             (secondBody.categoryBitMask & PhysicsCategory.Projectile != 0) {
-            if let monster = firstBody.node as? MonsterNode, let projectile = secondBody.node as? SKSpriteNode {
+            if let monster = firstBody.node as? MonsterNode, let projectile = secondBody.node as? ProjectileNode {
                 projectileDidColideWithMonster(projectile: projectile, monster: monster)
             }
         } else if (firstBody.categoryBitMask & PhysicsCategory.Wall != 0) &&

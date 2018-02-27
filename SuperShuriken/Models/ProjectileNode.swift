@@ -14,7 +14,7 @@ class ProjectileNode: SKSpriteNode {
     let distance : CGFloat = 2000
     
     func setup() {
-        size = CGSize.init(width: 30, height: 30)
+        size = CGSize.init(width: 50, height: 50)
         physicsBody = SKPhysicsBody(circleOfRadius: size.width/2)
         physicsBody?.isDynamic = true
         physicsBody?.categoryBitMask = PhysicsCategory.Projectile
