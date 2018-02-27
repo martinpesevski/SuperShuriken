@@ -13,8 +13,9 @@ struct PhysicsCategory {
     static let None      : UInt32 = 0
     static let All       : UInt32 = UInt32.max
     static let Monster   : UInt32 = 0b1       // 1
-    static let Wall      : UInt32 = 0b10      // 2
-    static let Projectile: UInt32 = 0b11     // 3
+    static let Wall      : UInt32 = 0b10       // 2
+    static let Goal      : UInt32 = 0b11       // 3
+    static let Projectile: UInt32 = 0b100       // 4
 }
 
 func + (left: CGPoint, right: CGPoint) -> CGPoint {
@@ -31,6 +32,14 @@ func * (point: CGPoint, scalar: CGFloat) -> CGPoint {
 
 func / (point: CGPoint, scalar: CGFloat) -> CGPoint {
     return CGPoint(x: point.x / scalar, y: point.y / scalar)
+}
+
+func random() -> CGFloat {
+    return CGFloat(Float(arc4random()) / 0xFFFFFFFF)
+}
+
+public func random(min: CGFloat, max: CGFloat) -> CGFloat {
+    return random() * (max - min) + min
 }
 
 #if !(arch(x86_64) || arch(arm64))
@@ -65,6 +74,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, adMobInterstitialDelegate {
     var didWin = false
     
     var monsterSpawner = SKSpriteNode()
+    var monsterGoal = SKSpriteNode()
     
     override func didMove(to view: SKView) {
         backgroundColor = SKColor.white
@@ -76,14 +86,28 @@ class GameScene: SKScene, SKPhysicsContactDelegate, adMobInterstitialDelegate {
             return
         }
         
-        if let enemySpawner = self.childNode(withName: "enemySpawner") as? SKSpriteNode {
-            monsterSpawner = enemySpawner;
+        guard let enemySpawner = self.childNode(withName: "enemySpawner") as? SKSpriteNode else {
+            return
+        }
+        
+        guard let monsterGoalPlaceholder = self.childNode(withName: "goal") as? SKSpriteNode else {
+            return
         }
         
         player = PlayerNode.init(texture: SKTexture(imageNamed: "ic_ninja_stance"))
         player.setupWithNode(node: spawnPoint)
         
+        monsterGoal.setupWithNode(node: monsterGoalPlaceholder)
+        monsterGoal.physicsBody = SKPhysicsBody(rectangleOf: monsterGoal.size)
+        monsterGoal.physicsBody?.categoryBitMask = PhysicsCategory.Goal
+        monsterGoal.physicsBody?.contactTestBitMask = PhysicsCategory.Monster
+        monsterGoal.physicsBody?.collisionBitMask = PhysicsCategory.None
+        
+        monsterSpawner.setupWithNode(node: enemySpawner)
+        
         addChild(player)
+        addChild(monsterGoal)
+        addChild(monsterSpawner)
         
         setupWalls()
         
@@ -101,14 +125,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate, adMobInterstitialDelegate {
     
     // MARK: helper methods
     
-    func random() -> CGFloat {
-        return CGFloat(Float(arc4random()) / 0xFFFFFFFF)
-    }
-    
-    func random(min: CGFloat, max: CGFloat) -> CGFloat {
-        return random() * (max - min) + min
-    }
-    
     func setupWalls() {
         guard let wallTop = self.childNode(withName: "wallTop") as? SKSpriteNode,
         let wallBottom = self.childNode(withName: "wallBottom") else {
@@ -125,46 +141,37 @@ class GameScene: SKScene, SKPhysicsContactDelegate, adMobInterstitialDelegate {
     }
     
     func addMonster() {
-        let monster = SKSpriteNode(imageNamed: "ic_monster")
-        monster.physicsBody = SKPhysicsBody(rectangleOf: monster.size)
-        monster.physicsBody?.isDynamic = true
-        monster.physicsBody?.categoryBitMask = PhysicsCategory.Monster
-        monster.physicsBody?.contactTestBitMask = PhysicsCategory.Projectile 
-        monster.physicsBody?.collisionBitMask = PhysicsCategory.None
-        
+        let monster = MonsterNode(imageNamed: "ic_monster")
+
         let actualY = random(min: (monsterSpawner.frame.origin.y + monsterSpawner.size.height) - monster.size.height/2,
                              max: monsterSpawner.frame.origin.y + monster.size.height/2)
         
-        monster.position = CGPoint(x: size.width + monster.size.width/2, y: actualY)
+        monster.setup(startPoint: CGPoint(x: size.width + monster.size.width/2, y: actualY))
         
         addChild(monster)
-        
-        let actualDuration = random(min: CGFloat(5.0), max: CGFloat(7.0))
-        
-        let actionMove = SKAction.move(to: CGPoint(x: -size.width/2 - monster.size.width/2, y: actualY), duration: TimeInterval(actualDuration))
-        let actionDone = SKAction.removeFromParent()
-        
-        let loseAction = SKAction.run {
-            self.endGame(didWin: false)
-        }
-        
-        monster.run(SKAction.sequence([actionMove, loseAction, actionDone]))
+        monster.playRunAnimation()
     }
     
-    func projectileDidColideWithMonster (projectile: SKSpriteNode, monster: SKSpriteNode) {
+    func projectileDidColideWithMonster (projectile: SKSpriteNode, monster: MonsterNode) {
         monstersDestroyed += 1
         if monstersDestroyed > 30 {
             endGame(didWin: true)
         }
         projectile.removeFromParent()
-        monster.removeFromParent()
+        monster.playDeathAnimation()
     }
     
     func projectileDidColideWithWall(projectile: ProjectileNode, wall: SKSpriteNode) {
 
     }
     
+    func monsterDidReachGoal(monster: MonsterNode, goal: SKSpriteNode) {
+        monster.removeFromParent()
+        endGame(didWin: false)
+    }
+    
     func endGame(didWin: Bool) {
+        self.didWin = didWin
         scene?.view?.isPaused = true
         AdsManager.sharedInstance.showInterstitial()
     }
@@ -228,7 +235,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, adMobInterstitialDelegate {
         
         if (firstBody.categoryBitMask & PhysicsCategory.Monster != 0) &&
             (secondBody.categoryBitMask & PhysicsCategory.Projectile != 0) {
-            if let monster = firstBody.node as? SKSpriteNode, let projectile = secondBody.node as? SKSpriteNode {
+            if let monster = firstBody.node as? MonsterNode, let projectile = secondBody.node as? SKSpriteNode {
                 projectileDidColideWithMonster(projectile: projectile, monster: monster)
             }
         } else if (firstBody.categoryBitMask & PhysicsCategory.Wall != 0) &&
@@ -236,6 +243,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate, adMobInterstitialDelegate {
             if let wall = firstBody.node as? SKSpriteNode, let projectile = secondBody.node as? ProjectileNode {
                 projectileDidColideWithWall(projectile: projectile, wall: wall)
             }
+        } else if (firstBody.categoryBitMask & PhysicsCategory.Monster != 0) &&
+            (secondBody.categoryBitMask & PhysicsCategory.Goal != 0) {
+            if let monster = firstBody.node as? MonsterNode, let goal = secondBody.node as? SKSpriteNode {
+                monsterDidReachGoal(monster: monster, goal: goal)
+            }
+        } else {
+            
         }
     }
     

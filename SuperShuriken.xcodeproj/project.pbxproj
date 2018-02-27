@@ -13,6 +13,7 @@
 		0F735075200CF24100EEFDD7 /* Global.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F735074200CF24100EEFDD7 /* Global.swift */; };
 		0F7350772010C1E600EEFDD7 /* LabelWithSwitchNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F7350762010C1E600EEFDD7 /* LabelWithSwitchNode.swift */; };
 		B69BBFDA222236171FF70C0A /* Pods_SuperShuriken.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FFAE01823C307487EE0B93EF /* Pods_SuperShuriken.framework */; };
+		C71E033B20430682001C61C2 /* MonsterNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = C71E033A20430682001C61C2 /* MonsterNode.swift */; };
 		C7345C94200F5FB900A24A16 /* AdsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7345C93200F5FB900A24A16 /* AdsManager.swift */; };
 		C737083B202213F20053F640 /* ProjectileNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = C737083A202213F20053F640 /* ProjectileNode.swift */; };
 		C766D7F3200A392800648287 /* MainMenu.sks in Resources */ = {isa = PBXBuildFile; fileRef = C766D7F2200A392800648287 /* MainMenu.sks */; };
@@ -40,6 +41,7 @@
 		0F7350762010C1E600EEFDD7 /* LabelWithSwitchNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LabelWithSwitchNode.swift; sourceTree = "<group>"; };
 		2C472AA165D44FCC849C49A0 /* Pods-SuperShuriken.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SuperShuriken.debug.xcconfig"; path = "Pods/Target Support Files/Pods-SuperShuriken/Pods-SuperShuriken.debug.xcconfig"; sourceTree = "<group>"; };
 		47C2856E36B2852627AA8E0A /* Pods-SuperShuriken.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SuperShuriken.release.xcconfig"; path = "Pods/Target Support Files/Pods-SuperShuriken/Pods-SuperShuriken.release.xcconfig"; sourceTree = "<group>"; };
+		C71E033A20430682001C61C2 /* MonsterNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonsterNode.swift; sourceTree = "<group>"; };
 		C7345C93200F5FB900A24A16 /* AdsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdsManager.swift; sourceTree = "<group>"; };
 		C737083A202213F20053F640 /* ProjectileNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectileNode.swift; sourceTree = "<group>"; };
 		C766D7F2200A392800648287 /* MainMenu.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = MainMenu.sks; sourceTree = "<group>"; };
@@ -94,6 +96,7 @@
 			children = (
 				0F735070200CBF5200EEFDD7 /* PlayerNode.swift */,
 				C737083A202213F20053F640 /* ProjectileNode.swift */,
+				C71E033A20430682001C61C2 /* MonsterNode.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -303,6 +306,7 @@
 				C796D2261F7AACAC00F770CF /* GameScene.swift in Sources */,
 				C7A4DF381FE6BD6C007DA58E /* ButtonNode.swift in Sources */,
 				0F73506A200CAE0500EEFDD7 /* GameOverScene.swift in Sources */,
+				C71E033B20430682001C61C2 /* MonsterNode.swift in Sources */,
 				C766D7F7200BC66400648287 /* CustomLabel.swift in Sources */,
 				C796D2281F7AACAC00F770CF /* GameViewController.swift in Sources */,
 				C7345C94200F5FB900A24A16 /* AdsManager.swift in Sources */,
