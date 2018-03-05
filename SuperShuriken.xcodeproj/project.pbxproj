@@ -31,6 +31,9 @@
 		C796D23B1F7AAFC400F770CF /* pew-pew-lei.caf in Resources */ = {isa = PBXBuildFile; fileRef = C796D2391F7AAFC400F770CF /* pew-pew-lei.caf */; };
 		C7A4DF381FE6BD6C007DA58E /* ButtonNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7A4DF371FE6BD6C007DA58E /* ButtonNode.swift */; };
 		C7D2DDC01FE5281E00A23537 /* MainMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7D2DDBF1FE5281E00A23537 /* MainMenu.swift */; };
+		C7DCF51F204D5F6600CB1903 /* Util.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7DCF51E204D5F6600CB1903 /* Util.swift */; };
+		C7DCF521204D624100CB1903 /* GameManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7DCF520204D624100CB1903 /* GameManager.swift */; };
+		C7DCF523204D629900CB1903 /* MonsterGoalNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7DCF522204D629900CB1903 /* MonsterGoalNode.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -61,6 +64,9 @@
 		C796D2391F7AAFC400F770CF /* pew-pew-lei.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "pew-pew-lei.caf"; sourceTree = "<group>"; };
 		C7A4DF371FE6BD6C007DA58E /* ButtonNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonNode.swift; sourceTree = "<group>"; };
 		C7D2DDBF1FE5281E00A23537 /* MainMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainMenu.swift; sourceTree = "<group>"; };
+		C7DCF51E204D5F6600CB1903 /* Util.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Util.swift; sourceTree = "<group>"; };
+		C7DCF520204D624100CB1903 /* GameManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameManager.swift; sourceTree = "<group>"; };
+		C7DCF522204D629900CB1903 /* MonsterGoalNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonsterGoalNode.swift; sourceTree = "<group>"; };
 		FFAE01823C307487EE0B93EF /* Pods_SuperShuriken.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SuperShuriken.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -97,6 +103,7 @@
 				0F735070200CBF5200EEFDD7 /* PlayerNode.swift */,
 				C737083A202213F20053F640 /* ProjectileNode.swift */,
 				C71E033A20430682001C61C2 /* MonsterNode.swift */,
+				C7DCF522204D629900CB1903 /* MonsterGoalNode.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -143,11 +150,10 @@
 				C796D21F1F7AACAC00F770CF /* AppDelegate.swift */,
 				0F73506E200CBEE100EEFDD7 /* Scenes */,
 				C796D2271F7AACAC00F770CF /* GameViewController.swift */,
-				C7345C93200F5FB900A24A16 /* AdsManager.swift */,
+				C7DCF51D204D5F3E00CB1903 /* Managers */,
 				C766D7F6200BC66400648287 /* CustomLabel.swift */,
 				C7A4DF371FE6BD6C007DA58E /* ButtonNode.swift */,
 				0F7350762010C1E600EEFDD7 /* LabelWithSwitchNode.swift */,
-				0F735074200CF24100EEFDD7 /* Global.swift */,
 				0F73506F200CBF2700EEFDD7 /* Models */,
 				C796D2291F7AACAC00F770CF /* Main.storyboard */,
 				C796D22C1F7AACAC00F770CF /* Assets.xcassets */,
@@ -164,6 +170,17 @@
 				C796D2391F7AAFC400F770CF /* pew-pew-lei.caf */,
 			);
 			path = Sounds;
+			sourceTree = "<group>";
+		};
+		C7DCF51D204D5F3E00CB1903 /* Managers */ = {
+			isa = PBXGroup;
+			children = (
+				0F735074200CF24100EEFDD7 /* Global.swift */,
+				C7DCF51E204D5F6600CB1903 /* Util.swift */,
+				C7345C93200F5FB900A24A16 /* AdsManager.swift */,
+				C7DCF520204D624100CB1903 /* GameManager.swift */,
+			);
+			path = Managers;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -301,15 +318,18 @@
 			buildActionMask = 2147483647;
 			files = (
 				0F7350772010C1E600EEFDD7 /* LabelWithSwitchNode.swift in Sources */,
+				C7DCF521204D624100CB1903 /* GameManager.swift in Sources */,
 				C7D2DDC01FE5281E00A23537 /* MainMenu.swift in Sources */,
 				C737083B202213F20053F640 /* ProjectileNode.swift in Sources */,
 				C796D2261F7AACAC00F770CF /* GameScene.swift in Sources */,
 				C7A4DF381FE6BD6C007DA58E /* ButtonNode.swift in Sources */,
 				0F73506A200CAE0500EEFDD7 /* GameOverScene.swift in Sources */,
 				C71E033B20430682001C61C2 /* MonsterNode.swift in Sources */,
+				C7DCF51F204D5F6600CB1903 /* Util.swift in Sources */,
 				C766D7F7200BC66400648287 /* CustomLabel.swift in Sources */,
 				C796D2281F7AACAC00F770CF /* GameViewController.swift in Sources */,
 				C7345C94200F5FB900A24A16 /* AdsManager.swift in Sources */,
+				C7DCF523204D629900CB1903 /* MonsterGoalNode.swift in Sources */,
 				0F735071200CBF5200EEFDD7 /* PlayerNode.swift in Sources */,
 				C766D7FB200BC74C00648287 /* SettingsScene.swift in Sources */,
 				0F735075200CF24100EEFDD7 /* Global.swift in Sources */,
@@ -460,7 +480,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				SWIFT_SWIFT3_OBJC_INFERENCE = On;
+				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
 				SWIFT_VERSION = 4.0;
 			};
 			name = Debug;
@@ -479,7 +499,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				SWIFT_SWIFT3_OBJC_INFERENCE = On;
+				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
 				SWIFT_VERSION = 4.0;
 			};
 			name = Release;

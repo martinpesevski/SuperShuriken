@@ -10,12 +10,24 @@ import UIKit
 import SpriteKit
 import GameplayKit
 
+enum MonsterType:Int {
+    case ghost = 0
+    case bigGhost
+
+    static var count: Int { return MonsterType.bigGhost.rawValue + 1}
+}
+
 class MonsterNode: SKSpriteNode {
     var startPoint = CGPoint()
+    var type: MonsterType!
+    
+    func setup(startPoint: CGPoint, type: MonsterType) {
+        self.type = type
 
-    func setup(startPoint: CGPoint) {
         self.startPoint = startPoint
         position = startPoint
+        let scaleFactor : CGFloat = type == MonsterType.ghost ? 2 : 3
+        scale(to: CGSize(width: size.width * scaleFactor, height: size.height * scaleFactor))
         
         physicsBody = SKPhysicsBody(rectangleOf: size)
         physicsBody?.isDynamic = true
