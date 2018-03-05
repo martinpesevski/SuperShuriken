@@ -11,16 +11,17 @@ import SpriteKit
 import GameplayKit
 
 enum MonsterType:Int {
-    case ghost = 0
-    case bigGhost
+    case ghost = 1
+    case bigGhost = 2
 
-    static var count: Int { return MonsterType.bigGhost.rawValue + 1}
+    static var count: Int { return 2}
 }
 
 class MonsterNode: SKSpriteNode {
     var startPoint = CGPoint()
     var type: MonsterType!
-    
+    var actualDuration: CGFloat!
+
     func setup(startPoint: CGPoint, type: MonsterType) {
         self.type = type
 
@@ -37,8 +38,6 @@ class MonsterNode: SKSpriteNode {
     }
     
     func playRunAnimation() {
-        let actualDuration = random(min: CGFloat(5.0), max: CGFloat(7.0))
-        
         let actionMove = SKAction.move(to: CGPoint(x: -100, y: startPoint.y), duration: TimeInterval(actualDuration))
         
         run(actionMove, withKey: "moveAction")

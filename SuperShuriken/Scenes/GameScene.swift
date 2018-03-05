@@ -9,22 +9,26 @@
 import SpriteKit
 import GameplayKit
 
-class GameScene: SKScene, SKPhysicsContactDelegate, adMobInterstitialDelegate {
+class GameScene: SKScene, SKPhysicsContactDelegate, adMobInterstitialDelegate, GameManagerDelegate {
     
     var player : PlayerNode!
-    var monstersDestroyed = 0
     var didWin = false
     
     var monsterSpawner = SKSpriteNode()
     var monsterGoal = MonsterGoalNode()
     var scoreLabel : SKLabelNode!
     
+    var gameManager = GameManager()
+    var monstersArray = [MonsterNode]()
+    
     override func didMove(to view: SKView) {
+        gameManager.delegate = self
+        
         backgroundColor = SKColor.white
         
         physicsWorld.gravity = CGVector.zero
         physicsWorld.contactDelegate = self
-        
+
         guard let spawnPoint = self.childNode(withName: "spawnPoint") as? SKSpriteNode else {
             return
         }
@@ -38,7 +42,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, adMobInterstitialDelegate {
         }
         
         scoreLabel = self.childNode(withName: "scoreLabel") as? SKLabelNode ?? SKLabelNode(text: "Score")
-        updateScore()
+        updateScoreLabel()
         
         player = PlayerNode.init(texture: SKTexture(imageNamed: "ic_ninja_stance"))
         player.setupWithNode(node: spawnPoint)
@@ -53,8 +57,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, adMobInterstitialDelegate {
         addChild(monsterSpawner)
         
         setupWalls()
-        
-        run(SKAction.repeatForever(SKAction.sequence([SKAction.run(addMonster), SKAction.wait(forDuration: TimeInterval(1.0))])))
+        startNextlevel()
         
         if Global.sharedInstance.isSoundOn {
             let backgroundMusic = SKAudioNode.init(fileNamed: "background-music-aac.caf")
@@ -83,6 +86,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate, adMobInterstitialDelegate {
         wallBottom.physicsBody?.collisionBitMask = PhysicsCategory.None
     }
     
+    func startNextlevel(){
+        run(SKAction.repeat(SKAction.sequence([SKAction.run(addMonster), SKAction.wait(forDuration: TimeInterval(1.0))]), count: gameManager.numberOfMonstersForCurrentLevel()))
+    }
+    
     func addMonster() {
         let monster = MonsterNode(imageNamed: "ic_monster")
 
@@ -91,19 +98,21 @@ class GameScene: SKScene, SKPhysicsContactDelegate, adMobInterstitialDelegate {
         
         let type = MonsterType(rawValue: Int(arc4random_uniform(UInt32(MonsterType.count)))) ?? MonsterType.ghost
         monster.setup(startPoint: CGPoint(x: size.width + monster.size.width/2, y: actualY), type: type)
+        monster.actualDuration = gameManager.monsterTimeToCrossScreen()
         
         addChild(monster)
+        monstersArray.append(monster)
         monster.playRunAnimation()
     }
     
     func projectileDidColideWithMonster (projectile: ProjectileNode, monster: MonsterNode) {
-        monstersDestroyed += 1
-        updateScore()
+        gameManager.updateScore(value: monster.type.rawValue)
+        updateScoreLabel()
         
-        if monstersDestroyed >= 30 {
-            endGame(didWin: true)
-        }
         projectile.removeFromParent()
+        if let index = monstersArray.index(of:monster) {
+            monstersArray.remove(at: index)
+        }
         monster.playDeathAnimation()
     }
     
@@ -116,8 +125,15 @@ class GameScene: SKScene, SKPhysicsContactDelegate, adMobInterstitialDelegate {
         endGame(didWin: false)
     }
     
-    func updateScore() {
-        scoreLabel.text = "Score: \(monstersDestroyed)"
+    func updateScoreLabel() {
+        scoreLabel.text = "Score: \(gameManager.score)"
+    }
+    
+    func levelFinished() {
+        gameManager.loadNextLevel()
+        run(SKAction.sequence([ SKAction.wait(forDuration: 5), SKAction.run({
+            self.startNextlevel()
+        })]))
     }
     
     func endGame(didWin: Bool) {
