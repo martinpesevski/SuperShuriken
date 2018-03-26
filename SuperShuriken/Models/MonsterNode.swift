@@ -14,7 +14,7 @@ enum MonsterType:Int {
     case ghost = 1
     case bigGhost = 2
 
-    static var count: Int { return 2}
+    static var count: Int { return 2 }
 }
 
 class MonsterNode: SKSpriteNode {

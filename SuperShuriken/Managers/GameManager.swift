@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SpriteKit
 
 protocol GameManagerDelegate {
     func levelFinished()
@@ -50,5 +51,14 @@ class GameManager: NSObject {
     
     func speedUpFactor() -> CGFloat {
         return level - 1 >= 10 ? 0.1 : CGFloat((10.0 - Double(level - 1)) / 10.0)
+    }
+    
+    func createNextLevelText() -> SKLabelNode {
+        let nextLevelTextNode = SKLabelNode(text: "Level \(level)")
+        nextLevelTextNode.fontName = "Chalkduster"
+        nextLevelTextNode.fontSize = 80;
+        nextLevelTextNode.color = UIColor.white
+        nextLevelTextNode.zPosition = 5
+        return nextLevelTextNode
     }
 }

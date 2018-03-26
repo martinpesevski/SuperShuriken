@@ -96,7 +96,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, adMobInterstitialDelegate, G
         let actualY = random(min: (monsterSpawner.frame.origin.y + monsterSpawner.size.height) - monster.size.height/2,
                              max: monsterSpawner.frame.origin.y + monster.size.height/2)
         
-        let type = MonsterType(rawValue: Int(arc4random_uniform(UInt32(MonsterType.count)))) ?? MonsterType.ghost
+        let type = MonsterType(rawValue: 1 + Int(arc4random_uniform(UInt32(MonsterType.count)))) ?? MonsterType.ghost
         monster.setup(startPoint: CGPoint(x: size.width + monster.size.width/2, y: actualY), type: type)
         monster.actualDuration = gameManager.monsterTimeToCrossScreen()
         
@@ -131,7 +131,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate, adMobInterstitialDelegate, G
     
     func levelFinished() {
         gameManager.loadNextLevel()
+        let nextlevelLabel = gameManager.createNextLevelText()
+        self.addChild(nextlevelLabel)
+        nextlevelLabel.position = CGPoint(x: frame.midX, y: frame.midY) 
         run(SKAction.sequence([ SKAction.wait(forDuration: 5), SKAction.run({
+            nextlevelLabel.removeFromParent()
             self.startNextlevel()
         })]))
     }

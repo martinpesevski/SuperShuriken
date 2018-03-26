@@ -148,8 +148,8 @@
 			children = (
 				C796D2371F7AAFC400F770CF /* Sounds */,
 				C796D21F1F7AACAC00F770CF /* AppDelegate.swift */,
-				0F73506E200CBEE100EEFDD7 /* Scenes */,
 				C796D2271F7AACAC00F770CF /* GameViewController.swift */,
+				0F73506E200CBEE100EEFDD7 /* Scenes */,
 				C7DCF51D204D5F3E00CB1903 /* Managers */,
 				C766D7F6200BC66400648287 /* CustomLabel.swift */,
 				C7A4DF371FE6BD6C007DA58E /* ButtonNode.swift */,
