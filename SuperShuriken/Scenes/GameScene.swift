@@ -21,6 +21,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate, adMobInterstitialDelegate, G
     var gameManager = GameManager()
     var monstersArray = [MonsterNode]()
     
+    var isMovingPlayer = false
+    private var activeTouches = [UITouch:String]()
+
     override func didMove(to view: SKView) {
         gameManager.delegate = self
         
@@ -105,6 +108,24 @@ class GameScene: SKScene, SKPhysicsContactDelegate, adMobInterstitialDelegate, G
         monster.playRunAnimation()
     }
     
+    func shootProjectile(location: CGPoint) {
+        player.texture = SKTexture.init(imageNamed: "ic_ninja_stance")
+        
+        let projectile = ProjectileNode(imageNamed: "ic_shuriken")
+        projectile.position = player.position
+        projectile.setup()
+        
+        let offset = location - projectile.position
+        
+        if offset.x < 0 {
+            return
+        }
+        
+        addChild(projectile)
+        let direction = offset.normalized()
+        projectile.shootWithDirection(direction: direction)
+    }
+    
     func projectileDidColideWithMonster (projectile: ProjectileNode, monster: MonsterNode) {
         gameManager.updateScore(value: monster.type.rawValue)
         updateScoreLabel()
@@ -160,33 +181,81 @@ class GameScene: SKScene, SKPhysicsContactDelegate, adMobInterstitialDelegate, G
     // MARK: touches
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        player.texture = SKTexture.init(imageNamed: "ic_ninja_throw")
+        for touch in touches {
+            let touchName = getTouchName(touch: touch)
+            activeTouches[touch] = touchName
+            tapBeginOn(touchName: touchName)
+        }
+    }
+    
+    override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
+        for touch in touches {
+            guard let touchName = activeTouches[touch] else {
+                fatalError("Touch just ended but not found into activeTouches")
+            }
+            
+            tapMovedOn(touchName: touchName, location: touch.location(in: self))
+        }
     }
     
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
-        guard let touch = touches.first else {
-            return
+        for touch in touches {
+            guard let touchName = activeTouches[touch] else {
+                fatalError("Touch just ended but not found into activeTouches")
+            }
+            
+            activeTouches[touch] = nil
+            tapEndedOn(touchName: touchName, location: touch.location(in: self))
         }
-        
-//        run(SKAction.playSoundFileNamed("pew-pew-lei.caf", waitForCompletion: false))
-        
+    }
+    
+    func getTouchName(touch: UITouch) -> String {
         let touchLocation = touch.location(in: self)
-        
-        player.texture = SKTexture.init(imageNamed: "ic_ninja_stance")
-        
-        let projectile = ProjectileNode(imageNamed: "ic_shuriken")
-        projectile.position = player.position
-        projectile.setup()
-        
-        let offset = touchLocation - projectile.position
-        
-        if offset.x < 0 {
-            return
+        if touchLocation.x < frame.width/10 {
+            return "movePlayer"
+        } else {
+            return "shoot"
         }
-        
-        addChild(projectile)
-        let direction = offset.normalized()
-        projectile.shootWithDirection(direction: direction)
+    }
+    
+    func tapBeginOn(touchName: String) {
+        switch touchName {
+        case "movePlayer":
+            isMovingPlayer = true
+            break
+        case "shoot":
+            player.texture = SKTexture.init(imageNamed: "ic_ninja_throw")
+            break
+        default:
+            break
+        }
+    }
+    
+    func tapMovedOn(touchName: String, location: CGPoint) {
+        switch touchName {
+        case "movePlayer":
+            if isMovingPlayer {
+                player.position.y = min(location.y, monsterSpawner.frame.maxY);
+            }
+            break
+        case "shoot":
+            break
+        default:
+            break
+        }
+    }
+    
+    func tapEndedOn(touchName: String, location: CGPoint) {
+        switch touchName {
+        case "movePlayer":
+            isMovingPlayer = false
+            break
+        case "shoot":
+            shootProjectile(location: location)
+            break
+        default:
+            break
+        }
     }
     
     // MARK: Physics
