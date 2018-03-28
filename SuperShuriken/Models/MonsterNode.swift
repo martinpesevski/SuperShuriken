@@ -24,10 +24,13 @@ class MonsterNode: SKSpriteNode {
     var startPoint = CGPoint()
     var type: MonsterType!
     var actualDuration: CGFloat!
-
+    var hitPoints: Int = 1
+    
     func setup(startPoint: CGPoint, type: MonsterType) {
         self.type = type
 
+        hitPoints = getNumberOfHits(monsterType: type)
+        
         self.startPoint = startPoint
         position = startPoint
         let scaleFactor = getScaleFactor(monsterType: type)
@@ -80,6 +83,13 @@ class MonsterNode: SKSpriteNode {
         return SKAction.repeatForever(SKAction.sequence([shootAction, SKAction.wait(forDuration: TimeInterval(shotFrequency))]) )
     }
     
+    // reduces the hitpoints of the monster and returns boolean indicating if it is dead or not
+    func hitAndCheckDead() -> Bool{
+        hitPoints -= 1
+        
+        return hitPoints == 0
+    }
+    
     func playDeathAnimation() {
         removeAction(forKey: "moveAction")
         physicsBody?.contactTestBitMask = PhysicsCategory.None
@@ -89,6 +99,13 @@ class MonsterNode: SKSpriteNode {
         let rotateFade = SKAction.group([rotateAction, fadeAction])
         let destroyAction = SKAction.removeFromParent()
         run(SKAction.sequence([rotateFade, destroyAction]))
+    }
+    
+    func playHitAnimation(){
+        let flashWhite = SKAction.fadeAlpha(to: 0.5, duration: 0.1)
+        let removeFlash = SKAction.fadeAlpha(to: 1, duration: 0.1)
+
+        run(SKAction.sequence([flashWhite, removeFlash]))
     }
     
     func getScaleFactor(monsterType: MonsterType) -> CGFloat {
@@ -105,5 +122,21 @@ class MonsterNode: SKSpriteNode {
         }
         
         return scaleFactor
+    }
+    
+    func getNumberOfHits(monsterType: MonsterType) -> Int {
+        let numberOfHits : Int
+        switch type {
+        case .ghost:
+            numberOfHits = 1
+        case .bigGhost:
+            numberOfHits = 2
+        case .boss:
+            numberOfHits = 5
+        default:
+            numberOfHits = 1
+        }
+        
+        return numberOfHits
     }
 }

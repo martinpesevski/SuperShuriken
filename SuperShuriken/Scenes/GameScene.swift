@@ -134,14 +134,21 @@ class GameScene: SKScene, SKPhysicsContactDelegate, adMobInterstitialDelegate, G
     }
     
     func projectileDidColideWithMonster (projectile: ProjectileNode, monster: MonsterNode) {
-        gameManager.updateScore(value: monster.type.rawValue)
-        updateScoreLabel()
-        
         projectile.removeFromParent()
-        if let index = monstersArray.index(of:monster) {
-            monstersArray.remove(at: index)
+
+        if monster.hitAndCheckDead() {
+            gameManager.updateScore(value: monster.type.rawValue)
+            updateScoreLabel()
+            
+            if let index = monstersArray.index(of:monster) {
+                monstersArray.remove(at: index)
+            }
+            monster.playDeathAnimation()
+        } else {
+
+            monster.playHitAnimation()
         }
-        monster.playDeathAnimation()
+        
     }
     
     func projectileDidColideWithProjectile(projectile1: ProjectileNode, projectile2: ProjectileNode) {
