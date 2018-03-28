@@ -9,16 +9,21 @@
 import UIKit
 import SpriteKit
 
+enum ProjectileType {
+    case friendly
+    case enemy
+}
+
 class ProjectileNode: SKSpriteNode {
     var destination : CGPoint = CGPoint.zero
     let distance : CGFloat = 2000
     
-    func setup() {
+    func setup(type: ProjectileType) {
         size = CGSize.init(width: 50, height: 50)
         physicsBody = SKPhysicsBody(circleOfRadius: size.width/2)
         physicsBody?.isDynamic = true
-        physicsBody?.categoryBitMask = PhysicsCategory.Projectile
-        physicsBody?.contactTestBitMask = PhysicsCategory.Monster | PhysicsCategory.Wall
+        physicsBody?.categoryBitMask = type == .friendly ? PhysicsCategory.Projectile : PhysicsCategory.EnemyProjectile
+        physicsBody?.contactTestBitMask = type == .friendly ? PhysicsCategory.Monster | PhysicsCategory.Wall : PhysicsCategory.Player
         physicsBody?.collisionBitMask = PhysicsCategory.None
         physicsBody?.usesPreciseCollisionDetection = true
     }

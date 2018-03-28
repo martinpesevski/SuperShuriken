@@ -49,6 +49,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, adMobInterstitialDelegate, G
         
         player = PlayerNode.init(texture: SKTexture(imageNamed: "ic_ninja_stance"))
         player.setupWithNode(node: spawnPoint)
+        player.setup()
         
         monsterGoal.setupWithNode(node: monsterGoalPlaceholder)
         monsterGoal.setup()
@@ -99,13 +100,19 @@ class GameScene: SKScene, SKPhysicsContactDelegate, adMobInterstitialDelegate, G
         let actualY = random(min: (monsterSpawner.frame.origin.y + monsterSpawner.size.height) - monster.size.height/2,
                              max: monsterSpawner.frame.origin.y + monster.size.height/2)
         
-        let type = MonsterType(rawValue: 1 + Int(arc4random_uniform(UInt32(MonsterType.count)))) ?? MonsterType.ghost
+        let type : MonsterType
+        if gameManager.isBossLevel {
+            type = MonsterType.boss
+        } else {
+            type = MonsterType(rawValue: 1 + Int(arc4random_uniform(UInt32(MonsterType.count)))) ?? MonsterType.ghost
+        }
+        
         monster.setup(startPoint: CGPoint(x: size.width + monster.size.width/2, y: actualY), type: type)
         monster.actualDuration = gameManager.monsterTimeToCrossScreen()
         
         addChild(monster)
         monstersArray.append(monster)
-        monster.playRunAnimation()
+        gameManager.isBossLevel ? monster.playBossAnimation() : monster.playRunAnimation()
     }
     
     func shootProjectile(location: CGPoint) {
@@ -113,7 +120,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, adMobInterstitialDelegate, G
         
         let projectile = ProjectileNode(imageNamed: "ic_shuriken")
         projectile.position = player.position
-        projectile.setup()
+        projectile.setup(type: .friendly)
         
         let offset = location - projectile.position
         
@@ -135,6 +142,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate, adMobInterstitialDelegate, G
             monstersArray.remove(at: index)
         }
         monster.playDeathAnimation()
+    }
+    
+    func projectileDidColideWithProjectile(projectile1: ProjectileNode, projectile2: ProjectileNode) {
+        projectile1.removeFromParent()
+        projectile2.removeFromParent()
     }
     
     func projectileDidColideWithWall(projectile: ProjectileNode, wall: SKSpriteNode) {
@@ -287,8 +299,14 @@ class GameScene: SKScene, SKPhysicsContactDelegate, adMobInterstitialDelegate, G
             if let monster = firstBody.node as? MonsterNode, let goal = secondBody.node as? MonsterGoalNode {
                 monsterDidReachGoal(monster: monster, goal: goal)
             }
-        } else {
-            
+        } else if (firstBody.categoryBitMask == PhysicsCategory.EnemyProjectile) &&
+            (secondBody.categoryBitMask == PhysicsCategory.Player){
+            endGame(didWin: false)
+        } else if (firstBody.categoryBitMask == PhysicsCategory.Projectile) &&
+            (secondBody.categoryBitMask == PhysicsCategory.EnemyProjectile){
+            if let projectile1 = firstBody.node as? ProjectileNode, let projectile2 = secondBody.node as? ProjectileNode {
+                projectileDidColideWithProjectile(projectile1: projectile1, projectile2: projectile2)
+            }
         }
     }
     

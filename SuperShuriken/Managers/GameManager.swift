@@ -15,6 +15,7 @@ protocol GameManagerDelegate {
 
 let startSpeed : (min:CGFloat, max:CGFloat) = (5.0, 7.0)
 let enemyLevelMultiplier = 5
+let bossLevelMultiplier = 2
 
 class GameManager: NSObject {
     
@@ -22,6 +23,7 @@ class GameManager: NSObject {
     var monstersForCurrentLevel = 0
     var score = 0
     var level = 1
+    var isBossLevel = false
     
     func restart() {
         score = 0
@@ -38,6 +40,7 @@ class GameManager: NSObject {
     
     func loadNextLevel() {
         level += 1
+        isBossLevel = level % bossLevelMultiplier == 0 
         monstersForCurrentLevel = 0
     }
     
@@ -46,7 +49,11 @@ class GameManager: NSObject {
     }
     
     func numberOfMonstersForCurrentLevel() -> Int {
-        return level  * enemyLevelMultiplier
+        if level % bossLevelMultiplier == 0 {
+            return 1
+        } else {
+            return level  * enemyLevelMultiplier
+        }
     }
     
     func speedUpFactor() -> CGFloat {
