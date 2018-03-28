@@ -272,18 +272,18 @@ class GameScene: SKScene, SKPhysicsContactDelegate, adMobInterstitialDelegate, G
             secondBody = contact.bodyA
         }
         
-        if (firstBody.categoryBitMask & PhysicsCategory.Monster != 0) &&
-            (secondBody.categoryBitMask & PhysicsCategory.Projectile != 0) {
+        if (firstBody.categoryBitMask == PhysicsCategory.Monster) &&
+            (secondBody.categoryBitMask == PhysicsCategory.Projectile) {
             if let monster = firstBody.node as? MonsterNode, let projectile = secondBody.node as? ProjectileNode {
                 projectileDidColideWithMonster(projectile: projectile, monster: monster)
             }
-        } else if (firstBody.categoryBitMask & PhysicsCategory.Wall != 0) &&
-            (secondBody.categoryBitMask & PhysicsCategory.Projectile != 0) {
+        } else if (firstBody.categoryBitMask == PhysicsCategory.Wall) &&
+            (secondBody.categoryBitMask == PhysicsCategory.Projectile) {
             if let wall = firstBody.node as? SKSpriteNode, let projectile = secondBody.node as? ProjectileNode {
                 projectileDidColideWithWall(projectile: projectile, wall: wall)
             }
-        } else if (firstBody.categoryBitMask & PhysicsCategory.Monster != 0) &&
-            (secondBody.categoryBitMask & PhysicsCategory.Goal != 0) {
+        } else if (firstBody.categoryBitMask == PhysicsCategory.Monster) &&
+            (secondBody.categoryBitMask == PhysicsCategory.Goal) {
             if let monster = firstBody.node as? MonsterNode, let goal = secondBody.node as? MonsterGoalNode {
                 monsterDidReachGoal(monster: monster, goal: goal)
             }
