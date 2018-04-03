@@ -64,21 +64,12 @@ class GameManager: NSObject {
         return level - 1 >= 10 ? 0.1 : CGFloat((10.0 - Double(level - 1)) / 10.0)
     }
     
-    func createNextLevelText() -> SKLabelNode {
-        let nextLevelTextNode = SKLabelNode(text: "Level \(level)")
+    func createLabel(text: String, size: CGFloat) -> SKLabelNode {
+        let nextLevelTextNode = SKLabelNode(text: text)
         nextLevelTextNode.fontName = "Chalkduster"
-        nextLevelTextNode.fontSize = 80;
+        nextLevelTextNode.fontSize = size;
         nextLevelTextNode.color = UIColor.white
         nextLevelTextNode.zPosition = 5
         return nextLevelTextNode
-    }
-    
-    func createGameOverText() -> SKLabelNode {
-        let gameOverTextNode = SKLabelNode(text: "YOU LOST :(")
-        gameOverTextNode.fontName = "Chalkduster"
-        gameOverTextNode.fontSize = 80;
-        gameOverTextNode.color = UIColor.white
-        gameOverTextNode.zPosition = 5
-        return gameOverTextNode
     }
 }

@@ -21,6 +21,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, adMobInterstitialDelegate, G
     var scoreLabel : SKLabelNode!
     var gameOverLabel : SKLabelNode!
     var nextLevelLabel : SKLabelNode!
+    var tapToRetryLabel : SKLabelNode!
     
     var gameManager = GameManager()
     var monstersArray = [MonsterNode]()
@@ -54,8 +55,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate, adMobInterstitialDelegate, G
             return
         }
         
-        gameOverLabel = gameManager.createGameOverText()
-        nextLevelLabel = gameManager.createNextLevelText()
+        gameOverLabel = gameManager.createLabel(text: "YOU LOST :(", size: 80)
+        nextLevelLabel = gameManager.createLabel(text: "GET READY FOR NEXT LEVEL", size: 80)
+        tapToRetryLabel = gameManager.createLabel(text: "Tap to retry", size: 40)
 
         scoreLabel = self.childNode(withName: "scoreLabel") as? SKLabelNode ?? SKLabelNode(text: "Score")
         updateScoreLabel()
@@ -113,6 +115,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate, adMobInterstitialDelegate, G
     }
     
     func startNextlevel(){
+        if gameManager.isGameFinished {
+            return
+        }
+        
         run(SKAction.repeat(SKAction.sequence([SKAction.run(addMonster), SKAction.wait(forDuration: TimeInterval(1.0))]), count: gameManager.numberOfMonstersForCurrentLevel()))
     }
     
@@ -162,7 +168,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, adMobInterstitialDelegate, G
     
     func levelFinished() {
         gameManager.loadNextLevel()
-        self.addChild(nextLevelLabel)
+        if nextLevelLabel.parent == nil { self.addChild(nextLevelLabel) }
         nextLevelLabel.position = CGPoint(x: frame.midX, y: frame.midY)
         run(SKAction.sequence([ SKAction.wait(forDuration: 5), SKAction.run({
             self.nextLevelLabel.removeFromParent()
@@ -173,8 +179,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate, adMobInterstitialDelegate, G
     func endGame(didWin: Bool) {
         self.didWin = didWin
         scene?.view?.isPaused = true
-        self.addChild(gameOverLabel)
+        
+        if gameOverLabel.parent == nil { self.addChild(gameOverLabel) }
+        if tapToRetryLabel.parent == nil { self.addChild(tapToRetryLabel) }
+        
         gameOverLabel.position = CGPoint(x: frame.midX, y: frame.midY)
+        tapToRetryLabel.position = CGPoint(x: frame.midX, y: frame.midY/2)
+        
         gameManager.isGameFinished = true;
         AdsManager.sharedInstance.showInterstitial()
     }
@@ -182,6 +193,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate, adMobInterstitialDelegate, G
     func restart() {
         gameManager.restart()
         gameOverLabel.removeFromParent()
+        tapToRetryLabel.removeFromParent()
+        updateScoreLabel()
         startNextlevel()
     }
     
@@ -210,11 +223,18 @@ class GameScene: SKScene, SKPhysicsContactDelegate, adMobInterstitialDelegate, G
         playerProjectilesArray = playerProjectilesArray.filter{$0 != projectile}
         
         if monster.hitAndCheckDead() {
-            gameManager.updateScore(value: monster.type.rawValue)
-            updateScoreLabel()
-            
             monstersArray = monstersArray.filter{$0 != monster}
             monster.playDeathAnimation()
+            
+            if gameManager.isBossLevel {
+                for projectile in enemyProjectilesArray {
+                    projectile.removeFromParent()
+                }
+                enemyProjectilesArray.removeAll()
+            }
+            
+            gameManager.updateScore(value: monster.type.rawValue)
+            updateScoreLabel()
         } else {
             monster.playHitAnimation()
         }
