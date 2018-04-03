@@ -9,17 +9,22 @@
 import SpriteKit
 import GameplayKit
 
-class GameScene: SKScene, SKPhysicsContactDelegate, adMobInterstitialDelegate, GameManagerDelegate {
+class GameScene: SKScene, SKPhysicsContactDelegate, adMobInterstitialDelegate, GameManagerDelegate, MonsterDelegate {
     
     var player : PlayerNode!
     var didWin = false
     
     var monsterSpawner = SKSpriteNode()
     var monsterGoal = MonsterGoalNode()
+    
     var scoreLabel : SKLabelNode!
+    var gameOverLabel : SKLabelNode!
+    var nextLevelLabel : SKLabelNode!
     
     var gameManager = GameManager()
     var monstersArray = [MonsterNode]()
+    var playerProjectilesArray = [ProjectileNode]()
+    var enemyProjectilesArray = [ProjectileNode]()
     
     var isMovingPlayer = false
     private var activeTouches = [UITouch:String]()
@@ -44,12 +49,16 @@ class GameScene: SKScene, SKPhysicsContactDelegate, adMobInterstitialDelegate, G
             return
         }
         
+        gameOverLabel = gameManager.createGameOverText()
+        nextLevelLabel = gameManager.createNextLevelText()
+
         scoreLabel = self.childNode(withName: "scoreLabel") as? SKLabelNode ?? SKLabelNode(text: "Score")
         updateScoreLabel()
         
         player = PlayerNode.init(texture: SKTexture(imageNamed: "ic_ninja_stance"))
         player.setupWithNode(node: spawnPoint)
         player.setup()
+        player.playWalkingAnimation()
         
         monsterGoal.setupWithNode(node: monsterGoalPlaceholder)
         monsterGoal.setup()
@@ -96,7 +105,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate, adMobInterstitialDelegate, G
     
     func addMonster() {
         let monster = MonsterNode(imageNamed: "ic_monster")
-
         let actualY = random(min: (monsterSpawner.frame.origin.y + monsterSpawner.size.height) - monster.size.height/2,
                              max: monsterSpawner.frame.origin.y + monster.size.height/2)
         
@@ -109,6 +117,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, adMobInterstitialDelegate, G
         
         monster.setup(startPoint: CGPoint(x: size.width + monster.size.width/2, y: actualY), type: type)
         monster.actualDuration = gameManager.monsterTimeToCrossScreen()
+        monster.monsterDelegate = self
         
         addChild(monster)
         monstersArray.append(monster)
@@ -129,40 +138,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate, adMobInterstitialDelegate, G
         }
         
         addChild(projectile)
+        playerProjectilesArray.append(projectile)
         let direction = offset.normalized()
         projectile.shootWithDirection(direction: direction)
-    }
-    
-    func projectileDidColideWithMonster (projectile: ProjectileNode, monster: MonsterNode) {
-        projectile.removeFromParent()
-
-        if monster.hitAndCheckDead() {
-            gameManager.updateScore(value: monster.type.rawValue)
-            updateScoreLabel()
-            
-            if let index = monstersArray.index(of:monster) {
-                monstersArray.remove(at: index)
-            }
-            monster.playDeathAnimation()
-        } else {
-
-            monster.playHitAnimation()
-        }
-        
-    }
-    
-    func projectileDidColideWithProjectile(projectile1: ProjectileNode, projectile2: ProjectileNode) {
-        projectile1.removeFromParent()
-        projectile2.removeFromParent()
-    }
-    
-    func projectileDidColideWithWall(projectile: ProjectileNode, wall: SKSpriteNode) {
-
-    }
-    
-    func monsterDidReachGoal(monster: MonsterNode, goal: MonsterGoalNode) {
-        monster.removeFromParent()
-        endGame(didWin: false)
     }
     
     func updateScoreLabel() {
@@ -171,11 +149,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate, adMobInterstitialDelegate, G
     
     func levelFinished() {
         gameManager.loadNextLevel()
-        let nextlevelLabel = gameManager.createNextLevelText()
-        self.addChild(nextlevelLabel)
-        nextlevelLabel.position = CGPoint(x: frame.midX, y: frame.midY) 
+        self.addChild(nextLevelLabel)
+        nextLevelLabel.position = CGPoint(x: frame.midX, y: frame.midY)
         run(SKAction.sequence([ SKAction.wait(forDuration: 5), SKAction.run({
-            nextlevelLabel.removeFromParent()
+            self.nextLevelLabel.removeFromParent()
             self.startNextlevel()
         })]))
     }
@@ -183,23 +160,80 @@ class GameScene: SKScene, SKPhysicsContactDelegate, adMobInterstitialDelegate, G
     func endGame(didWin: Bool) {
         self.didWin = didWin
         scene?.view?.isPaused = true
+        self.addChild(gameOverLabel)
+        gameOverLabel.position = CGPoint(x: frame.midX, y: frame.midY)
+        gameManager.isGameFinished = true;
         AdsManager.sharedInstance.showInterstitial()
+    }
+    
+    func restart() {
+        gameManager.restart()
+        gameOverLabel.removeFromParent()
+        startNextlevel()
     }
     
     func showGameOverScreen() {
         scene?.view?.isPaused = false
-        let reveal = SKTransition.flipHorizontal(withDuration: 1)
-        if let gameWonScene = GameOverScene(fileNamed: "GameOverScene") {
-            gameWonScene.scaleMode = .aspectFit
-            gameWonScene.setup(didWin: didWin)
-            
-            self.view?.presentScene(gameWonScene, transition: reveal)
+        
+        for monster in monstersArray {
+            monster.removeFromParent()
         }
+        monstersArray.removeAll()
+        
+        for projectile in playerProjectilesArray {
+            projectile.removeFromParent()
+        }
+        playerProjectilesArray.removeAll()
+        for projectile in enemyProjectilesArray {
+            projectile.removeFromParent()
+        }
+        enemyProjectilesArray.removeAll()
+    }
+        
+    //MARK: collisions
+    
+    func projectileDidColideWithMonster (projectile: ProjectileNode, monster: MonsterNode) {
+        projectile.removeFromParent()
+        playerProjectilesArray = playerProjectilesArray.filter{$0 != projectile}
+        
+        if monster.hitAndCheckDead() {
+            gameManager.updateScore(value: monster.type.rawValue)
+            updateScoreLabel()
+            
+            monstersArray = monstersArray.filter{$0 != monster}
+            monster.playDeathAnimation()
+        } else {
+            monster.playHitAnimation()
+        }
+    }
+    
+    func projectileDidColideWithProjectile(projectile1: ProjectileNode, projectile2: ProjectileNode) {
+        projectile1.removeFromParent()
+        playerProjectilesArray = playerProjectilesArray.filter{$0 != projectile1}
+        
+        projectile2.removeFromParent()
+        enemyProjectilesArray = enemyProjectilesArray.filter{$0 != projectile2}
+    }
+    
+    func projectileDidColideWithWall(projectile: ProjectileNode, wall: SKSpriteNode) {
+
+    }
+    
+    func monsterDidReachGoal(monster: MonsterNode, goal: MonsterGoalNode) {
+        monster.removeFromParent()
+        monstersArray = monstersArray.filter{$0 != monster}
+
+        endGame(didWin: false)
     }
     
     // MARK: touches
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        if gameManager.isGameFinished {
+            restart()
+            return
+        }
+        
         for touch in touches {
             let touchName = getTouchName(touch: touch)
             activeTouches[touch] = touchName
@@ -210,7 +244,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, adMobInterstitialDelegate, G
     override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
         for touch in touches {
             guard let touchName = activeTouches[touch] else {
-                fatalError("Touch just ended but not found into activeTouches")
+                return
             }
             
             tapMovedOn(touchName: touchName, location: touch.location(in: self))
@@ -220,7 +254,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, adMobInterstitialDelegate, G
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         for touch in touches {
             guard let touchName = activeTouches[touch] else {
-                fatalError("Touch just ended but not found into activeTouches")
+                return
             }
             
             activeTouches[touch] = nil
@@ -317,7 +351,15 @@ class GameScene: SKScene, SKPhysicsContactDelegate, adMobInterstitialDelegate, G
         }
     }
     
+    //MARK: admob delegate
+    
     func didHideInterstitial() {
         showGameOverScreen()
+    }
+    
+    //MARK: monster delegate
+    
+    func monsterDidShoot(projectile: ProjectileNode) {
+        enemyProjectilesArray.append(projectile)
     }
 }

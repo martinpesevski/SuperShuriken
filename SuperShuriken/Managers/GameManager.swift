@@ -24,10 +24,14 @@ class GameManager: NSObject {
     var score = 0
     var level = 1
     var isBossLevel = false
-    
+    var isGameFinished = false
+
     func restart() {
         score = 0
         level = 1
+        monstersForCurrentLevel = 0
+        isBossLevel = false
+        isGameFinished = false
     }
 
     func updateScore(value: Int) {
@@ -67,5 +71,14 @@ class GameManager: NSObject {
         nextLevelTextNode.color = UIColor.white
         nextLevelTextNode.zPosition = 5
         return nextLevelTextNode
+    }
+    
+    func createGameOverText() -> SKLabelNode {
+        let gameOverTextNode = SKLabelNode(text: "YOU LOST :(")
+        gameOverTextNode.fontName = "Chalkduster"
+        gameOverTextNode.fontSize = 80;
+        gameOverTextNode.color = UIColor.white
+        gameOverTextNode.zPosition = 5
+        return gameOverTextNode
     }
 }

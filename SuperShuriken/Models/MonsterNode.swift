@@ -10,6 +10,10 @@ import UIKit
 import SpriteKit
 import GameplayKit
 
+protocol MonsterDelegate {
+    func monsterDidShoot(projectile: ProjectileNode)
+}
+
 enum MonsterType:Int {
     case ghost = 1
     case bigGhost = 2
@@ -25,6 +29,7 @@ class MonsterNode: SKSpriteNode {
     var type: MonsterType!
     var actualDuration: CGFloat!
     var hitPoints: Int = 1
+    var monsterDelegate: MonsterDelegate?
     
     func setup(startPoint: CGPoint, type: MonsterType) {
         self.type = type
@@ -76,6 +81,7 @@ class MonsterNode: SKSpriteNode {
                 return
             }
             scene.addChild(projectile)
+            self.monsterDelegate?.monsterDidShoot(projectile: projectile)
             let direction = offset.normalized()
             projectile.shootWithDirection(direction: direction)
         }
