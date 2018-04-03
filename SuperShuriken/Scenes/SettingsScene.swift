@@ -25,7 +25,7 @@ class SettingsScene : SKScene, switchNodeDelegate {
                                      selectedTexture: SKTexture.init(imageNamed: "ic_buttonClicked"),
                                      disabledTexture: nil)
         menuButton.setupWithNode(node: menuPlaceholder)
-        menuButton.setButtonAction(target: self, triggerEvent: .TouchUp, action: #selector(onMenuTap))
+        menuButton.setButtonAction(target: self, triggerEvent: .TouchUpInside, action: #selector(onMenuTap))
         menuButton.setButtonLabel(title: "menu", font: "Chalkduster", fontSize: 20)
         menuButton.zPosition = 2
         

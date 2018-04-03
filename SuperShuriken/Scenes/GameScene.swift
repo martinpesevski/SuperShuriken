@@ -11,6 +11,7 @@ import GameplayKit
 
 class GameScene: SKScene, SKPhysicsContactDelegate, adMobInterstitialDelegate, GameManagerDelegate, MonsterDelegate {
     
+    var menuButton: ButtonNode!
     var player : PlayerNode!
     var didWin = false
     
@@ -49,11 +50,22 @@ class GameScene: SKScene, SKPhysicsContactDelegate, adMobInterstitialDelegate, G
             return
         }
         
+        guard let menuButtonPlaceholder = self.childNode(withName: "menuButton") as? SKSpriteNode else {
+            return
+        }
+        
         gameOverLabel = gameManager.createGameOverText()
         nextLevelLabel = gameManager.createNextLevelText()
 
         scoreLabel = self.childNode(withName: "scoreLabel") as? SKLabelNode ?? SKLabelNode(text: "Score")
         updateScoreLabel()
+        
+        menuButton = ButtonNode.init(normalTexture: SKTexture.init(imageNamed: "ic_button"),
+                                                  selectedTexture: SKTexture.init(imageNamed: "ic_buttonClicked"),
+                                                  disabledTexture: nil)
+        menuButton.setupWithNode(node: menuButtonPlaceholder)
+        menuButton.setButtonAction(target: self, triggerEvent: .TouchUpInside, action: #selector(onMenuTap))
+        menuButton.setButtonLabel(title: "MENU", font: "Chalkduster", fontSize: 40)
         
         player = PlayerNode.init(texture: SKTexture(imageNamed: "ic_ninja_stance"))
         player.setupWithNode(node: spawnPoint)
@@ -68,7 +80,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate, adMobInterstitialDelegate, G
         addChild(player)
         addChild(monsterGoal)
         addChild(monsterSpawner)
-        
+        addChild(menuButton)
+
         setupWalls()
         startNextlevel()
         
@@ -233,7 +246,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, adMobInterstitialDelegate, G
             restart()
             return
         }
-        
+
         for touch in touches {
             let touchName = getTouchName(touch: touch)
             activeTouches[touch] = touchName
@@ -308,6 +321,16 @@ class GameScene: SKScene, SKPhysicsContactDelegate, adMobInterstitialDelegate, G
             break
         default:
             break
+        }
+    }
+    
+    @objc func onMenuTap(){
+        gameManager.isGameFinished = true
+        let reveal = SKTransition.flipHorizontal(withDuration: 1)
+        if let scene = MainMenu(fileNamed: "MainMenu") {
+            scene.initialize()
+            
+            self.view?.presentScene(scene, transition: reveal)
         }
     }
     

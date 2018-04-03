@@ -30,7 +30,7 @@ class MainMenu: SKScene {
                                          selectedTexture: buttonClickedTexture,
                                          disabledTexture: nil)
         playButtonNode.setupWithNode(node: playPlaceholder)
-        playButtonNode.setButtonAction(target: self, triggerEvent: .TouchUp, action: #selector(onPlayTap))
+        playButtonNode.setButtonAction(target: self, triggerEvent: .TouchUpInside, action: #selector(onPlayTap))
         playButtonNode.setButtonLabel(title: "Play", font: "Chalkduster", fontSize: 20.0)
         playButtonNode.name = "playButton"
         self.addChild(playButtonNode)
@@ -43,7 +43,7 @@ class MainMenu: SKScene {
                                          selectedTexture: buttonClickedTexture,
                                          disabledTexture: nil)
         settingsButtonNode.setupWithNode(node: settingsPlaceholder)
-        settingsButtonNode.setButtonAction(target: self, triggerEvent: .TouchUp, action: #selector(onSettingsTap))
+        settingsButtonNode.setButtonAction(target: self, triggerEvent: .TouchUpInside, action: #selector(onSettingsTap))
         settingsButtonNode.setButtonLabel(title: "Settings", font: "Chalkduster", fontSize: 20.0)
         settingsButtonNode.name = "settingsButton"
         self.addChild(settingsButtonNode)
