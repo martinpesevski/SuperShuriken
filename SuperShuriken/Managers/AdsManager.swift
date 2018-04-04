@@ -69,7 +69,7 @@ class AdsManager: NSObject, GADBannerViewDelegate, GADInterstitialDelegate{
         super.init()
         
         let appDelegate  = UIApplication.shared.delegate as! AppDelegate
-        rootViewController = appDelegate.window!.rootViewController as UIViewController!
+        rootViewController = appDelegate.window!.rootViewController as UIViewController? ?? UIViewController()
     }
     
     func addBannerViewToView(_ bannerView: GADBannerView) {

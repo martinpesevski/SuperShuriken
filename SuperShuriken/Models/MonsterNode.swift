@@ -71,7 +71,7 @@ class MonsterNode: SKSpriteNode {
     
     func startBossShooting() -> SKAction{
         let shootAction = SKAction.run {
-            let projectile = ProjectileNode(imageNamed: "ic_shuriken")
+            let projectile = ProjectileNode(imageNamed: "ic_shuriken1")
             projectile.position = self.position
             projectile.setup(type: .enemy)
             

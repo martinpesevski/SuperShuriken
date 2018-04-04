@@ -69,10 +69,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate, adMobInterstitialDelegate, G
         menuButton.setButtonAction(target: self, triggerEvent: .TouchUpInside, action: #selector(onMenuTap))
         menuButton.setButtonLabel(title: "MENU", font: "Chalkduster", fontSize: 40)
         
-        player = PlayerNode.init(texture: SKTexture(imageNamed: "ic_ninja_stance"))
+        player = PlayerNode(imageNamed: "ic_player")
         player.setupWithNode(node: spawnPoint)
         player.setup()
-        player.playWalkingAnimation()
         
         monsterGoal.setupWithNode(node: monsterGoalPlaceholder)
         monsterGoal.setup()
@@ -144,7 +143,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, adMobInterstitialDelegate, G
     }
     
     func shootProjectile(location: CGPoint) {
-        player.texture = SKTexture.init(imageNamed: "ic_ninja_stance")
+        player.playAnimation(type: .Shoot)
         
         let projectile = ProjectileNode(imageNamed: "ic_shuriken")
         projectile.position = player.position
@@ -196,6 +195,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, adMobInterstitialDelegate, G
         tapToRetryLabel.removeFromParent()
         updateScoreLabel()
         startNextlevel()
+        player.texture = SKTexture.init(imageNamed: "ic_player")
     }
     
     func showGameOverScreen() {
@@ -246,6 +246,15 @@ class GameScene: SKScene, SKPhysicsContactDelegate, adMobInterstitialDelegate, G
         
         projectile2.removeFromParent()
         enemyProjectilesArray = enemyProjectilesArray.filter{$0 != projectile2}
+    }
+    
+    func enemyProjectileHitPlayer(projectile: ProjectileNode, player: PlayerNode) {
+        projectile.removeFromParent()
+        enemyProjectilesArray = enemyProjectilesArray.filter{$0 != projectile}
+
+        player.stopAnimation(type: .Walk)
+        player.playAnimation(type: .Death)
+        endGame(didWin: false)
     }
     
     func projectileDidColideWithWall(projectile: ProjectileNode, wall: SKSpriteNode) {
@@ -308,9 +317,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate, adMobInterstitialDelegate, G
         switch touchName {
         case "movePlayer":
             isMovingPlayer = true
+            player.playAnimation(type: .Walk)
             break
         case "shoot":
-            player.texture = SKTexture.init(imageNamed: "ic_ninja_throw")
             break
         default:
             break
@@ -335,6 +344,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, adMobInterstitialDelegate, G
         switch touchName {
         case "movePlayer":
             isMovingPlayer = false
+            player.stopAnimation(type: .Walk)
             break
         case "shoot":
             shootProjectile(location: location)
@@ -385,7 +395,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate, adMobInterstitialDelegate, G
             }
         } else if (firstBody.categoryBitMask == PhysicsCategory.EnemyProjectile) &&
             (secondBody.categoryBitMask == PhysicsCategory.Player){
-            endGame(didWin: false)
+            if let projectile = firstBody.node as? ProjectileNode, let player = secondBody.node as? PlayerNode {
+                enemyProjectileHitPlayer(projectile: projectile, player: player)
+            }
         } else if (firstBody.categoryBitMask == PhysicsCategory.Projectile) &&
             (secondBody.categoryBitMask == PhysicsCategory.EnemyProjectile){
             if let projectile1 = firstBody.node as? ProjectileNode, let projectile2 = secondBody.node as? ProjectileNode {

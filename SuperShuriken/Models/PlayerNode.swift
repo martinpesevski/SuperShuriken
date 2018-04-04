@@ -8,9 +8,17 @@
 
 import SpriteKit
 
+enum playerAnimationType: String {
+    case Walk = "playerWalkAnimation"
+    case Shoot = "playerShootAnimation"
+    case Death = "playerDeathAnimation"
+}
+
 class PlayerNode: SKSpriteNode {
-    private var bokiWalkingFrames: [SKTexture] = []
-    
+    private var playerWalkingFrames: [SKTexture] = []
+    private var playerShootingFrames: [SKTexture] = []
+    private var playerDeathFrames: [SKTexture] = []
+
     func setup() {
         physicsBody = SKPhysicsBody(rectangleOf: size)
         physicsBody?.isDynamic = true
@@ -18,23 +26,39 @@ class PlayerNode: SKSpriteNode {
         physicsBody?.contactTestBitMask = PhysicsCategory.EnemyProjectile
         physicsBody?.collisionBitMask = PhysicsCategory.None
         
-        let bokiWalkingAtlas = SKTextureAtlas(named: "bokiBatine")
-        var walkingFrames: [SKTexture] = []
-        
-        let numImages = bokiWalkingAtlas.textureNames.count
-        for i in 0..<numImages {
-            let bokiTextureName = "bokiBatine_\(i)"
-            walkingFrames.append(bokiWalkingAtlas.textureNamed(bokiTextureName))
-        }
-        bokiWalkingFrames = walkingFrames
+        playerWalkingFrames = createAtlas(name: "playerWalk")
+        playerDeathFrames = createAtlas(name: "playerDeath")
+        playerShootingFrames = createAtlas(name: "playerShoot")
     }
     
-    func playWalkingAnimation() {
+    func playAnimation(type: playerAnimationType) {
+        switch type {
+        case .Walk:
+            playWalkingAnimation()
+        case .Shoot:
+            playShootAnimation()
+        case .Death:
+            playDeathAnimation()
+        }
+    }
+    func stopAnimation(type: playerAnimationType) {
+        removeAction(forKey: type.rawValue)
+    }
+    
+    private func playWalkingAnimation() {
         run(SKAction.repeatForever(
-            SKAction.animate(with: bokiWalkingFrames,
+            SKAction.animate(with: playerWalkingFrames,
                              timePerFrame: 0.1,
                              resize: false,
                              restore: true)),
-            withKey:"walkingInPlaceBoki")
+            withKey:playerAnimationType.Walk.rawValue)
+    }
+    
+    private func playShootAnimation() {
+        run(SKAction.animate(with: playerShootingFrames, timePerFrame: 0.1, resize: false, restore: true), withKey: playerAnimationType.Shoot.rawValue)
+    }
+    
+    private func playDeathAnimation() {
+        run(SKAction.animate(with: playerDeathFrames, timePerFrame: 0.1, resize: false, restore: false), withKey: playerAnimationType.Death.rawValue)
     }
 }
