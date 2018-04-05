@@ -55,6 +55,9 @@ class PlayerNode: SKSpriteNode {
     }
     
     private func playShootAnimation() {
+        if action(forKey: playerAnimationType.Shoot.rawValue) != nil {
+            return
+        }
         run(SKAction.animate(with: playerShootingFrames, timePerFrame: 0.1, resize: false, restore: true), withKey: playerAnimationType.Shoot.rawValue)
     }
     

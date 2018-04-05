@@ -145,9 +145,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate, adMobInterstitialDelegate, G
     func shootProjectile(location: CGPoint) {
         player.playAnimation(type: .Shoot)
         
-        let projectile = ProjectileNode(imageNamed: "ic_shuriken")
+        let projectile = ProjectileNode()
         projectile.position = player.position
-        projectile.setup(type: .friendly)
+        projectile.setup(type: .friendly, assetName: "ic_shuriken2")
         
         let offset = location - projectile.position
         
@@ -172,7 +172,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, adMobInterstitialDelegate, G
         run(SKAction.sequence([ SKAction.wait(forDuration: 5), SKAction.run({
             self.nextLevelLabel.removeFromParent()
             self.startNextlevel()
-        })]))
+        })]), withKey: "startNextLevel")
     }
     
     func endGame(didWin: Bool) {
@@ -191,6 +191,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, adMobInterstitialDelegate, G
     
     func restart() {
         gameManager.restart()
+        removeAction(forKey: "startNextLevel")
         gameOverLabel.removeFromParent()
         tapToRetryLabel.removeFromParent()
         updateScoreLabel()
