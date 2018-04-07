@@ -39,4 +39,13 @@ class Global: NSObject {
             UserDefaults.standard.set(newValue, forKey: "shurikenAdsEnabled")
         }
     }
+    
+    var selectedPlayerShuriken: String {
+        get {
+            return UserDefaults.standard.string(forKey: "playerShurikenAssetName") ?? "ic_shuriken"
+        }
+        set {
+            UserDefaults.standard.set(newValue, forKey: "playerShurikenAssetName")
+        }
+    }
 }

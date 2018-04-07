@@ -147,7 +147,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, adMobInterstitialDelegate, G
         
         let projectile = ProjectileNode()
         projectile.position = player.position
-        projectile.setup(type: .friendly, assetName: "ic_shuriken3")
+        projectile.setup(type: .friendly, assetName: Global.sharedInstance.selectedPlayerShuriken)
         
         let offset = location - projectile.position
         
