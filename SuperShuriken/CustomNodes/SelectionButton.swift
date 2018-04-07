@@ -36,6 +36,12 @@ class SelectionButton: ButtonNode {
         lockNode.isHidden = !locked
     }
     
+    func playRadiateAnimation(){
+        run(SKAction.repeatForever(SKAction.sequence(
+            [SKAction.scale(to: CGSize(width: size.width + 10, height: size.height + 10), duration: 1),
+             SKAction.scale(to: CGSize(width: size.width - 10, height: size.height - 10), duration: 1)])))
+    }
+    
     required init(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }

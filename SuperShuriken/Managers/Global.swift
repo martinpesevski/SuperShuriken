@@ -48,4 +48,13 @@ class Global: NSObject {
             UserDefaults.standard.set(newValue, forKey: "playerShurikenAssetName")
         }
     }
+    
+    var lockedShurikenAssets: [String] {
+        get {
+            return UserDefaults.standard.array(forKey: "lockedShurikenAssets") as? [String] ?? ["ic_shuriken3"]
+        }
+        set {
+            UserDefaults.standard.set(newValue, forKey: "lockedShurikenAssets")
+        }
+    }
 }

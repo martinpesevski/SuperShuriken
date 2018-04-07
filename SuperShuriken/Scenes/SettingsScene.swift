@@ -48,15 +48,15 @@ class SettingsScene : SKScene, switchNodeDelegate {
         shuriken1Button.setupWithNode(node: selectShuriken1Placeholder)
         shuriken1Button.setButtonAction(target: self, triggerEvent: .TouchUpInside, action: #selector(onShurikenTap(sender:)))
         shuriken1Button.zPosition = 2
-        shuriken1Button.setLocked(locked: false)
-        
+        shuriken1Button.playRadiateAnimation()
+
         shuriken2Button = SelectionButton(normalTexture: SKTexture(imageNamed: "ic_shuriken2"),
                                      selectedTexture: SKTexture(imageNamed: "ic_shuriken2"),
                                      disabledTexture: nil)
         shuriken2Button.setupWithNode(node: selectShuriken2Placeholder)
-        shuriken2Button.setButtonAction(target: self, triggerEvent: .TouchUpInside, action: #selector(onShurikenTap(sender:)))
+
         shuriken2Button.zPosition = 2
-        shuriken2Button.setLocked(locked: false)
+        shuriken2Button.playRadiateAnimation()
 
         shuriken3Button = SelectionButton(normalTexture: SKTexture(imageNamed: "ic_shuriken3"),
                                      selectedTexture: SKTexture(imageNamed: "ic_shuriken3"),
@@ -64,14 +64,16 @@ class SettingsScene : SKScene, switchNodeDelegate {
         shuriken3Button.setupWithNode(node: selectShuriken3Placeholder)
         shuriken3Button.setButtonAction(target: self, triggerEvent: .TouchUpInside, action: #selector(onShurikenTap(sender:)))
         shuriken3Button.zPosition = 2
-        shuriken3Button.setLocked(locked: true)
+        shuriken3Button.playRadiateAnimation()
 
         shurikensDict = ["ic_shuriken": shuriken1Button, "ic_shuriken2": shuriken2Button, "ic_shuriken3": shuriken3Button]
         
         let highlightedAssetName = Global.sharedInstance.selectedPlayerShuriken
+        let lockedAssets = Global.sharedInstance.lockedShurikenAssets
         for button in shurikensDict {
             let isHighlighted = highlightedAssetName == button.key
             button.value.setHighligted(highlighted: isHighlighted)
+            button.value.setLocked(locked: lockedAssets.contains(button.key))
         }
 
         adsCell = adsPlaceholder
@@ -103,17 +105,11 @@ class SettingsScene : SKScene, switchNodeDelegate {
     }
     
     @objc func onShurikenTap(sender: ButtonNode){
-        if sender == self.shuriken1Button {
-            Global.sharedInstance.selectedPlayerShuriken = "ic_shuriken"
-        } else if sender == self.shuriken2Button{
-            Global.sharedInstance.selectedPlayerShuriken = "ic_shuriken2"
-        } else if sender == self.shuriken3Button{
-            Global.sharedInstance.selectedPlayerShuriken = "ic_shuriken3"
-        }
         
         for button in shurikensDict {
             let isHighlighted = sender == button.value
             button.value.setHighligted(highlighted: isHighlighted)
+            Global.sharedInstance.selectedPlayerShuriken = button.key
         }
     }
     
