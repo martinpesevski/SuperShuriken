@@ -13,9 +13,10 @@ class SettingsScene : SKScene, switchNodeDelegate {
     var menuButton : ButtonNode!
     var soundCell : LabelWithSwitchNode!
     var adsCell : LabelWithSwitchNode!
-    var shuriken1Button : ButtonNode!
-    var shuriken2Button : ButtonNode!
-    var shuriken3Button : ButtonNode!
+    var shuriken1Button : SelectionButton!
+    var shuriken2Button : SelectionButton!
+    var shuriken3Button : SelectionButton!
+    var shurikensDict = [String: SelectionButton]()
 
     override func didMove(to view: SKView) {
         guard let soundPlaceholder = childNode(withName: "soundPlaceholder") as? LabelWithSwitchNode,
@@ -41,26 +42,37 @@ class SettingsScene : SKScene, switchNodeDelegate {
         soundCell.switchDelegate = self
         soundCell.setSwitch(isOn: Global.sharedInstance.isSoundOn)
         
-        shuriken1Button = ButtonNode(normalTexture: SKTexture(imageNamed: "ic_shuriken"),
+        shuriken1Button = SelectionButton(normalTexture: SKTexture(imageNamed: "ic_shuriken"),
                                      selectedTexture: SKTexture(imageNamed: "ic_shuriken"),
                                      disabledTexture: nil)
         shuriken1Button.setupWithNode(node: selectShuriken1Placeholder)
         shuriken1Button.setButtonAction(target: self, triggerEvent: .TouchUpInside, action: #selector(onShurikenTap(sender:)))
         shuriken1Button.zPosition = 2
-
-        shuriken2Button = ButtonNode(normalTexture: SKTexture(imageNamed: "ic_shuriken2"),
+        shuriken1Button.setLocked(locked: false)
+        
+        shuriken2Button = SelectionButton(normalTexture: SKTexture(imageNamed: "ic_shuriken2"),
                                      selectedTexture: SKTexture(imageNamed: "ic_shuriken2"),
                                      disabledTexture: nil)
         shuriken2Button.setupWithNode(node: selectShuriken2Placeholder)
         shuriken2Button.setButtonAction(target: self, triggerEvent: .TouchUpInside, action: #selector(onShurikenTap(sender:)))
         shuriken2Button.zPosition = 2
+        shuriken2Button.setLocked(locked: false)
 
-        shuriken3Button = ButtonNode(normalTexture: SKTexture(imageNamed: "ic_shuriken3"),
+        shuriken3Button = SelectionButton(normalTexture: SKTexture(imageNamed: "ic_shuriken3"),
                                      selectedTexture: SKTexture(imageNamed: "ic_shuriken3"),
                                      disabledTexture: nil)
         shuriken3Button.setupWithNode(node: selectShuriken3Placeholder)
         shuriken3Button.setButtonAction(target: self, triggerEvent: .TouchUpInside, action: #selector(onShurikenTap(sender:)))
         shuriken3Button.zPosition = 2
+        shuriken3Button.setLocked(locked: true)
+
+        shurikensDict = ["ic_shuriken": shuriken1Button, "ic_shuriken2": shuriken2Button, "ic_shuriken3": shuriken3Button]
+        
+        let highlightedAssetName = Global.sharedInstance.selectedPlayerShuriken
+        for button in shurikensDict {
+            let isHighlighted = highlightedAssetName == button.key
+            button.value.setHighligted(highlighted: isHighlighted)
+        }
 
         adsCell = adsPlaceholder
         adsCell.setupWithText(labelText: "Enable ads")
@@ -97,6 +109,11 @@ class SettingsScene : SKScene, switchNodeDelegate {
             Global.sharedInstance.selectedPlayerShuriken = "ic_shuriken2"
         } else if sender == self.shuriken3Button{
             Global.sharedInstance.selectedPlayerShuriken = "ic_shuriken3"
+        }
+        
+        for button in shurikensDict {
+            let isHighlighted = sender == button.value
+            button.value.setHighligted(highlighted: isHighlighted)
         }
     }
     

@@ -73,7 +73,7 @@ class MonsterNode: SKSpriteNode {
         let shootAction = SKAction.run {
             let projectile = ProjectileNode()
             projectile.position = self.position
-            projectile.setup(type: .enemy, assetName: "ic_shuriken1")
+            projectile.setup(type: .enemy, assetName: "ic_shuriken3")
             
             let offset = CGPoint(x: -100, y: 0)
             

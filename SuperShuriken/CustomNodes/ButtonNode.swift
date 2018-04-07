@@ -31,6 +31,7 @@ class ButtonNode: SKSpriteNode {
     var defaultTexture: SKTexture
     var selectedTexture: SKTexture
     var label: SKLabelNode
+    var backgroundNode: SKSpriteNode
     
     required init(coder: NSCoder) {
         fatalError("NSCoding not supported")
@@ -42,6 +43,8 @@ class ButtonNode: SKSpriteNode {
         self.selectedTexture = selectedTexture
         self.disabledTexture = disabledTexture
         self.label = SKLabelNode(fontNamed: "Helvetica");
+       
+        self.backgroundNode = SKSpriteNode()
         
         super.init(texture: defaultTexture, color: .white, size: defaultTexture.size())
         isUserInteractionEnabled = true
@@ -50,8 +53,13 @@ class ButtonNode: SKSpriteNode {
         self.label.verticalAlignmentMode = SKLabelVerticalAlignmentMode.center;
         self.label.horizontalAlignmentMode = SKLabelHorizontalAlignmentMode.center;
         self.label.zPosition = 2
-        addChild(self.label)
+        
+        self.backgroundNode.size = size
+        self.backgroundNode.position = position
 
+        addChild(self.backgroundNode)
+        addChild(self.label)
+        
 //        // Adding this node as an empty layer. Without it the touch functions are not being called
 //        // The reason for this is unknown when this was implemented...?
 //        let bugFixLayerNode = SKSpriteNode(texture: nil, color: UIColor.clear, size: defaultTexture.size())
