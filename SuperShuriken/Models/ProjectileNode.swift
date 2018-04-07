@@ -35,6 +35,9 @@ class ProjectileNode: SKSpriteNode {
         case "ic_shuriken2":
             style = .straight
             break
+        case "ic_shuriken3":
+            style = .rotating
+            break
         default:
             style = .rotating
             break
