@@ -25,6 +25,7 @@ class PlayerNode: SKSpriteNode {
         physicsBody?.categoryBitMask = PhysicsCategory.Player
         physicsBody?.contactTestBitMask = PhysicsCategory.EnemyProjectile
         physicsBody?.collisionBitMask = PhysicsCategory.None
+        texture = SKTexture.init(image: #imageLiteral(resourceName: "ic_player"))
         
         playerWalkingFrames = createAtlas(name: "playerWalk")
         playerDeathFrames = createAtlas(name: "playerDeath")
@@ -43,6 +44,7 @@ class PlayerNode: SKSpriteNode {
     }
     func stopAnimation(type: playerAnimationType) {
         removeAction(forKey: type.rawValue)
+        texture = SKTexture.init(image: #imageLiteral(resourceName: "ic_player"))
     }
     
     private func playWalkingAnimation() {

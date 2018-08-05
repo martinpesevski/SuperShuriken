@@ -185,7 +185,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, adMobInterstitialDelegate, G
         gameOverLabel.position = CGPoint(x: frame.midX, y: frame.midY)
         tapToRetryLabel.position = CGPoint(x: frame.midX, y: frame.midY/2)
         
-        gameManager.isGameFinished = true;
+        self.gameManager.isGameFinished = true
         AdsManager.sharedInstance.showInterstitial()
     }
     
@@ -211,6 +211,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, adMobInterstitialDelegate, G
             projectile.removeFromParent()
         }
         playerProjectilesArray.removeAll()
+        
         for projectile in enemyProjectilesArray {
             projectile.removeFromParent()
         }
@@ -252,7 +253,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate, adMobInterstitialDelegate, G
     func enemyProjectileHitPlayer(projectile: ProjectileNode, player: PlayerNode) {
         projectile.removeFromParent()
         enemyProjectilesArray = enemyProjectilesArray.filter{$0 != projectile}
-
+        isMovingPlayer = false
+        
         player.stopAnimation(type: .Walk)
         player.playAnimation(type: .Death)
         endGame(didWin: false)
@@ -267,6 +269,14 @@ class GameScene: SKScene, SKPhysicsContactDelegate, adMobInterstitialDelegate, G
         monstersArray = monstersArray.filter{$0 != monster}
 
         endGame(didWin: false)
+    }
+    
+    func monsterDidCollideWithPlayer(monster: MonsterNode, player: PlayerNode) {
+        monstersArray = monstersArray.filter{$0 != monster}
+        monster.playDeathAnimation()
+        
+        gameManager.updateScore(value: monster.type.rawValue)
+        updateScoreLabel()
     }
     
     // MARK: touches
@@ -393,6 +403,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate, adMobInterstitialDelegate, G
             (secondBody.categoryBitMask == PhysicsCategory.Goal) {
             if let monster = firstBody.node as? MonsterNode, let goal = secondBody.node as? MonsterGoalNode {
                 monsterDidReachGoal(monster: monster, goal: goal)
+            }
+        } else if (firstBody.categoryBitMask == PhysicsCategory.Monster) &&
+            (secondBody.categoryBitMask == PhysicsCategory.Player) {
+            if let monster = firstBody.node as? MonsterNode, let player = secondBody.node as? PlayerNode {
+                monsterDidCollideWithPlayer(monster: monster, player: player)
             }
         } else if (firstBody.categoryBitMask == PhysicsCategory.EnemyProjectile) &&
             (secondBody.categoryBitMask == PhysicsCategory.Player){

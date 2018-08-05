@@ -66,7 +66,7 @@ class MonsterNode: SKSpriteNode {
         let bossShootingAction = startBossShooting()
         let walkAndShootAction = SKAction.group([actionWalkUpDown, bossShootingAction])
         let bossMoveAnimation = SKAction.sequence([actionWalkOnScreen, walkAndShootAction])
-        run(bossMoveAnimation)
+        run(bossMoveAnimation, withKey: "bossAction")
     }
     
     func startBossShooting() -> SKAction{
@@ -98,6 +98,7 @@ class MonsterNode: SKSpriteNode {
     
     func playDeathAnimation() {
         removeAction(forKey: "moveAction")
+        removeAction(forKey: "bossAction")
         physicsBody?.contactTestBitMask = PhysicsCategory.None
         physicsBody?.categoryBitMask = PhysicsCategory.None
         let rotateAction = SKAction.rotate(byAngle: -CGFloat(Double.pi/2), duration: 0.3)
