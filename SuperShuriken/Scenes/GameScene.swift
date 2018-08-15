@@ -29,6 +29,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, adMobInterstitialDelegate, G
     var enemyProjectilesArray = [ProjectileNode]()
     
     var isMovingPlayer = false
+    var isJumpingPlayer = false
     private var activeTouches = [UITouch:String]()
 
     override func didMove(to view: SKView) {
@@ -143,7 +144,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, adMobInterstitialDelegate, G
     }
     
     func shootProjectile(location: CGPoint) {
-        player.playAnimation(type: .Shoot)
+        player.playAnimation(type: .Shoot, completion: {})
         
         let projectile = ProjectileNode()
         projectile.position = player.position
@@ -256,7 +257,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, adMobInterstitialDelegate, G
         isMovingPlayer = false
         
         player.stopAnimation(type: .Walk)
-        player.playAnimation(type: .Death)
+        player.playAnimation(type: .Death, completion:{})
         endGame(didWin: false)
     }
     
@@ -328,7 +329,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, adMobInterstitialDelegate, G
         switch touchName {
         case "movePlayer":
             isMovingPlayer = true
-            player.playAnimation(type: .Walk)
+            player.playAnimation(type: .Walk, completion: {})
             break
         case "shoot":
             break
@@ -341,7 +342,20 @@ class GameScene: SKScene, SKPhysicsContactDelegate, adMobInterstitialDelegate, G
         switch touchName {
         case "movePlayer":
             if isMovingPlayer {
-                player.position.y = min(location.y, monsterSpawner.frame.maxY);
+                if location.y < monsterSpawner.frame.maxY {
+                    player.position.y = location.y;
+                } else {
+                    if !isJumpingPlayer {
+                        isMovingPlayer = false
+                        isJumpingPlayer = true
+                        player.playAnimation(type: .Jump, completion: {
+                            self.isMovingPlayer = true
+                            self.isJumpingPlayer = false
+                        })
+                    } else {
+                        isJumpingPlayer = false
+                    }
+                }
             }
             break
         case "shoot":
