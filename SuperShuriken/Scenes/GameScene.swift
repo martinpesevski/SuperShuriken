@@ -9,6 +9,7 @@
 import SpriteKit
 import GameplayKit
 
+
 class GameScene: SKScene, SKPhysicsContactDelegate, adMobInterstitialDelegate, GameManagerDelegate, MonsterDelegate {
     
     var menuButton: ButtonNode!
@@ -27,9 +28,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, adMobInterstitialDelegate, G
     var monstersArray = [MonsterNode]()
     var playerProjectilesArray = [ProjectileNode]()
     var enemyProjectilesArray = [ProjectileNode]()
-    
-    var isMovingPlayer = false
-    var isJumpingPlayer = false
+
     private var activeTouches = [UITouch:String]()
 
     override func didMove(to view: SKView) {
@@ -254,10 +253,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, adMobInterstitialDelegate, G
     func enemyProjectileHitPlayer(projectile: ProjectileNode, player: PlayerNode) {
         projectile.removeFromParent()
         enemyProjectilesArray = enemyProjectilesArray.filter{$0 != projectile}
-        isMovingPlayer = false
-        
-        player.stopAnimation(type: .Walk)
-        player.playAnimation(type: .Death, completion:{})
+        player.handleGotHit()
         endGame(didWin: false)
     }
     
@@ -291,7 +287,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, adMobInterstitialDelegate, G
         for touch in touches {
             let touchName = getTouchName(touch: touch)
             activeTouches[touch] = touchName
-            tapBeginOn(touchName: touchName)
+            tapBeginOn(touchName: touchName, location: touch.location(in: self))
         }
     }
     
@@ -325,11 +321,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate, adMobInterstitialDelegate, G
         }
     }
     
-    func tapBeginOn(touchName: String) {
+    func tapBeginOn(touchName: String, location: CGPoint) {
         switch touchName {
         case "movePlayer":
-            isMovingPlayer = true
-            player.playAnimation(type: .Walk, completion: {})
+            player.handleTouchStart(location: location)
             break
         case "shoot":
             break
@@ -341,22 +336,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, adMobInterstitialDelegate, G
     func tapMovedOn(touchName: String, location: CGPoint) {
         switch touchName {
         case "movePlayer":
-            if isMovingPlayer {
-                if location.y < monsterSpawner.frame.maxY {
-                    player.position.y = location.y;
-                } else {
-                    if !isJumpingPlayer {
-                        isMovingPlayer = false
-                        isJumpingPlayer = true
-                        player.playAnimation(type: .Jump, completion: {
-                            self.isMovingPlayer = true
-                            self.isJumpingPlayer = false
-                        })
-                    } else {
-                        isJumpingPlayer = false
-                    }
-                }
-            }
+            player.handleTouchMoved(location: location)
             break
         case "shoot":
             break
@@ -368,8 +348,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, adMobInterstitialDelegate, G
     func tapEndedOn(touchName: String, location: CGPoint) {
         switch touchName {
         case "movePlayer":
-            isMovingPlayer = false
-            player.stopAnimation(type: .Walk)
+            player.handleTouchEnded(location: location)
             break
         case "shoot":
             shootProjectile(location: location)

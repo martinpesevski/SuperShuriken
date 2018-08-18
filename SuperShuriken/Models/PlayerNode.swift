@@ -19,6 +19,9 @@ class PlayerNode: SKSpriteNode {
     private var playerWalkingFrames: [SKTexture] = []
     private var playerShootingFrames: [SKTexture] = []
     private var playerDeathFrames: [SKTexture] = []
+    
+    private var isMoving = false;
+    private var isJumping = false;
 
     func setup() {
         physicsBody = SKPhysicsBody(rectangleOf: size)
@@ -32,7 +35,48 @@ class PlayerNode: SKSpriteNode {
         playerDeathFrames = createAtlas(name: "playerDeath")
         playerShootingFrames = createAtlas(name: "playerShoot")
     }
+    //MARK: touches
+    func handleTouchStart(location: CGPoint) {
+        isMoving = true
+        playAnimation(type: .Walk, completion: {})
+        walkToPoint(point: location)
+    }
     
+    
+    func handleTouchMoved(location: CGPoint) {
+        if isMoving {
+            if location.y < horizonVerticalLocation {
+                walkToPoint(point: location)
+            } else if location.y >= horizonVerticalLocation + 50 {
+                if !isJumping {
+                    isMoving = false
+                    isJumping = true
+                    playAnimation(type: .Jump, completion: {
+                        self.isMoving = true
+                        self.isJumping = false
+                    })
+                } else {
+                    isJumping = false
+                }
+            } else {
+                position.y = horizonVerticalLocation
+            }
+        }
+    }
+    
+    func handleTouchEnded(location: CGPoint) {
+        isMoving = false
+        stopAnimation(type: .Walk)
+    }
+    
+    func handleGotHit() {
+        isMoving = false
+        
+        stopAnimation(type: .Walk)
+        playAnimation(type: .Death, completion:{})
+    }
+    
+    //MARK: animations
     func playAnimation(type: playerAnimationType, completion: @escaping () -> Void) {
         switch type {
         case .Walk:
@@ -45,6 +89,23 @@ class PlayerNode: SKSpriteNode {
             playJumpAnimation(completion: completion)
         }
     }
+    
+    func walkToPoint(point: CGPoint) {
+        if point.y < horizonVerticalLocation {
+            let verticalMovePoint = CGPoint(x: position.x, y: point.y)
+            run(SKAction.move(to: verticalMovePoint, duration: 0.5))
+        } else if point.y >= horizonVerticalLocation + 50 {
+            let verticalMovePoint = CGPoint(x: position.x, y: horizonVerticalLocation)
+            run(SKAction.sequence([SKAction.move(to: verticalMovePoint, duration: 0.5), SKAction.run {
+                self.playAnimation(type: .Jump, completion: {})
+                }]))
+        } else {
+            let verticalMovePoint = CGPoint(x: position.x, y: horizonVerticalLocation)
+            run(SKAction.move(to: verticalMovePoint, duration: 0.5))
+        }
+
+    }
+    
     func stopAnimation(type: playerAnimationType) {
         removeAction(forKey: type.rawValue)
         texture = SKTexture.init(image: #imageLiteral(resourceName: "ic_player"))

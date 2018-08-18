@@ -12,6 +12,7 @@
 		0F7350772010C1E600EEFDD7 /* LabelWithSwitchNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F7350762010C1E600EEFDD7 /* LabelWithSwitchNode.swift */; };
 		B69BBFDA222236171FF70C0A /* Pods_SuperShuriken.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FFAE01823C307487EE0B93EF /* Pods_SuperShuriken.framework */; };
 		C71E033B20430682001C61C2 /* MonsterNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = C71E033A20430682001C61C2 /* MonsterNode.swift */; };
+		C72035D221283D07000D7C89 /* Consants.swift in Sources */ = {isa = PBXBuildFile; fileRef = C72035D121283D07000D7C89 /* Consants.swift */; };
 		C72F6C22207924AE004E9D19 /* SelectionButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = C72F6C21207924AE004E9D19 /* SelectionButton.swift */; };
 		C7345C94200F5FB900A24A16 /* AdsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7345C93200F5FB900A24A16 /* AdsManager.swift */; };
 		C737083B202213F20053F640 /* ProjectileNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = C737083A202213F20053F640 /* ProjectileNode.swift */; };
@@ -45,6 +46,7 @@
 		2C472AA165D44FCC849C49A0 /* Pods-SuperShuriken.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SuperShuriken.debug.xcconfig"; path = "Pods/Target Support Files/Pods-SuperShuriken/Pods-SuperShuriken.debug.xcconfig"; sourceTree = "<group>"; };
 		47C2856E36B2852627AA8E0A /* Pods-SuperShuriken.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SuperShuriken.release.xcconfig"; path = "Pods/Target Support Files/Pods-SuperShuriken/Pods-SuperShuriken.release.xcconfig"; sourceTree = "<group>"; };
 		C71E033A20430682001C61C2 /* MonsterNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonsterNode.swift; sourceTree = "<group>"; };
+		C72035D121283D07000D7C89 /* Consants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Consants.swift; sourceTree = "<group>"; };
 		C72F6C21207924AE004E9D19 /* SelectionButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectionButton.swift; sourceTree = "<group>"; };
 		C7345C93200F5FB900A24A16 /* AdsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdsManager.swift; sourceTree = "<group>"; };
 		C737083A202213F20053F640 /* ProjectileNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectileNode.swift; sourceTree = "<group>"; };
@@ -127,6 +129,17 @@
 			name = Pods;
 			sourceTree = "<group>";
 		};
+		C72035D021283CC1000D7C89 /* Supporting files */ = {
+			isa = PBXGroup;
+			children = (
+				C796D2291F7AACAC00F770CF /* Main.storyboard */,
+				C796D22C1F7AACAC00F770CF /* Assets.xcassets */,
+				C796D22E1F7AACAC00F770CF /* LaunchScreen.storyboard */,
+				C72035D121283D07000D7C89 /* Consants.swift */,
+			);
+			path = "Supporting files";
+			sourceTree = "<group>";
+		};
 		C72F6C1E20791F1B004E9D19 /* CustomNodes */ = {
 			isa = PBXGroup;
 			children = (
@@ -169,6 +182,7 @@
 		C796D21E1F7AACAC00F770CF /* SuperShuriken */ = {
 			isa = PBXGroup;
 			children = (
+				C796D2311F7AACAC00F770CF /* Info.plist */,
 				C7884A2D207291D1005D01AB /* Animations */,
 				C796D2371F7AAFC400F770CF /* Sounds */,
 				C796D21F1F7AACAC00F770CF /* AppDelegate.swift */,
@@ -177,10 +191,7 @@
 				C72F6C1E20791F1B004E9D19 /* CustomNodes */,
 				C7DCF51D204D5F3E00CB1903 /* Managers */,
 				0F73506F200CBF2700EEFDD7 /* Models */,
-				C796D2291F7AACAC00F770CF /* Main.storyboard */,
-				C796D22C1F7AACAC00F770CF /* Assets.xcassets */,
-				C796D22E1F7AACAC00F770CF /* LaunchScreen.storyboard */,
-				C796D2311F7AACAC00F770CF /* Info.plist */,
+				C72035D021283CC1000D7C89 /* Supporting files */,
 			);
 			path = SuperShuriken;
 			sourceTree = "<group>";
@@ -341,6 +352,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C72035D221283D07000D7C89 /* Consants.swift in Sources */,
 				0F7350772010C1E600EEFDD7 /* LabelWithSwitchNode.swift in Sources */,
 				C7DCF521204D624100CB1903 /* GameManager.swift in Sources */,
 				C7D2DDC01FE5281E00A23537 /* MainMenu.swift in Sources */,
