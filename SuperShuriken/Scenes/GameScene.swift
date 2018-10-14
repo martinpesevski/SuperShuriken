@@ -9,7 +9,6 @@
 import SpriteKit
 import GameplayKit
 
-
 class GameScene: SKScene, SKPhysicsContactDelegate, adMobInterstitialDelegate, GameManagerDelegate, MonsterDelegate {
     
     var menuButton: ButtonNode!
@@ -30,7 +29,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate, adMobInterstitialDelegate, G
     var enemyProjectilesArray = [ProjectileNode]()
 
     private var activeTouches = [UITouch:String]()
-
+    
+    
     override func didMove(to view: SKView) {
         gameManager.delegate = self
         
@@ -94,6 +94,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate, adMobInterstitialDelegate, G
 
         AdsManager.sharedInstance.createAndLoadInterstitial()
         AdsManager.sharedInstance.interstitialDelegate = self
+    }
+    
+    override func update(_ currentTime: TimeInterval) {
+        player.update(currentTime: currentTime)
     }
     
     // MARK: helper methods

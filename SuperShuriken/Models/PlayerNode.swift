@@ -7,6 +7,7 @@
 //
 
 import SpriteKit
+import GameplayKit
 
 enum playerAnimationType: String {
     case Walk = "playerWalkAnimation"
@@ -15,13 +16,35 @@ enum playerAnimationType: String {
     case Death = "playerDeathAnimation"
 }
 
-class PlayerNode: SKSpriteNode {
+class PlayerNode: SKSpriteNode, GKAgentDelegate {
     private var playerWalkingFrames: [SKTexture] = []
     private var playerShootingFrames: [SKTexture] = []
     private var playerDeathFrames: [SKTexture] = []
     
-    private var isMoving = false;
     private var isJumping = false;
+    
+    //GameplayKit
+    let agent = GKAgent2D()
+    let trackingAgent = GKAgent2D()
+    var seekGoal : GKGoal = GKGoal()
+    let stopGoal : GKGoal = GKGoal()
+    
+    var seeking : Bool = false {
+        willSet {
+//            if newValue {
+//                agent.behavior?.setWeight(1, for: seekGoal)
+//                agent.behavior?.setWeight(0, for: stopGoal)
+//            }else{
+//                agent.behavior?.setWeight(0, for: seekGoal)
+//                agent.behavior?.setWeight(1, for: stopGoal)
+//            }
+        }
+    }
+    
+    var agentSystem = GKComponentSystem()
+    
+    var lastUpdateTime : TimeInterval = 0
+    
 
     func setup() {
         physicsBody = SKPhysicsBody(rectangleOf: size)
@@ -31,47 +54,55 @@ class PlayerNode: SKSpriteNode {
         physicsBody?.collisionBitMask = PhysicsCategory.None
         texture = SKTexture.init(image: #imageLiteral(resourceName: "ic_player"))
         
+        //GameplayKit
+        seekGoal = GKGoal(toSeekAgent: trackingAgent)
+
+        agent.position = vector_float2(Float(position.x), Float(position.y))
+        agent.delegate = self
+        agent.maxSpeed = 100 * 4
+        agent.maxAcceleration = 500 * 4
+        agent.behavior = GKBehavior()
+        agent.behavior?.setWeight(1, for: seekGoal)
+        agent.mass = 0.01
+
+        agentSystem = GKComponentSystem(componentClass: GKAgent2D.self)
+        
+        agentSystem.addComponent(agent)
+        
+        
         playerWalkingFrames = createAtlas(name: "playerWalk")
         playerDeathFrames = createAtlas(name: "playerDeath")
         playerShootingFrames = createAtlas(name: "playerShoot")
     }
+    
+    func update(currentTime: TimeInterval){
+        if lastUpdateTime == 0 {
+            lastUpdateTime = currentTime
+        }
+        
+        let delta = currentTime - lastUpdateTime
+        lastUpdateTime = currentTime
+        self.agentSystem.update(deltaTime: delta)
+    }
+    
     //MARK: touches
     func handleTouchStart(location: CGPoint) {
-        isMoving = true
+        self.seeking = true
         playAnimation(type: .Walk, completion: {})
-        walkToPoint(point: location)
+        trackingAgent.position = vector_float2(Float(location.x), Float(location.y))
     }
     
     
     func handleTouchMoved(location: CGPoint) {
-        if isMoving {
-            if location.y < horizonVerticalLocation {
-                walkToPoint(point: location)
-            } else if location.y >= horizonVerticalLocation + 50 {
-                if !isJumping {
-                    isMoving = false
-                    isJumping = true
-                    playAnimation(type: .Jump, completion: {
-                        self.isMoving = true
-                        self.isJumping = false
-                    })
-                } else {
-                    isJumping = false
-                }
-            } else {
-                position.y = horizonVerticalLocation
-            }
-        }
+        trackingAgent.position = vector_float2(Float(location.x), Float(location.y))
     }
     
     func handleTouchEnded(location: CGPoint) {
-        isMoving = false
+        self.seeking = false
         stopAnimation(type: .Walk)
     }
     
     func handleGotHit() {
-        isMoving = false
-        
         stopAnimation(type: .Walk)
         playAnimation(type: .Death, completion:{})
     }
@@ -103,7 +134,6 @@ class PlayerNode: SKSpriteNode {
             let verticalMovePoint = CGPoint(x: position.x, y: horizonVerticalLocation)
             run(SKAction.move(to: verticalMovePoint, duration: 0.5))
         }
-
     }
     
     func stopAnimation(type: playerAnimationType) {
@@ -140,6 +170,20 @@ class PlayerNode: SKSpriteNode {
         run(action: SKAction.group([motionAnimation, spriteAnimation]), withKey: playerAnimationType.Jump.rawValue) {
             completion()
         }
+    }
+    
+    //MARK: gkAgentDelegate
+    
+    func agentWillUpdate(_ agent: GKAgent) {
+        
+    }
+    
+    func agentDidUpdate(_ agent: GKAgent) {
+        guard let agent2D = agent as? GKAgent2D else {
+            return
+        }
+        
+        position = CGPoint(x: position.x, y: CGFloat(agent2D.position.y))
     }
 }
 
