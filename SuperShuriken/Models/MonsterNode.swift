@@ -18,8 +18,9 @@ enum MonsterType:Int {
     case ghost = 1
     case bigGhost = 2
     case boss = 10
+    case air = 3
 
-    static var count: Int { return 2 }
+    static var count: Int { return 3 }
 }
 
 private let bossMoveDistance:CGFloat = 150
@@ -117,15 +118,15 @@ class MonsterNode: SKSpriteNode {
     
     func getScaleFactor(monsterType: MonsterType) -> CGFloat {
         let scaleFactor : CGFloat
-        switch type {
+        switch monsterType {
         case .ghost:
             scaleFactor = 2
         case .bigGhost:
             scaleFactor = 3
+        case .air:
+            scaleFactor = 2
         case .boss:
             scaleFactor = 5
-        default:
-            scaleFactor = 2
         }
         
         return scaleFactor
@@ -133,15 +134,15 @@ class MonsterNode: SKSpriteNode {
     
     func getNumberOfHits(monsterType: MonsterType) -> Int {
         let numberOfHits : Int
-        switch type {
+        switch monsterType {
         case .ghost:
             numberOfHits = 1
         case .bigGhost:
             numberOfHits = 2
+        case .air:
+            numberOfHits = 1
         case .boss:
             numberOfHits = 5
-        default:
-            numberOfHits = 1
         }
         
         return numberOfHits

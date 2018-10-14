@@ -123,14 +123,19 @@ class GameScene: SKScene, SKPhysicsContactDelegate, adMobInterstitialDelegate, G
     
     func addMonster() {
         let monster = MonsterNode(imageNamed: "ic_monster")
-        let actualY = random(min: (monsterSpawner.frame.origin.y + monsterSpawner.size.height) - monster.size.height/2,
-                             max: monsterSpawner.frame.origin.y + monster.size.height/2)
+        var actualY = random(min: monsterSpawner.frame.origin.y + monster.size.height/2,
+                             max: (monsterSpawner.frame.origin.y + horizonVerticalLocation) - monster.size.height/2)
         
         let type : MonsterType
         if gameManager.isBossLevel {
             type = MonsterType.boss
         } else {
             type = MonsterType(rawValue: 1 + Int(arc4random_uniform(UInt32(MonsterType.count)))) ?? MonsterType.ghost
+        }
+        
+        if type == .air {
+             actualY = random(min: (monsterSpawner.frame.origin.y + horizonVerticalLocation),
+                                 max: monsterSpawner.frame.origin.y + monsterSpawner.frame.size.height)
         }
         
         monster.setup(startPoint: CGPoint(x: size.width + monster.size.width/2, y: actualY), type: type)
@@ -166,6 +171,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, adMobInterstitialDelegate, G
     }
     
     func levelFinished() {
+        if gameManager.isGameFinished {return}
         gameManager.loadNextLevel()
         if nextLevelLabel.parent == nil { self.addChild(nextLevelLabel) }
         nextLevelLabel.position = CGPoint(x: frame.midX, y: frame.midY)
@@ -178,6 +184,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate, adMobInterstitialDelegate, G
     func endGame(didWin: Bool) {
         self.didWin = didWin
         scene?.view?.isPaused = true
+        
+        removeAction(forKey: "startNextLevel")
         
         if gameOverLabel.parent == nil { self.addChild(gameOverLabel) }
         if tapToRetryLabel.parent == nil { self.addChild(tapToRetryLabel) }
