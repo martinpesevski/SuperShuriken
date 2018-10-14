@@ -126,13 +126,14 @@ class GameScene: SKScene, SKPhysicsContactDelegate, adMobInterstitialDelegate, G
     }
     
     func addMonster() {
-        let monster = MonsterNode(imageNamed: "ic_monster")
+        var monster = MonsterNode(imageNamed: "ic_monster")
         var actualY = random(min: monsterSpawner.frame.origin.y + monster.size.height/2,
                              max: (monsterSpawner.frame.origin.y + horizonVerticalLocation) - monster.size.height/2)
         
         let type : MonsterType
         if gameManager.isBossLevel {
             type = MonsterType.boss
+            monster = BossNode(imageNamed: "ic_monster")
         } else {
             type = MonsterType(rawValue: 1 + Int(arc4random_uniform(UInt32(MonsterType.count)))) ?? MonsterType.ghost
         }
@@ -148,7 +149,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, adMobInterstitialDelegate, G
         
         addChild(monster)
         monstersArray.append(monster)
-        gameManager.isBossLevel ? monster.playBossAnimation() : monster.playRunAnimation()
+        gameManager.isBossLevel ? (monster as! BossNode).playBossAnimation() : monster.playRunAnimation()
     }
     
     func shootProjectile(location: CGPoint) {

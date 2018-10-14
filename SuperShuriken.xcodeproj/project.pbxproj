@@ -16,6 +16,7 @@
 		C72F6C22207924AE004E9D19 /* SelectionButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = C72F6C21207924AE004E9D19 /* SelectionButton.swift */; };
 		C7345C94200F5FB900A24A16 /* AdsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7345C93200F5FB900A24A16 /* AdsManager.swift */; };
 		C737083B202213F20053F640 /* ProjectileNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = C737083A202213F20053F640 /* ProjectileNode.swift */; };
+		C75A375A21737A5700293FFF /* BossNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = C75A375921737A5700293FFF /* BossNode.swift */; };
 		C766D7F3200A392800648287 /* MainMenu.sks in Resources */ = {isa = PBXBuildFile; fileRef = C766D7F2200A392800648287 /* MainMenu.sks */; };
 		C766D7F7200BC66400648287 /* CustomLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C766D7F6200BC66400648287 /* CustomLabel.swift */; };
 		C766D7F9200BC71C00648287 /* SettingsScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = C766D7F8200BC71C00648287 /* SettingsScene.sks */; };
@@ -50,6 +51,7 @@
 		C72F6C21207924AE004E9D19 /* SelectionButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectionButton.swift; sourceTree = "<group>"; };
 		C7345C93200F5FB900A24A16 /* AdsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdsManager.swift; sourceTree = "<group>"; };
 		C737083A202213F20053F640 /* ProjectileNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectileNode.swift; sourceTree = "<group>"; };
+		C75A375921737A5700293FFF /* BossNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BossNode.swift; sourceTree = "<group>"; };
 		C766D7F2200A392800648287 /* MainMenu.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = MainMenu.sks; sourceTree = "<group>"; };
 		C766D7F6200BC66400648287 /* CustomLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomLabel.swift; sourceTree = "<group>"; };
 		C766D7F8200BC71C00648287 /* SettingsScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = SettingsScene.sks; sourceTree = "<group>"; };
@@ -107,6 +109,7 @@
 				0F735070200CBF5200EEFDD7 /* PlayerNode.swift */,
 				C737083A202213F20053F640 /* ProjectileNode.swift */,
 				C71E033A20430682001C61C2 /* MonsterNode.swift */,
+				C75A375921737A5700293FFF /* BossNode.swift */,
 				C7DCF522204D629900CB1903 /* MonsterGoalNode.swift */,
 			);
 			path = Models;
@@ -358,6 +361,7 @@
 				C7D2DDC01FE5281E00A23537 /* MainMenu.swift in Sources */,
 				C737083B202213F20053F640 /* ProjectileNode.swift in Sources */,
 				C796D2261F7AACAC00F770CF /* GameScene.swift in Sources */,
+				C75A375A21737A5700293FFF /* BossNode.swift in Sources */,
 				C7A4DF381FE6BD6C007DA58E /* ButtonNode.swift in Sources */,
 				C71E033B20430682001C61C2 /* MonsterNode.swift in Sources */,
 				C7DCF51F204D5F6600CB1903 /* Util.swift in Sources */,
