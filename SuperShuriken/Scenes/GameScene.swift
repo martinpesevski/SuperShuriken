@@ -100,7 +100,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, adMobInterstitialDelegate, G
         player.update(currentTime: currentTime)
     }
     
-    // MARK: helper methods
+    // MARK: - helper methods
     
     func setupWalls() {
         guard let wallTop = self.childNode(withName: "wallTop") as? SKSpriteNode,
@@ -231,7 +231,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, adMobInterstitialDelegate, G
         enemyProjectilesArray.removeAll()
     }
         
-    //MARK: collisions
+    //MARK: - collisions
     
     func projectileDidColideWithMonster (projectile: ProjectileNode, monster: MonsterNode) {
         projectile.removeFromParent()
@@ -289,7 +289,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, adMobInterstitialDelegate, G
         updateScoreLabel()
     }
     
-    // MARK: touches
+    // MARK: - touches
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         if gameManager.isGameFinished {
@@ -381,7 +381,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, adMobInterstitialDelegate, G
         }
     }
     
-    // MARK: Physics
+    // MARK: - Physics
     
     func didBegin(_ contact: SKPhysicsContact) {
         var firstBody: SKPhysicsBody
@@ -428,13 +428,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate, adMobInterstitialDelegate, G
         }
     }
     
-    //MARK: admob delegate
+    //MARK: - admob delegate
     
     func didHideInterstitial() {
         showGameOverScreen()
     }
     
-    //MARK: monster delegate
+    //MARK: - monster delegate
     
     func monsterDidShoot(projectile: ProjectileNode) {
         enemyProjectilesArray.append(projectile)

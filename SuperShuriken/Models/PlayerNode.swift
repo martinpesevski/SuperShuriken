@@ -29,18 +29,6 @@ class PlayerNode: SKSpriteNode, GKAgentDelegate {
     var seekGoal : GKGoal = GKGoal()
     let stopGoal : GKGoal = GKGoal()
     
-    var seeking : Bool = false {
-        willSet {
-//            if newValue {
-//                agent.behavior?.setWeight(1, for: seekGoal)
-//                agent.behavior?.setWeight(0, for: stopGoal)
-//            }else{
-//                agent.behavior?.setWeight(0, for: seekGoal)
-//                agent.behavior?.setWeight(1, for: stopGoal)
-//            }
-        }
-    }
-    
     var agentSystem = GKComponentSystem()
     
     var lastUpdateTime : TimeInterval = 0
@@ -59,11 +47,12 @@ class PlayerNode: SKSpriteNode, GKAgentDelegate {
 
         agent.position = vector_float2(Float(position.x), Float(position.y))
         agent.delegate = self
-        agent.maxSpeed = 100 * 4
-        agent.maxAcceleration = 500 * 4
+        agent.maxSpeed = 400
+        agent.speed = 400
+        agent.maxAcceleration = 100000000
         agent.behavior = GKBehavior()
         agent.behavior?.setWeight(1, for: seekGoal)
-        agent.mass = 0.01
+        agent.mass = 0.00000000000001
 
         agentSystem = GKComponentSystem(componentClass: GKAgent2D.self)
         
@@ -85,21 +74,30 @@ class PlayerNode: SKSpriteNode, GKAgentDelegate {
         self.agentSystem.update(deltaTime: delta)
     }
     
-    //MARK: touches
+    //MARK: - touches
     func handleTouchStart(location: CGPoint) {
         self.seeking = true
+        removeAction(forKey: "runToPoint")
         playAnimation(type: .Walk, completion: {})
         trackingAgent.position = vector_float2(Float(location.x), Float(location.y))
     }
     
     
     func handleTouchMoved(location: CGPoint) {
-        trackingAgent.position = vector_float2(Float(location.x), Float(location.y))
+        if seeking == false || location.y.distance(to: position.y) < 10 {
+            seeking = false
+            position = CGPoint(x: position.x, y: location.y);
+        } else {
+            seeking = true
+            trackingAgent.position = vector_float2(Float(location.x), Float(location.y))
+        }
     }
     
     func handleTouchEnded(location: CGPoint) {
         self.seeking = false
-        stopAnimation(type: .Walk)
+        walkToPoint(point: location) {
+            self.stopAnimation(type: .Walk)
+        }
     }
     
     func handleGotHit() {
@@ -107,7 +105,17 @@ class PlayerNode: SKSpriteNode, GKAgentDelegate {
         playAnimation(type: .Death, completion:{})
     }
     
-    //MARK: animations
+    func walkToPoint(point: CGPoint, completion: @escaping () -> Void) {
+        let distanceToWalk = distance(float2(Float(position.x), Float(point.y)),
+                                      float2(Float(position.x),Float(position.y)))
+        let duration = distanceToWalk/400
+        let destinationPoint = CGPoint(x: position.x, y: point.y)
+        run(action: SKAction.move(to: destinationPoint, duration: TimeInterval(duration)), withKey: "runToPoint") {
+            completion()
+        }
+    }
+    
+    //MARK: - animations
     func playAnimation(type: playerAnimationType, completion: @escaping () -> Void) {
         switch type {
         case .Walk:
@@ -118,21 +126,6 @@ class PlayerNode: SKSpriteNode, GKAgentDelegate {
             playDeathAnimation(completion: completion)
         case .Jump:
             playJumpAnimation(completion: completion)
-        }
-    }
-    
-    func walkToPoint(point: CGPoint) {
-        if point.y < horizonVerticalLocation {
-            let verticalMovePoint = CGPoint(x: position.x, y: point.y)
-            run(SKAction.move(to: verticalMovePoint, duration: 0.5))
-        } else if point.y >= horizonVerticalLocation + 50 {
-            let verticalMovePoint = CGPoint(x: position.x, y: horizonVerticalLocation)
-            run(SKAction.sequence([SKAction.move(to: verticalMovePoint, duration: 0.5), SKAction.run {
-                self.playAnimation(type: .Jump, completion: {})
-                }]))
-        } else {
-            let verticalMovePoint = CGPoint(x: position.x, y: horizonVerticalLocation)
-            run(SKAction.move(to: verticalMovePoint, duration: 0.5))
         }
     }
     
@@ -172,7 +165,7 @@ class PlayerNode: SKSpriteNode, GKAgentDelegate {
         }
     }
     
-    //MARK: gkAgentDelegate
+    //MARK: - gkAgentDelegate
     
     func agentWillUpdate(_ agent: GKAgent) {
         
@@ -183,7 +176,9 @@ class PlayerNode: SKSpriteNode, GKAgentDelegate {
             return
         }
         
-        position = CGPoint(x: position.x, y: CGFloat(agent2D.position.y))
+        if self.seeking {
+            position = CGPoint(x: position.x, y: CGFloat(agent2D.position.y))
+        }
     }
 }
 
