@@ -96,10 +96,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate, adMobInterstitialDelegate, G
         AdsManager.sharedInstance.interstitialDelegate = self
     }
     
-    override func update(_ currentTime: TimeInterval) {
-        player.update(currentTime: currentTime)
-    }
-    
     // MARK: - helper methods
     
     func setupWalls() {
