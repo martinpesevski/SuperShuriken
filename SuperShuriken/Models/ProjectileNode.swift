@@ -56,14 +56,18 @@ class ProjectileNode: SKSpriteNode {
         let shootAmount = direction * distance
         self.destination = shootAmount + position
         
-        let actionMove = SKAction.move(to: destination, duration: 2.0)
-        let actionMoveDone = SKAction.removeFromParent()
-        let projectileMovement = SKAction.sequence([actionMove, actionMoveDone])
+        let projectileMovement = getProjectileMovement()
         let projectileRotation = SKAction.repeatForever(SKAction.rotate(byAngle: CGFloat(Double.pi), duration: 0.2))
         if style == .rotating {
             run(SKAction.group([projectileMovement, projectileRotation]))
         } else {
             run (projectileMovement)
         }
+    }
+    
+    func getProjectileMovement () -> SKAction {
+        let actionMove = SKAction.move(to: destination, duration: 2.0)
+        let actionMoveDone = SKAction.removeFromParent()
+        return SKAction.sequence([actionMove, actionMoveDone])
     }
 }

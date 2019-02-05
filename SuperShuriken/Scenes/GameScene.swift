@@ -15,16 +15,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate, adMobInterstitialDelegate, G
     var player : PlayerNode!
     var didWin = false
     
-    var monsterSpawner = SKSpriteNode()
-    var monsterGoal = MonsterGoalNode()
-    
     var scoreLabel : SKLabelNode!
     var gameOverLabel : SKLabelNode!
     var nextLevelLabel : SKLabelNode!
     var tapToRetryLabel : SKLabelNode!
     
-    var gameManager = GameManager()
-    var monstersArray = [MonsterNode]()
+    var gameManager = GameManager.sharedInstance
+    var monsterManager = MonsterManager.sharedInstance
     var playerProjectilesArray = [ProjectileNode]()
     var enemyProjectilesArray = [ProjectileNode]()
 
@@ -39,19 +36,19 @@ class GameScene: SKScene, SKPhysicsContactDelegate, adMobInterstitialDelegate, G
         physicsWorld.gravity = CGVector.zero
         physicsWorld.contactDelegate = self
 
-        guard let spawnPoint = self.childNode(withName: "spawnPoint") as? SKSpriteNode else {
+        guard let spawnPoint = childNode(withName: "spawnPoint") as? SKSpriteNode else {
             return
         }
         
-        guard let enemySpawner = self.childNode(withName: "enemySpawner") as? SKSpriteNode else {
+        guard let enemySpawner = childNode(withName: "enemySpawner") as? SKSpriteNode else {
             return
         }
         
-        guard let monsterGoalPlaceholder = self.childNode(withName: "goal") as? SKSpriteNode else {
+        guard let monsterGoalPlaceholder = childNode(withName: "goal") as? SKSpriteNode else {
             return
         }
         
-        guard let menuButtonPlaceholder = self.childNode(withName: "menuButton") as? SKSpriteNode else {
+        guard let menuButtonPlaceholder = childNode(withName: "menuButton") as? SKSpriteNode else {
             return
         }
         
@@ -59,7 +56,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, adMobInterstitialDelegate, G
         nextLevelLabel = gameManager.createLabel(text: "GET READY FOR NEXT LEVEL", size: 80)
         tapToRetryLabel = gameManager.createLabel(text: "Tap to retry", size: 40)
 
-        scoreLabel = self.childNode(withName: "scoreLabel") as? SKLabelNode ?? SKLabelNode(text: "Score")
+        scoreLabel = childNode(withName: "scoreLabel") as? SKLabelNode ?? SKLabelNode(text: "Score")
         updateScoreLabel()
         
         menuButton = ButtonNode.init(normalTexture: SKTexture.init(imageNamed: "ic_button"),
@@ -73,14 +70,14 @@ class GameScene: SKScene, SKPhysicsContactDelegate, adMobInterstitialDelegate, G
         player.setupWithNode(node: spawnPoint)
         player.setup()
         
-        monsterGoal.setupWithNode(node: monsterGoalPlaceholder)
-        monsterGoal.setup()
+        monsterManager.monsterGoal.setupWithNode(node: monsterGoalPlaceholder)
+        monsterManager.monsterGoal.setup()
         
-        monsterSpawner.setupWithNode(node: enemySpawner)
+        monsterManager.monsterSpawner.setupWithNode(node: enemySpawner)
         
         addChild(player)
-        addChild(monsterGoal)
-        addChild(monsterSpawner)
+        addChild(monsterManager.monsterGoal.copy() as! SKNode)
+        addChild(monsterManager.monsterSpawner.copy() as! SKNode)
         addChild(menuButton)
 
         setupWalls()
@@ -99,8 +96,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate, adMobInterstitialDelegate, G
     // MARK: - helper methods
     
     func setupWalls() {
-        guard let wallTop = self.childNode(withName: "wallTop") as? SKSpriteNode,
-        let wallBottom = self.childNode(withName: "wallBottom") else {
+        guard let wallTop = childNode(withName: "wallTop") as? SKSpriteNode,
+        let wallBottom = childNode(withName: "wallBottom") else {
             return
         }
         
@@ -122,30 +119,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, adMobInterstitialDelegate, G
     }
     
     func addMonster() {
-        var monster = MonsterNode(imageNamed: "ic_monster")
-        var actualY = random(min: monsterSpawner.frame.origin.y + monster.size.height/2,
-                             max: (monsterSpawner.frame.origin.y + horizonVerticalLocation) - monster.size.height/2)
-        
-        let type : MonsterType
-        if gameManager.isBossLevel {
-            type = MonsterType.boss
-            monster = BossNode(imageNamed: "ic_monster")
-        } else {
-            type = MonsterType(rawValue: 1 + Int(arc4random_uniform(UInt32(MonsterType.count)))) ?? MonsterType.ghost
-        }
-        
-        if type == .air {
-             actualY = random(min: (monsterSpawner.frame.origin.y + horizonVerticalLocation),
-                                 max: monsterSpawner.frame.origin.y + monsterSpawner.frame.size.height)
-        }
-        
-        monster.setup(startPoint: CGPoint(x: size.width + monster.size.width/2, y: actualY), type: type)
-        monster.actualDuration = gameManager.monsterTimeToCrossScreen()
-        monster.monsterDelegate = self
-        
-        addChild(monster)
-        monstersArray.append(monster)
-        gameManager.isBossLevel ? (monster as! BossNode).playBossAnimation() : monster.playRunAnimation()
+        monsterManager.addMonsterToScene(scene: self)
     }
     
     func shootProjectile(location: CGPoint) {
@@ -174,11 +148,16 @@ class GameScene: SKScene, SKPhysicsContactDelegate, adMobInterstitialDelegate, G
     func levelFinished() {
         if gameManager.isGameFinished {return}
         gameManager.loadNextLevel()
-        if nextLevelLabel.parent == nil { self.addChild(nextLevelLabel) }
+        if nextLevelLabel.parent == nil { addChild(nextLevelLabel) }
         nextLevelLabel.position = CGPoint(x: frame.midX, y: frame.midY)
         run(SKAction.sequence([ SKAction.wait(forDuration: 5), SKAction.run({
-            self.nextLevelLabel.removeFromParent()
-            self.startNextlevel()
+            [weak self] in
+            
+            if let weakSelf = self {
+                weakSelf.nextLevelLabel.removeFromParent()
+                weakSelf.startNextlevel()
+            }
+            
         })]), withKey: "startNextLevel")
     }
     
@@ -188,13 +167,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate, adMobInterstitialDelegate, G
         
         removeAction(forKey: "startNextLevel")
         
-        if gameOverLabel.parent == nil { self.addChild(gameOverLabel) }
-        if tapToRetryLabel.parent == nil { self.addChild(tapToRetryLabel) }
+        if gameOverLabel.parent == nil { addChild(gameOverLabel) }
+        if tapToRetryLabel.parent == nil { addChild(tapToRetryLabel) }
         
         gameOverLabel.position = CGPoint(x: frame.midX, y: frame.midY)
         tapToRetryLabel.position = CGPoint(x: frame.midX, y: frame.midY/2)
         
-        self.gameManager.isGameFinished = true
+        gameManager.isGameFinished = true
         AdsManager.sharedInstance.showInterstitial()
     }
     
@@ -211,10 +190,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate, adMobInterstitialDelegate, G
     func showGameOverScreen() {
         scene?.view?.isPaused = false
         
-        for monster in monstersArray {
+        for monster in monsterManager.monstersArray {
             monster.removeFromParent()
         }
-        monstersArray.removeAll()
+        monsterManager.monstersArray.removeAll()
         
         for projectile in playerProjectilesArray {
             projectile.removeFromParent()
@@ -234,7 +213,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, adMobInterstitialDelegate, G
         playerProjectilesArray = playerProjectilesArray.filter{$0 != projectile}
         
         if monster.hitAndCheckDead() {
-            monstersArray = monstersArray.filter{$0 != monster}
+            monsterManager.monstersArray = monsterManager.monstersArray.filter{$0 != monster}
             monster.playDeathAnimation()
             
             if gameManager.isBossLevel {
@@ -272,13 +251,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate, adMobInterstitialDelegate, G
     
     func monsterDidReachGoal(monster: MonsterNode, goal: MonsterGoalNode) {
         monster.removeFromParent()
-        monstersArray = monstersArray.filter{$0 != monster}
+        monsterManager.monstersArray = monsterManager.monstersArray.filter{$0 != monster}
 
         endGame(didWin: false)
     }
     
     func monsterDidCollideWithPlayer(monster: MonsterNode, player: PlayerNode) {
-        monstersArray = monstersArray.filter{$0 != monster}
+        monsterManager.monstersArray = monsterManager.monstersArray.filter{$0 != monster}
         monster.playDeathAnimation()
         
         gameManager.updateScore(value: monster.type.rawValue)
@@ -368,12 +347,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate, adMobInterstitialDelegate, G
     }
     
     @objc func onMenuTap(){
-        gameManager.isGameFinished = true
+        gameManager.restart()
         let reveal = SKTransition.flipHorizontal(withDuration: 1)
         if let scene = MainMenu(fileNamed: "MainMenu") {
             scene.initialize()
             
-            self.view?.presentScene(scene, transition: reveal)
+            view?.presentScene(scene, transition: reveal)
         }
     }
     

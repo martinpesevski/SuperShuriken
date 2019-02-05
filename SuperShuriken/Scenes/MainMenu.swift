@@ -54,7 +54,7 @@ class MainMenu: SKScene {
         if let scene = GameScene(fileNamed: "GameScene") {
             scene.scaleMode = .aspectFit
             
-            self.view?.presentScene(scene, transition: reveal)
+            view?.presentScene(scene, transition: reveal)
         }
     }
     
@@ -63,7 +63,7 @@ class MainMenu: SKScene {
         if let scene = SettingsScene(fileNamed: "SettingsScene") {
             scene.scaleMode = .aspectFit
             
-            self.view?.presentScene(scene, transition: reveal)
+            view?.presentScene(scene, transition: reveal)
         }
     }
 }

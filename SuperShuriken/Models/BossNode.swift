@@ -9,10 +9,22 @@
 import UIKit
 import SpriteKit
 
+enum BossAttackType : Int {
+    case straightShot = 1
+    case curveShot = 2
+    
+    static var count: Int { return 2 }
+}
+
 class BossNode: MonsterNode {
     
     private let bossMoveDistance:CGFloat = 150
-
+    var attackType = BossAttackType.straightShot
+    
+    func setupRandom(){
+        attackType = BossAttackType(rawValue:Int(arc4random_uniform(UInt32(MonsterType.count)))) ??
+            .straightShot
+    }
     
     func playBossAnimation() {
         let actionWalkOnScreen = SKAction.move(to: CGPoint(x: startPoint.x - bossMoveDistance, y: startPoint.y), duration: TimeInterval(1))
@@ -31,7 +43,8 @@ class BossNode: MonsterNode {
     
     func startBossShooting() -> SKAction{
         let shootAction = SKAction.run {
-            let projectile = ProjectileNode()
+            let projectile = BossProjectileNode()
+            projectile.setupWithBossAttackType(attackType: self.attackType)
             projectile.position = self.position
             projectile.setup(type: .enemy, assetName: "ic_shuriken3")
             

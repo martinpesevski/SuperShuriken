@@ -15,9 +15,10 @@ protocol GameManagerDelegate {
 
 let startSpeed : (min:CGFloat, max:CGFloat) = (5.0, 7.0)
 let enemyLevelMultiplier = 5
-let bossLevelMultiplier = 2
+let bossLevelMultiplier = 1
 
 class GameManager: NSObject {
+    static let sharedInstance = GameManager()
     
     var delegate : GameManagerDelegate?
     var monstersForCurrentLevel = 0

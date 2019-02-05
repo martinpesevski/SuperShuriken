@@ -29,6 +29,7 @@ class MonsterNode: SKSpriteNode {
     var actualDuration: CGFloat!
     var hitPoints: Int = 1
     var monsterDelegate: MonsterDelegate?
+
     
     func setup(startPoint: CGPoint, type: MonsterType) {
         self.type = type
