@@ -32,12 +32,18 @@ class BossProjectileNode: ProjectileNode {
     }
     
     func createCurveMovement() -> SKAction {
-        let actionMoveStraight = SKAction.move(to: destination, duration: 2.0)
-        let actionMoveUp = SKAction.move(by: CGVector(dx: 0, dy: 200), duration: 0.5);
-        let actionMoveDown = SKAction.move(by: CGVector(dx: 0, dy: -400), duration: 0.5);
-        let actionZigZag = SKAction.repeatForever(SKAction.sequence([actionMoveUp, actionMoveDown]))
-        let actionMove = SKAction.group([actionMoveStraight, actionZigZag])
+        let path = CGMutablePath()
+        path.move(to: CGPoint(x: 0, y: 0))
+        var offset = 0
+        for _ in 1...7 {
+            path.addLine(to: CGPoint(x: -100 + offset, y: 50))
+            path.addLine(to: CGPoint(x: -200 + offset, y: -100))
+            path.addLine(to: CGPoint(x: -300 + offset, y: 50))
+            offset -= 300
+        }
+        
+        let actionMoveZigZag = SKAction.follow(path, asOffset: true, orientToPath: false, duration: 2.0)
         let actionMoveDone = SKAction.removeFromParent()
-        return SKAction.sequence([actionMove, actionMoveDone])
+        return SKAction.sequence([actionMoveZigZag, actionMoveDone])
     }
 }
