@@ -54,7 +54,8 @@ class SettingsScene : SKScene, switchNodeDelegate {
                                      selectedTexture: SKTexture(imageNamed: "ic_shuriken2"),
                                      disabledTexture: nil)
         shuriken2Button.setupWithNode(node: selectShuriken2Placeholder)
-
+        shuriken2Button.setButtonAction(target: self, triggerEvent: .TouchUpInside, action: #selector(onShurikenTap(sender:)))
+        
         shuriken2Button.zPosition = 2
         shuriken2Button.playRadiateAnimation()
 
@@ -104,12 +105,14 @@ class SettingsScene : SKScene, switchNodeDelegate {
         isOn ? AdsManager.sharedInstance.showAds() : AdsManager.sharedInstance.removeAds()
     }
     
-    @objc func onShurikenTap(sender: ButtonNode){
+    @objc func onShurikenTap(sender: SelectionButton){
         
         for button in shurikensDict {
             let isHighlighted = sender == button.value
             button.value.setHighligted(highlighted: isHighlighted)
-            Global.sharedInstance.selectedPlayerShuriken = button.key
+            if isHighlighted {
+                Global.sharedInstance.selectedPlayerShuriken = button.key
+            }
         }
     }
     
