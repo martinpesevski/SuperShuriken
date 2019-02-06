@@ -43,7 +43,7 @@ class ProjectileNode: SKSpriteNode {
             break
         }
 
-        size = CGSize.init(width: style == .straight ? 75 : 50, height: style == .straight ? 30 : 50)
+        size = CGSize.init(width: style == .straight ? 110 : 75, height: style == .straight ? 45 : 75)
         physicsBody = SKPhysicsBody(circleOfRadius: size.width/2)
         physicsBody?.isDynamic = true
         physicsBody?.categoryBitMask = type == .friendly ? PhysicsCategory.Projectile : PhysicsCategory.EnemyProjectile

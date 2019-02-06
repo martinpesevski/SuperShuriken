@@ -22,8 +22,6 @@ class Global: NSObject {
     
     var isSoundOn : Bool {
         get {
-            if isFirstRun { UserDefaults.standard.set(true, forKey: "isSoundOn")}
-
             return UserDefaults.standard.bool(forKey: "isSoundOn")
         }
         set {
