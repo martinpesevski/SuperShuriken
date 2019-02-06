@@ -162,9 +162,7 @@
 		C7884A2D207291D1005D01AB /* Animations */ = {
 			isa = PBXGroup;
 			children = (
-				C793BFEB2074EDAC00BDC559 /* playerShoot.atlas */,
-				C793BFE92074EDA600BDC559 /* playerDeath.atlas */,
-				C793BFE72074DEB300BDC559 /* playerWalk.atlas */,
+				C7B35B04220B5F080045E6FF /* PlayerAnimations */,
 			);
 			path = Animations;
 			sourceTree = "<group>";
@@ -211,6 +209,16 @@
 				C796D2391F7AAFC400F770CF /* pew-pew-lei.caf */,
 			);
 			path = Sounds;
+			sourceTree = "<group>";
+		};
+		C7B35B04220B5F080045E6FF /* PlayerAnimations */ = {
+			isa = PBXGroup;
+			children = (
+				C793BFEB2074EDAC00BDC559 /* playerShoot.atlas */,
+				C793BFE92074EDA600BDC559 /* playerDeath.atlas */,
+				C793BFE72074DEB300BDC559 /* playerWalk.atlas */,
+			);
+			path = PlayerAnimations;
 			sourceTree = "<group>";
 		};
 		C7DCF51D204D5F3E00CB1903 /* Managers */ = {
