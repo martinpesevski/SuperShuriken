@@ -31,12 +31,7 @@ class MonsterManager: NSObject {
             monster = BossNode(imageNamed: "ic_monster")
             (monster as! BossNode).setupRandom()
         } else {
-            type = MonsterType(rawValue: 1 + Int(arc4random_uniform(UInt32(MonsterType.count)))) ?? MonsterType.ghost
-        }
-        
-        if type == .air {
-            actualY = random(min: (monsterSpawner.frame.origin.y + horizonVerticalLocation),
-                             max: monsterSpawner.frame.origin.y + monsterSpawner.frame.size.height)
+            type = MonsterType(rawValue: 1 + Int(arc4random_uniform(UInt32(MonsterType.count)))) ?? MonsterType.basicMob
         }
         
         monster.setup(startPoint: CGPoint(x: scene.size.width + monster.size.width/2, y: actualY), type: type)

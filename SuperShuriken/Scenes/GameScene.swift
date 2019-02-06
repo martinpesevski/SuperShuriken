@@ -212,7 +212,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, adMobInterstitialDelegate, G
         projectile.removeFromParent()
         playerProjectilesArray = playerProjectilesArray.filter{$0 != projectile}
         
-        if monster.hitAndCheckDead() {
+        if monster.hitAndCheckDead(attackType: .Projectile) {
             monsterManager.monstersArray = monsterManager.monstersArray.filter{$0 != monster}
             monster.playDeathAnimation()
             
@@ -258,10 +258,16 @@ class GameScene: SKScene, SKPhysicsContactDelegate, adMobInterstitialDelegate, G
     
     func monsterDidCollideWithPlayer(monster: MonsterNode, player: PlayerNode) {
         monsterManager.monstersArray = monsterManager.monstersArray.filter{$0 != monster}
-        monster.playDeathAnimation()
         
-        gameManager.updateScore(value: monster.type.rawValue)
-        updateScoreLabel()
+        if monster.hitAndCheckDead(attackType: .Melee) {
+            monster.playDeathAnimation()
+            gameManager.updateScore(value: monster.type.rawValue)
+            updateScoreLabel()
+        } else {
+            player.handleGotHit()
+            endGame(didWin: false)
+        }
+        
     }
     
     // MARK: - touches

@@ -14,8 +14,8 @@ protocol GameManagerDelegate {
 }
 
 let startSpeed : (min:CGFloat, max:CGFloat) = (5.0, 7.0)
-let enemyLevelMultiplier = 5
-let bossLevelMultiplier = 1
+let enemyLevelMultiplier = 5//increment in number of enemies for each level
+let bossLevelMultiplier = 5//how many levels does it take to encounter a boss
 
 class GameManager: NSObject {
     static let sharedInstance = GameManager()

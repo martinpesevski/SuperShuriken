@@ -9,12 +9,17 @@
 import SpriteKit
 import GameplayKit
 
-enum playerAnimationType: String {
+enum PlayerAnimationType: String {
     case Walk = "playerWalkAnimation"
     case Jump = "playerJumpAnimation"
     case Shoot = "playerShootAnimation"
     case Death = "playerDeathAnimation"
     case walkToPoint = "playerWalkToPointAnimation"
+}
+
+enum AttackType: Int {
+    case Melee = 0
+    case Projectile = 1
 }
 
 class PlayerNode: SKSpriteNode, GKAgentDelegate {
@@ -78,13 +83,13 @@ class PlayerNode: SKSpriteNode, GKAgentDelegate {
                                       float2(Float(position.x),Float(position.y)))
         let duration = distanceToWalk/400
         let destinationPoint = CGPoint(x: position.x, y: point.y)
-        run(action: SKAction.move(to: destinationPoint, duration: TimeInterval(duration)), withKey: playerAnimationType.walkToPoint.rawValue) {
+        run(action: SKAction.move(to: destinationPoint, duration: TimeInterval(duration)), withKey: PlayerAnimationType.walkToPoint.rawValue) {
             completion()
         }
     }
     
     //MARK: - animations
-    func playAnimation(type: playerAnimationType, completion: @escaping () -> Void) {
+    func playAnimation(type: PlayerAnimationType, completion: @escaping () -> Void) {
         switch type {
         case .Walk:
             playWalkingAnimation(completion: completion)
@@ -99,7 +104,7 @@ class PlayerNode: SKSpriteNode, GKAgentDelegate {
         }
     }
     
-    func stopAnimation(type: playerAnimationType) {
+    func stopAnimation(type: PlayerAnimationType) {
         removeAction(forKey: type.rawValue)
         texture = SKTexture.init(image: #imageLiteral(resourceName: "ic_player"))
     }
@@ -110,18 +115,18 @@ class PlayerNode: SKSpriteNode, GKAgentDelegate {
                              timePerFrame: 0.1,
                              resize: false,
                              restore: true)),
-            withKey:playerAnimationType.Walk.rawValue)
+            withKey:PlayerAnimationType.Walk.rawValue)
     }
     
     private func playShootAnimation(completion: () -> Void) {
-        if action(forKey: playerAnimationType.Shoot.rawValue) != nil {
+        if action(forKey: PlayerAnimationType.Shoot.rawValue) != nil {
             return
         }
-        run(SKAction.animate(with: playerShootingFrames, timePerFrame: 0.1, resize: false, restore: true), withKey: playerAnimationType.Shoot.rawValue)
+        run(SKAction.animate(with: playerShootingFrames, timePerFrame: 0.1, resize: false, restore: true), withKey: PlayerAnimationType.Shoot.rawValue)
     }
     
     private func playDeathAnimation(completion: () -> Void) {
-        run(SKAction.animate(with: playerDeathFrames, timePerFrame: 0.1, resize: false, restore: false), withKey: playerAnimationType.Death.rawValue)
+        run(SKAction.animate(with: playerDeathFrames, timePerFrame: 0.1, resize: false, restore: false), withKey: PlayerAnimationType.Death.rawValue)
     }
     
     private func playJumpAnimation(completion: @escaping () -> Void) {
@@ -130,7 +135,7 @@ class PlayerNode: SKSpriteNode, GKAgentDelegate {
         let spriteAnimation = SKAction.animate(with: playerShootingFrames, timePerFrame: 0.3, resize: false, restore: true)
         
         let motionAnimation = SKAction.sequence([jumpUp, fallDown])
-        run(action: SKAction.group([motionAnimation, spriteAnimation]), withKey: playerAnimationType.Jump.rawValue) {
+        run(action: SKAction.group([motionAnimation, spriteAnimation]), withKey: PlayerAnimationType.Jump.rawValue) {
             completion()
         }
     }

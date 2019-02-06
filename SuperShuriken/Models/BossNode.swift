@@ -22,7 +22,7 @@ class BossNode: MonsterNode {
     var attackType = BossAttackType.straightShot
     
     func setupRandom(){
-        attackType = BossAttackType(rawValue:Int(arc4random_uniform(UInt32(MonsterType.count)))) ??
+        attackType = BossAttackType(rawValue:Int(arc4random_uniform(UInt32(BossAttackType.count)))) ??
             .straightShot
     }
     

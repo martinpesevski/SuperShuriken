@@ -15,10 +15,10 @@ protocol MonsterDelegate {
 }
 
 enum MonsterType:Int {
-    case ghost = 1
-    case bigGhost = 2
+    case basicMob = 1
+    case bigMob = 2
+    case meleeMob = 3
     case boss = 10
-    case air = 3
 
     static var count: Int { return 3 }
 }
@@ -29,12 +29,13 @@ class MonsterNode: SKSpriteNode {
     var actualDuration: CGFloat!
     var hitPoints: Int = 1
     var monsterDelegate: MonsterDelegate?
-
+    var attackTypeWeaknesses: [AttackType]!
     
     func setup(startPoint: CGPoint, type: MonsterType) {
         self.type = type
 
         hitPoints = getNumberOfHits(monsterType: type)
+        attackTypeWeaknesses = getWeaknesses(monsterType: type)
         
         self.startPoint = startPoint
         position = startPoint
@@ -55,7 +56,11 @@ class MonsterNode: SKSpriteNode {
     }
     
     // reduces the hitpoints of the monster and returns boolean indicating if it is dead or not
-    func hitAndCheckDead() -> Bool{
+    func hitAndCheckDead(attackType: AttackType) -> Bool{
+        if !attackTypeWeaknesses.contains(attackType) {
+            return false
+        }
+        
         hitPoints -= 1
         
         return hitPoints == 0
@@ -83,11 +88,11 @@ class MonsterNode: SKSpriteNode {
     func getScaleFactor(monsterType: MonsterType) -> CGFloat {
         let scaleFactor : CGFloat
         switch monsterType {
-        case .ghost:
+        case .basicMob:
             scaleFactor = 2
-        case .bigGhost:
+        case .bigMob:
             scaleFactor = 3
-        case .air:
+        case.meleeMob:
             scaleFactor = 2
         case .boss:
             scaleFactor = 5
@@ -99,16 +104,32 @@ class MonsterNode: SKSpriteNode {
     func getNumberOfHits(monsterType: MonsterType) -> Int {
         let numberOfHits : Int
         switch monsterType {
-        case .ghost:
+        case .basicMob:
             numberOfHits = 1
-        case .bigGhost:
+        case .bigMob:
             numberOfHits = 2
-        case .air:
+        case .meleeMob:
             numberOfHits = 1
         case .boss:
             numberOfHits = 5
         }
         
         return numberOfHits
+    }
+    
+    func getWeaknesses(monsterType: MonsterType) -> [AttackType] {
+        var weaknessesArray : [AttackType] = [];
+        switch monsterType {
+        case .basicMob:
+            weaknessesArray = [.Melee, .Projectile]
+        case .bigMob:
+            weaknessesArray = [.Projectile]
+        case .meleeMob:
+            weaknessesArray = [.Melee]
+        case .boss:
+            weaknessesArray = [.Projectile]
+        }
+        
+        return weaknessesArray
     }
 }
