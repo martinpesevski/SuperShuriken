@@ -59,6 +59,12 @@ class PlayerNode: SKSpriteNode, GKAgentDelegate {
     
     
     func handleTouchMoved(location: CGPoint) {
+        if GameManager.sharedInstance.isGameFinished {
+            self.stopAnimation(type: .walkToPoint)
+            self.stopAnimation(type: .Walk)
+            return;
+        }
+        
         if isDragging || fabs(location.y.distance(to: position.y)) < 50 {
             self.stopAnimation(type: .walkToPoint)
             isDragging = true;
@@ -67,6 +73,12 @@ class PlayerNode: SKSpriteNode, GKAgentDelegate {
     }
     
     func handleTouchEnded(location: CGPoint) {
+        if GameManager.sharedInstance.isGameFinished {
+            self.stopAnimation(type: .walkToPoint)
+            self.stopAnimation(type: .Walk)
+            return;
+        }
+        
         self.stopAnimation(type: .walkToPoint)	
         walkToPoint(point: location) {
             self.stopAnimation(type: .Walk)
@@ -105,8 +117,10 @@ class PlayerNode: SKSpriteNode, GKAgentDelegate {
     }
     
     func stopAnimation(type: PlayerAnimationType) {
-        removeAction(forKey: type.rawValue)
-        texture = SKTexture.init(image: #imageLiteral(resourceName: "ic_player"))
+        if action(forKey: type.rawValue) != nil {
+            removeAction(forKey: type.rawValue)
+            texture = SKTexture.init(image: #imageLiteral(resourceName: "ic_player"))
+        }
     }
     
     private func playWalkingAnimation(completion: () -> Void) {

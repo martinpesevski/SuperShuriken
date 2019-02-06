@@ -115,7 +115,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, adMobInterstitialDelegate, G
             return
         }
         
-        run(SKAction.repeat(SKAction.sequence([SKAction.run(addMonster), SKAction.wait(forDuration: TimeInterval(1.0))]), count: gameManager.numberOfMonstersForCurrentLevel()))
+        run(SKAction.repeat(SKAction.sequence([SKAction.run(addMonster), SKAction.wait(forDuration: TimeInterval(1.0))]), count: gameManager.numberOfMonstersForCurrentLevel()), withKey:"spawnAction")
     }
     
     func addMonster() {
@@ -162,10 +162,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate, adMobInterstitialDelegate, G
     }
     
     func endGame(didWin: Bool) {
+        if gameManager.isGameFinished {return}
+        
         self.didWin = didWin
         scene?.view?.isPaused = true
         
         removeAction(forKey: "startNextLevel")
+        removeAction(forKey: "spawnAction")
         
         if gameOverLabel.parent == nil { addChild(gameOverLabel) }
         if tapToRetryLabel.parent == nil { addChild(tapToRetryLabel) }
@@ -174,17 +177,23 @@ class GameScene: SKScene, SKPhysicsContactDelegate, adMobInterstitialDelegate, G
         tapToRetryLabel.position = CGPoint(x: frame.midX, y: frame.midY/2)
         
         gameManager.isGameFinished = true
-        AdsManager.sharedInstance.showInterstitial()
+        if Global.sharedInstance.adsEnabled {
+            AdsManager.sharedInstance.showInterstitial()
+        } else {
+            showGameOverScreen()
+        }
     }
     
     func restart() {
         gameManager.restart()
         removeAction(forKey: "startNextLevel")
+        player.stopAnimation(type: .Death)
         gameOverLabel.removeFromParent()
         tapToRetryLabel.removeFromParent()
         updateScoreLabel()
         startNextlevel()
         player.texture = SKTexture.init(imageNamed: "ic_player")
+
     }
     
     func showGameOverScreen() {
@@ -258,9 +267,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate, adMobInterstitialDelegate, G
     
     func monsterDidCollideWithPlayer(monster: MonsterNode, player: PlayerNode) {
         monsterManager.monstersArray = monsterManager.monstersArray.filter{$0 != monster}
-        
+        monster.playDeathAnimation()
+
         if monster.hitAndCheckDead(attackType: .Melee) {
-            monster.playDeathAnimation()
             gameManager.updateScore(value: monster.type.rawValue)
             updateScoreLabel()
         } else {
@@ -286,6 +295,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, adMobInterstitialDelegate, G
     }
     
     override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
+        
         for touch in touches {
             guard let touchName = activeTouches[touch] else {
                 return
