@@ -21,7 +21,7 @@ class MonsterManager: NSObject {
     
     func addMonsterToScene(scene: GameScene) {
         
-        var monster = MonsterNode(imageNamed: "ic_monster")
+        var monster = MonsterNode()
         let actualY = random(min: monsterSpawner.frame.origin.y + monster.size.height/2,
                              max: (monsterSpawner.frame.origin.y + horizonVerticalLocation) - monster.size.height/2)
         

@@ -32,7 +32,10 @@ class MonsterNode: SKSpriteNode {
     
     func setup(startPoint: CGPoint, type: MonsterType) {
         self.type = type
-
+        
+        texture = SKTexture(imageNamed: getImageName(monsterType: type))
+        size = texture?.size() ?? CGSize(width: 50, height: 50)
+        
         hitPoints = getNumberOfHits(monsterType: type)
         attackTypeWeaknesses = getWeaknesses(monsterType: type)
         
@@ -147,6 +150,19 @@ class MonsterNode: SKSpriteNode {
             return meleeMobSpeed
         case .boss:
             return 0
+        }
+    }
+    
+    func getImageName(monsterType: MonsterType) -> String {
+        switch monsterType {
+        case .basicMob:
+            return "ic_ninja_sword"
+        case .bigMob:
+            return "ic_monster"
+        case .meleeMob:
+            return "ic_monster"
+        case .boss:
+            return "ic_monster"
         }
     }
 }
