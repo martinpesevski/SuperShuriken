@@ -35,7 +35,6 @@ class MonsterManager: NSObject {
         }
         
         monster.setup(startPoint: CGPoint(x: scene.size.width + monster.size.width/2, y: actualY), type: type)
-        monster.actualDuration = gameManager.monsterTimeToCrossScreen()
         monster.monsterDelegate = scene
         
         scene.addChild(monster)

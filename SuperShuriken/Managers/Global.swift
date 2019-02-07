@@ -8,6 +8,11 @@
 
 import UIKit
 
+let projectileSpeed : CGFloat = 1000
+let meleeMobSpeed : CGFloat = 600
+let basicMobSpeed : CGFloat = 500
+let bigMobSpeed : CGFloat = 400
+
 class Global: NSObject {
     static let sharedInstance = Global()
 

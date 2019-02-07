@@ -26,14 +26,14 @@ class BossProjectileNode: ProjectileNode {
     }
     
     func createStraightMovement() -> SKAction {
-        let actionMove = SKAction.move(to: destination, duration: 2.0)
+        let actionMove = SKAction.move(to: destination, duration: getDuration(pointA: position, pointB: destination, speed: projectileSpeed))
         let actionMoveDone = SKAction.removeFromParent()
         return SKAction.sequence([actionMove, actionMoveDone])
     }
     
     func createCurveMovement() -> SKAction {
         let path = CGMutablePath()
-        path.move(to: CGPoint(x: 0, y: 0))
+        path.move(to: position)
         var offset = 0
         for _ in 1...7 {
             path.addLine(to: CGPoint(x: -100 + offset, y: 50))
@@ -42,7 +42,7 @@ class BossProjectileNode: ProjectileNode {
             offset -= 300
         }
         
-        let actionMoveZigZag = SKAction.follow(path, asOffset: true, orientToPath: false, duration: 2.0)
+        let actionMoveZigZag = SKAction.follow(path, asOffset: true, orientToPath: false, duration:  getDuration(pointA: position, pointB: destination, speed: projectileSpeed))
         let actionMoveDone = SKAction.removeFromParent()
         return SKAction.sequence([actionMoveZigZag, actionMoveDone])
     }

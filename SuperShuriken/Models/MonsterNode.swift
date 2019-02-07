@@ -26,7 +26,6 @@ enum MonsterType:Int {
 class MonsterNode: SKSpriteNode {
     var startPoint = CGPoint()
     var type: MonsterType!
-    var actualDuration: CGFloat!
     var hitPoints: Int = 1
     var monsterDelegate: MonsterDelegate?
     var attackTypeWeaknesses: [AttackType]!
@@ -50,7 +49,8 @@ class MonsterNode: SKSpriteNode {
     }
     
     func playRunAnimation() {
-        let actionMove = SKAction.move(to: CGPoint(x: -100, y: startPoint.y), duration: TimeInterval(actualDuration))
+        let destination = CGPoint(x: -100, y: position.y)
+        let actionMove = SKAction.move(to: CGPoint(x: -100, y: startPoint.y), duration: getDuration(pointA: position, pointB: destination, speed: getSpeed(monsterType: type) * GameManager.sharedInstance.speedUpFactor()))
         
         run(actionMove, withKey: "moveAction")
     }
@@ -135,5 +135,18 @@ class MonsterNode: SKSpriteNode {
         }
         
         return weaknessesArray
+    }
+    
+    func getSpeed(monsterType: MonsterType) -> CGFloat {
+        switch monsterType {
+        case .basicMob:
+            return basicMobSpeed
+        case .bigMob:
+            return bigMobSpeed
+        case .meleeMob:
+            return meleeMobSpeed
+        case .boss:
+            return 0
+        }
     }
 }

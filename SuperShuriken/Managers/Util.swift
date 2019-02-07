@@ -43,6 +43,14 @@ public func random(min: CGFloat, max: CGFloat) -> CGFloat {
     return random() * (max - min) + min
 }
 
+public func getDuration(pointA:CGPoint,pointB:CGPoint,speed:CGFloat)->TimeInterval {
+    let xDist = (pointB.x - pointA.x)
+    let yDist = (pointB.y - pointA.y)
+    let distance = sqrt((xDist * xDist) + (yDist * yDist));
+    let duration : TimeInterval = TimeInterval(distance/speed)
+    return duration
+}
+
 #if !(arch(x86_64) || arch(arm64))
     func sqrt(a: CGFloat) -> CGFloat {
         return CGFloat(sqrtf(Float(a)))

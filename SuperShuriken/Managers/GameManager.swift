@@ -13,7 +13,6 @@ protocol GameManagerDelegate {
     func levelFinished()
 }
 
-let startSpeed : (min:CGFloat, max:CGFloat) = (5.0, 7.0)
 let enemyLevelMultiplier = 5//increment in number of enemies for each level
 let bossLevelMultiplier = 5//how many levels does it take to encounter a boss
 
@@ -47,10 +46,6 @@ class GameManager: NSObject {
         level += 1
         isBossLevel = level % bossLevelMultiplier == 0 
         monstersForCurrentLevel = 0
-    }
-    
-    func monsterTimeToCrossScreen() -> CGFloat {
-        return random(min: startSpeed.min * speedUpFactor(), max: startSpeed.max * speedUpFactor())
     }
     
     func numberOfMonstersForCurrentLevel() -> Int {

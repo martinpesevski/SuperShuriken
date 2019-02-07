@@ -66,7 +66,7 @@ class ProjectileNode: SKSpriteNode {
     }
     
     func getProjectileMovement () -> SKAction {
-        let actionMove = SKAction.move(to: destination, duration: 2.0)
+        let actionMove = SKAction.move(to: destination, duration: getDuration(pointA: self.position, pointB: destination, speed: 1000))
         let actionMoveDone = SKAction.removeFromParent()
         return SKAction.sequence([actionMove, actionMoveDone])
     }
