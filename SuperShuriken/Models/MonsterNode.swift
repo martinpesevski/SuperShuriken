@@ -79,10 +79,14 @@ class MonsterNode: SKSpriteNode {
     }
     
     func playHitAnimation(){
+        removeAction(forKey: "moveAction")
+        let knockbackAction = SKAction.move(by: CGVector(dx: 50, dy: 0), duration: 0.2)
         let flashWhite = SKAction.fadeAlpha(to: 0.5, duration: 0.1)
         let removeFlash = SKAction.fadeAlpha(to: 1, duration: 0.1)
 
-        run(SKAction.sequence([flashWhite, removeFlash]))
+        run(SKAction.group([knockbackAction, SKAction.sequence([flashWhite, removeFlash]) ]), completion:{
+            self.playRunAnimation()
+        })
     }
     
     func getScaleFactor(monsterType: MonsterType) -> CGFloat {
