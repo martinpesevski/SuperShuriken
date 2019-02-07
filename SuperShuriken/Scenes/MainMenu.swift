@@ -16,7 +16,7 @@ class MainMenu: SKScene {
     var backgroundNode : SKSpriteNode!
     
     func initialize () {
-        scaleMode = .aspectFit
+        scaleMode = .fill
     }
     
     override func didMove(to view: SKView) {
@@ -52,7 +52,7 @@ class MainMenu: SKScene {
     @objc func onPlayTap() {
         let reveal = SKTransition.flipHorizontal(withDuration: 1)
         if let scene = GameScene(fileNamed: "GameScene") {
-            scene.scaleMode = .aspectFit
+            scene.scaleMode = .fill
             
             view?.presentScene(scene, transition: reveal)
         }
@@ -61,7 +61,7 @@ class MainMenu: SKScene {
     @objc func onSettingsTap() {
         let reveal = SKTransition.flipHorizontal(withDuration: 1)
         if let scene = SettingsScene(fileNamed: "SettingsScene") {
-            scene.scaleMode = .aspectFit
+            scene.scaleMode = .fill
             
             view?.presentScene(scene, transition: reveal)
         }
