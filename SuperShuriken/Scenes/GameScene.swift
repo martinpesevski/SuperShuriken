@@ -172,6 +172,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, adMobInterstitialDelegate, G
         
         if gameOverLabel.parent == nil { addChild(gameOverLabel) }
         if tapToRetryLabel.parent == nil { addChild(tapToRetryLabel) }
+        nextLevelLabel.removeFromParent()
         
         gameOverLabel.position = CGPoint(x: frame.midX, y: frame.midY)
         tapToRetryLabel.position = CGPoint(x: frame.midX, y: frame.midY/2)

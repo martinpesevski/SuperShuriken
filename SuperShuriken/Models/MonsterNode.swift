@@ -34,7 +34,7 @@ class MonsterNode: SKSpriteNode {
         self.type = type
         
         texture = SKTexture(imageNamed: getImageName(monsterType: type))
-        size = texture?.size() ?? CGSize(width: 50, height: 50)
+        size = texture?.size() ?? CGSize(width: 50, height: 50) 
         
         hitPoints = getNumberOfHits(monsterType: type)
         attackTypeWeaknesses = getWeaknesses(monsterType: type)
@@ -87,7 +87,7 @@ class MonsterNode: SKSpriteNode {
         let flashWhite = SKAction.fadeAlpha(to: 0.5, duration: 0.1)
         let removeFlash = SKAction.fadeAlpha(to: 1, duration: 0.1)
 
-        run(SKAction.group([knockbackAction, SKAction.sequence([flashWhite, removeFlash]) ]), completion:{
+        run(SKAction.group([knockbackAction, SKAction.sequence([flashWhite, removeFlash]) ]), completion:{ [unowned self] in
             self.playRunAnimation()
         })
     }
