@@ -11,15 +11,16 @@ import SpriteKit
 
 enum BossAttackType : Int {
     case straightShot = 1
-    case curveShot = 2
-    
-    static var count: Int { return 2 }
+    case curveShot
+    case splitShot
+
+    static var count: Int { return 3 }
 }
 
 class BossNode: MonsterNode {
     
     private let bossMoveDistance:CGFloat = 150
-    var attackType = BossAttackType.straightShot
+    var attackType = BossAttackType.splitShot
     
     func setupRandom(){
         attackType = BossAttackType(rawValue:Int(arc4random_uniform(UInt32(BossAttackType.count)))) ??
@@ -83,23 +84,37 @@ class BossNode: MonsterNode {
     
     func getShootAction(scene:SKScene, offset: CGFloat) -> SKAction {
         let shootAction = SKAction.run { [unowned self] in
-            let projectile = BossProjectileNode()
-            projectile.setupWithBossAttackType(attackType: self.attackType)
-            projectile.position = CGPoint(x: self.position.x, y: self.position.y + offset)
-            projectile.setup(type: .enemy, assetName: "ic_shuriken3")
-            
-            let offset = CGPoint(x: -100, y: 0)
-            
-            guard let scene = self.scene else {
-                return
+            if self.attackType == .splitShot {
+                self.createAndShootSplitShot()
+            } else {
+                self.createAndShootSingleShot(offset: 0, angle: 0)
             }
-            scene.addChild(projectile)
-            self.monsterDelegate?.monsterDidShoot(projectile: projectile)
-            let direction = offset.normalized()
-            projectile.shootWithDirection(direction: direction)
         }
         
         return shootAction
+    }
+    
+    func createAndShootSingleShot(offset: CGFloat, angle: Int) {
+        let projectile = BossProjectileNode()
+        projectile.setupWithBossAttackType(attackType: self.attackType, angle: angle)
+        projectile.position = CGPoint(x: self.position.x, y: self.position.y + offset)
+        projectile.setup(type: .enemy, assetName: "ic_shuriken3")
+        
+        let offset = CGPoint(x: -100, y: 0)
+        
+        guard let scene = self.scene else {
+            return
+        }
+        scene.addChild(projectile)
+        self.monsterDelegate?.monsterDidShoot(projectile: projectile)
+        let direction = offset.normalized()
+        projectile.shootWithDirection(direction: direction)
+    }
+    
+    func createAndShootSplitShot(){
+        createAndShootSingleShot(offset: 0, angle: 200)
+        createAndShootSingleShot(offset: 0, angle: 0)
+        createAndShootSingleShot(offset: 0, angle: -200)
     }
     
     func getBossRepeatedShootAction(scene:SKScene) -> SKAction{

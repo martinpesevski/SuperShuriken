@@ -10,23 +10,26 @@ import UIKit
 import SpriteKit
 
 class BossProjectileNode: ProjectileNode {
-    var attackType = BossAttackType.straightShot
+    var attackType = BossAttackType.splitShot
+    var angle = 0
     
-    func setupWithBossAttackType(attackType: BossAttackType){
+    func setupWithBossAttackType(attackType: BossAttackType, angle: Int){
         self.attackType = attackType
+        self.angle = angle
     }
     
     override func getProjectileMovement() -> SKAction {
         switch attackType {
-        case .straightShot:
-            return createStraightMovement()
+        case .straightShot, .splitShot:
+            return createStraightMovement(angle: angle)
         case .curveShot:
             return createCurveMovement()
         }
     }
     
-    func createStraightMovement() -> SKAction {
-        let actionMove = SKAction.move(to: destination, duration: getDuration(pointA: position, pointB: destination, speed: projectileSpeed))
+    func createStraightMovement(angle: Int) -> SKAction {
+        let newDestination = CGPoint(x: destination.x, y: destination.y + CGFloat(angle))
+        let actionMove = SKAction.move(to: newDestination, duration: getDuration(pointA: position, pointB: destination, speed: projectileSpeed))
         let actionMoveDone = SKAction.removeFromParent()
         return SKAction.sequence([actionMove, actionMoveDone])
     }
