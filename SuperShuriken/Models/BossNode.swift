@@ -54,11 +54,11 @@ class BossNode: MonsterNode {
     
     func runSpecialAttackTimer(scene: SKScene){
         run(action: SKAction.wait(forDuration: 5), withKey: "waitForSpecial") { [unowned self] in
-            self.shootSpecialAttackAction(scene: scene)
+            self.shootSpecialAttack(scene: scene)
         }
     }
     
-    func shootSpecialAttackAction(scene: SKScene) {
+    func shootSpecialAttack(scene: SKScene) {
         self.removeAction(forKey: "bossAction")
         let flashWhite = SKAction.fadeAlpha(to: 0.5, duration: 0.1)
         let removeFlash = SKAction.fadeAlpha(to: 1, duration: 0.1)
@@ -66,7 +66,7 @@ class BossNode: MonsterNode {
         var shotsArray = [SKAction]()
         for _ in 0...15 {
             let offset = random(min: -50.0, max: 50.0)
-            let shootAction = getShootAction(scene: scene, offset: offset)
+            let shootAction = getShootAction(scene: scene, attackType: .straightShot, offset: offset)
             shotsArray.append(shootAction)
             shotsArray.append(SKAction.wait(forDuration: 0.02))
         }
@@ -82,21 +82,21 @@ class BossNode: MonsterNode {
         return SKAction.repeatForever(SKAction.sequence([actionWalkTop, actionWalkBottom]))
     }
     
-    func getShootAction(scene:SKScene, offset: CGFloat) -> SKAction {
+    func getShootAction(scene:SKScene, attackType:BossAttackType, offset: CGFloat) -> SKAction {
         let shootAction = SKAction.run { [unowned self] in
             if self.attackType == .splitShot {
                 self.createAndShootSplitShot()
             } else {
-                self.createAndShootSingleShot(offset: 0, angle: 0)
+                self.createAndShootSingleShot(attackType: attackType, offset: offset, angle: 0)
             }
         }
         
         return shootAction
     }
     
-    func createAndShootSingleShot(offset: CGFloat, angle: Int) {
+    func createAndShootSingleShot(attackType: BossAttackType, offset: CGFloat, angle: Int) {
         let projectile = BossProjectileNode()
-        projectile.setupWithBossAttackType(attackType: self.attackType, angle: angle)
+        projectile.setupWithBossAttackType(attackType: attackType, angle: angle)
         projectile.position = CGPoint(x: self.position.x, y: self.position.y + offset)
         projectile.setup(type: .enemy, assetName: "ic_shuriken3")
         
@@ -112,13 +112,13 @@ class BossNode: MonsterNode {
     }
     
     func createAndShootSplitShot(){
-        createAndShootSingleShot(offset: 0, angle: 200)
-        createAndShootSingleShot(offset: 0, angle: 0)
-        createAndShootSingleShot(offset: 0, angle: -200)
+        createAndShootSingleShot(attackType: .straightShot, offset: 0, angle: 200)
+        createAndShootSingleShot(attackType: .straightShot, offset: 0, angle: 0)
+        createAndShootSingleShot(attackType: .straightShot, offset: 0, angle: -200)
     }
     
     func getBossRepeatedShootAction(scene:SKScene) -> SKAction{
-        let shootAction = getShootAction(scene: scene, offset: 0)
+        let shootAction = getShootAction(scene: scene, attackType: attackType,offset: 0)
         let shotFrequency = random(min: 0.2, max: 1)
         
         let normalShootAction = SKAction.sequence([shootAction, SKAction.wait(forDuration: TimeInterval(shotFrequency))])
