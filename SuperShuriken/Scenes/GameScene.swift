@@ -16,6 +16,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, adMobInterstitialDelegate, G
     var didWin = false
     
     var scoreLabel : SKLabelNode!
+    var staminaBar : StaminaBarNode!
     var gameOverLabel : SKLabelNode!
     var nextLevelLabel : SKLabelNode!
     var tapToRetryLabel : SKLabelNode!
@@ -51,6 +52,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate, adMobInterstitialDelegate, G
         guard let menuButtonPlaceholder = childNode(withName: "menuButton") as? SKSpriteNode else {
             return
         }
+        guard let staminaBarPlaceholder = childNode(withName: "staminaBar") as? SKSpriteNode else {
+            return
+        }
         
         gameOverLabel = gameManager.createLabel(text: "YOU LOST :(", size: 80)
         nextLevelLabel = gameManager.createLabel(text: "GET READY FOR NEXT LEVEL", size: 80)
@@ -70,12 +74,17 @@ class GameScene: SKScene, SKPhysicsContactDelegate, adMobInterstitialDelegate, G
         player.setupWithNode(node: spawnPoint)
         player.setup()
         
+        staminaBar = StaminaBarNode(imageNamed: "ic_stamina_bar_edge")
+        staminaBar.setupWithNode(node: staminaBarPlaceholder)
+        staminaBar.setupStaminaBar()
+        
         monsterManager.monsterGoal.setupWithNode(node: monsterGoalPlaceholder)
         monsterManager.monsterGoal.setup()
         
         monsterManager.monsterSpawner.setupWithNode(node: enemySpawner)
         
         addChild(player)
+        addChild(staminaBar)
         addChild(monsterManager.monsterGoal.copy() as! SKNode)
         addChild(monsterManager.monsterSpawner.copy() as! SKNode)
         addChild(menuButton)
@@ -123,6 +132,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate, adMobInterstitialDelegate, G
     }
     
     func shootProjectile(location: CGPoint) {
+        if staminaBar.isExhausted {
+            return
+        }
+       
         player.playAnimation(type: .Shoot, completion: {})
         
         let projectile = ProjectileNode()
@@ -139,6 +152,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, adMobInterstitialDelegate, G
         playerProjectilesArray.append(projectile)
         let direction = offset.normalized()
         projectile.shootWithDirection(direction: direction)
+        staminaBar.didShoot()
     }
     
     func updateScoreLabel() {
