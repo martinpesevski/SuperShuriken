@@ -29,7 +29,9 @@ class MonsterNode: SKSpriteNode {
     var hitPoints: Int = 1
     var monsterDelegate: MonsterDelegate?
     var attackTypeWeaknesses: [AttackType]!
-    
+    var bloodSplatterNode: SKSpriteNode!
+    var bloodSplatterTextures = [SKTexture]()
+
     func setup(startPoint: CGPoint, type: MonsterType) {
         self.type = type
         
@@ -43,6 +45,14 @@ class MonsterNode: SKSpriteNode {
         position = startPoint
         let scaleFactor = getScaleFactor(monsterType: type)
         scale(to: CGSize(width: size.width * scaleFactor, height: size.height * scaleFactor))
+        
+        bloodSplatterNode = SKSpriteNode(color: .clear, size: CGSize(width: 30, height: 20))
+        bloodSplatterNode.anchorPoint = CGPoint(x: 0, y: 0)
+        bloodSplatterNode.zPosition = 1
+        bloodSplatterNode.position = CGPoint(x: 0, y: 0)
+        addChild(bloodSplatterNode)
+        
+        bloodSplatterTextures = createAtlas(name: "bloodSplatter")
         
         physicsBody = SKPhysicsBody(rectangleOf: size)
         physicsBody?.isDynamic = true
@@ -79,17 +89,24 @@ class MonsterNode: SKSpriteNode {
         let rotateFade = SKAction.group([rotateAction, fadeAction])
         let destroyAction = SKAction.removeFromParent()
         run(SKAction.sequence([rotateFade, destroyAction]))
+        playBloodSplatterAnimation()
     }
     
     func playHitAnimation(){
         removeAction(forKey: "moveAction")
         let knockbackAction = SKAction.move(by: CGVector(dx: 50, dy: 0), duration: 0.2)
-        let flashWhite = SKAction.fadeAlpha(to: 0.5, duration: 0.1)
-        let removeFlash = SKAction.fadeAlpha(to: 1, duration: 0.1)
-
-        run(SKAction.group([knockbackAction, SKAction.sequence([flashWhite, removeFlash]) ]), completion:{ [unowned self] in
+        
+        playBloodSplatterAnimation()
+        
+        run(knockbackAction) { [unowned self] in
             self.playRunAnimation()
-        })
+        }
+    }
+    
+    func playBloodSplatterAnimation(){
+        let bloodSplatterAction = SKAction.animate(with: bloodSplatterTextures, timePerFrame: 0.05, resize: false, restore: true)
+        removeAction(forKey: "bloodSplatterAction")
+        bloodSplatterNode.run(bloodSplatterAction, withKey: "bloodSplatterAction")
     }
     
     func getScaleFactor(monsterType: MonsterType) -> CGFloat {

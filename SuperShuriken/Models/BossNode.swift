@@ -40,10 +40,7 @@ class BossNode: MonsterNode {
     }
     
     override func playHitAnimation() {
-        let flashWhite = SKAction.fadeAlpha(to: 0.5, duration: 0.1)
-        let removeFlash = SKAction.fadeAlpha(to: 1, duration: 0.1)
-        
-        run(SKAction.sequence([flashWhite, removeFlash]))
+        playBloodSplatterAnimation()
     }
     
     func getWalkAndShootAction(scene: SKScene) -> SKAction{

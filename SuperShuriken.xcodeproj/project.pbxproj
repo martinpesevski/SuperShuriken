@@ -41,6 +41,7 @@
 		C7DCF51F204D5F6600CB1903 /* Util.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7DCF51E204D5F6600CB1903 /* Util.swift */; };
 		C7DCF521204D624100CB1903 /* GameManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7DCF520204D624100CB1903 /* GameManager.swift */; };
 		C7DCF523204D629900CB1903 /* MonsterGoalNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7DCF522204D629900CB1903 /* MonsterGoalNode.swift */; };
+		C7E7B5B2221705FB00BBE894 /* bloodSplatter.atlas in Resources */ = {isa = PBXBuildFile; fileRef = C7E7B5B1221705FB00BBE894 /* bloodSplatter.atlas */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -81,6 +82,7 @@
 		C7DCF51E204D5F6600CB1903 /* Util.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Util.swift; sourceTree = "<group>"; };
 		C7DCF520204D624100CB1903 /* GameManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameManager.swift; sourceTree = "<group>"; };
 		C7DCF522204D629900CB1903 /* MonsterGoalNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonsterGoalNode.swift; sourceTree = "<group>"; };
+		C7E7B5B1221705FB00BBE894 /* bloodSplatter.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = bloodSplatter.atlas; sourceTree = "<group>"; };
 		FFAE01823C307487EE0B93EF /* Pods_SuperShuriken.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SuperShuriken.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -165,6 +167,7 @@
 		C7884A2D207291D1005D01AB /* Animations */ = {
 			isa = PBXGroup;
 			children = (
+				C7E7B5B1221705FB00BBE894 /* bloodSplatter.atlas */,
 				C7B35B04220B5F080045E6FF /* PlayerAnimations */,
 			);
 			path = Animations;
@@ -309,6 +312,7 @@
 				C796D22D1F7AACAC00F770CF /* Assets.xcassets in Resources */,
 				C793BFE82074DEB300BDC559 /* playerWalk.atlas in Resources */,
 				C796D23B1F7AAFC400F770CF /* pew-pew-lei.caf in Resources */,
+				C7E7B5B2221705FB00BBE894 /* bloodSplatter.atlas in Resources */,
 				C796D2301F7AACAC00F770CF /* LaunchScreen.storyboard in Resources */,
 				C793BFEA2074EDA600BDC559 /* playerDeath.atlas in Resources */,
 			);
