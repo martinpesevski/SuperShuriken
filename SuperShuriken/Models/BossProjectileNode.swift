@@ -36,7 +36,7 @@ class BossProjectileNode: ProjectileNode {
     
     func createCurveMovement() -> SKAction {
         let path = CGMutablePath()
-        path.move(to: position)
+        path.move(to: CGPoint(x: 0, y: 0))
         var offset = 0
         for _ in 1...7 {
             path.addLine(to: CGPoint(x: -100 + offset, y: 50))
