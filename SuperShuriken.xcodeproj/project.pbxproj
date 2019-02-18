@@ -22,9 +22,6 @@
 		C766D7F9200BC71C00648287 /* SettingsScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = C766D7F8200BC71C00648287 /* SettingsScene.sks */; };
 		C766D7FB200BC74C00648287 /* SettingsScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = C766D7FA200BC74C00648287 /* SettingsScene.swift */; };
 		C766D7FD200C0D2E00648287 /* GameScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = C766D7FC200C0D2E00648287 /* GameScene.sks */; };
-		C793BFE82074DEB300BDC559 /* playerWalk.atlas in Resources */ = {isa = PBXBuildFile; fileRef = C793BFE72074DEB300BDC559 /* playerWalk.atlas */; };
-		C793BFEA2074EDA600BDC559 /* playerDeath.atlas in Resources */ = {isa = PBXBuildFile; fileRef = C793BFE92074EDA600BDC559 /* playerDeath.atlas */; };
-		C793BFEC2074EDAC00BDC559 /* playerShoot.atlas in Resources */ = {isa = PBXBuildFile; fileRef = C793BFEB2074EDAC00BDC559 /* playerShoot.atlas */; };
 		C796D2201F7AACAC00F770CF /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C796D21F1F7AACAC00F770CF /* AppDelegate.swift */; };
 		C796D2261F7AACAC00F770CF /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = C796D2251F7AACAC00F770CF /* GameScene.swift */; };
 		C796D2281F7AACAC00F770CF /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C796D2271F7AACAC00F770CF /* GameViewController.swift */; };
@@ -41,7 +38,14 @@
 		C7DCF51F204D5F6600CB1903 /* Util.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7DCF51E204D5F6600CB1903 /* Util.swift */; };
 		C7DCF521204D624100CB1903 /* GameManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7DCF520204D624100CB1903 /* GameManager.swift */; };
 		C7DCF523204D629900CB1903 /* MonsterGoalNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7DCF522204D629900CB1903 /* MonsterGoalNode.swift */; };
-		C7E7B5B2221705FB00BBE894 /* bloodSplatter.atlas in Resources */ = {isa = PBXBuildFile; fileRef = C7E7B5B1221705FB00BBE894 /* bloodSplatter.atlas */; };
+		C7E7B5B42217135E00BBE894 /* GameKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C7E7B5B32217135E00BBE894 /* GameKit.framework */; };
+		C7E7B5B62218AC7A00BBE894 /* bloodSplatter.atlas in Resources */ = {isa = PBXBuildFile; fileRef = C7E7B5B52218AC7A00BBE894 /* bloodSplatter.atlas */; };
+		C7E7B5B9221A0CD000BBE894 /* Dying.atlas in Resources */ = {isa = PBXBuildFile; fileRef = C7E7B5B8221A0CD000BBE894 /* Dying.atlas */; };
+		C7E7B5BB221A0D3300BBE894 /* Running.atlas in Resources */ = {isa = PBXBuildFile; fileRef = C7E7B5BA221A0D3300BBE894 /* Running.atlas */; };
+		C7E7B5BD221A0D5C00BBE894 /* Throwing.atlas in Resources */ = {isa = PBXBuildFile; fileRef = C7E7B5BC221A0D5C00BBE894 /* Throwing.atlas */; };
+		C7E7B5C1221A0E2600BBE894 /* Idle.atlas in Resources */ = {isa = PBXBuildFile; fileRef = C7E7B5C0221A0E2600BBE894 /* Idle.atlas */; };
+		C7E7B5C5221A191D00BBE894 /* Run_Slashing.atlas in Resources */ = {isa = PBXBuildFile; fileRef = C7E7B5C4221A191D00BBE894 /* Run_Slashing.atlas */; };
+		C7E7B5E6221A284900BBE894 /* Run_Throwing.atlas in Resources */ = {isa = PBXBuildFile; fileRef = C7E7B5E5221A284800BBE894 /* Run_Throwing.atlas */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -61,9 +65,6 @@
 		C766D7F8200BC71C00648287 /* SettingsScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = SettingsScene.sks; sourceTree = "<group>"; };
 		C766D7FA200BC74C00648287 /* SettingsScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsScene.swift; sourceTree = "<group>"; };
 		C766D7FC200C0D2E00648287 /* GameScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = GameScene.sks; sourceTree = "<group>"; };
-		C793BFE72074DEB300BDC559 /* playerWalk.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = playerWalk.atlas; sourceTree = "<group>"; };
-		C793BFE92074EDA600BDC559 /* playerDeath.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = playerDeath.atlas; sourceTree = "<group>"; };
-		C793BFEB2074EDAC00BDC559 /* playerShoot.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = playerShoot.atlas; sourceTree = "<group>"; };
 		C796D21C1F7AACAC00F770CF /* SuperShuriken.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SuperShuriken.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C796D21F1F7AACAC00F770CF /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		C796D2251F7AACAC00F770CF /* GameScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameScene.swift; sourceTree = "<group>"; };
@@ -82,7 +83,14 @@
 		C7DCF51E204D5F6600CB1903 /* Util.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Util.swift; sourceTree = "<group>"; };
 		C7DCF520204D624100CB1903 /* GameManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameManager.swift; sourceTree = "<group>"; };
 		C7DCF522204D629900CB1903 /* MonsterGoalNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonsterGoalNode.swift; sourceTree = "<group>"; };
-		C7E7B5B1221705FB00BBE894 /* bloodSplatter.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = bloodSplatter.atlas; sourceTree = "<group>"; };
+		C7E7B5B32217135E00BBE894 /* GameKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GameKit.framework; path = System/Library/Frameworks/GameKit.framework; sourceTree = SDKROOT; };
+		C7E7B5B52218AC7A00BBE894 /* bloodSplatter.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = bloodSplatter.atlas; sourceTree = "<group>"; };
+		C7E7B5B8221A0CD000BBE894 /* Dying.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = Dying.atlas; sourceTree = "<group>"; };
+		C7E7B5BA221A0D3300BBE894 /* Running.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = Running.atlas; sourceTree = "<group>"; };
+		C7E7B5BC221A0D5C00BBE894 /* Throwing.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = Throwing.atlas; sourceTree = "<group>"; };
+		C7E7B5C0221A0E2600BBE894 /* Idle.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = Idle.atlas; sourceTree = "<group>"; };
+		C7E7B5C4221A191D00BBE894 /* Run_Slashing.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = Run_Slashing.atlas; sourceTree = "<group>"; };
+		C7E7B5E5221A284800BBE894 /* Run_Throwing.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = Run_Throwing.atlas; sourceTree = "<group>"; };
 		FFAE01823C307487EE0B93EF /* Pods_SuperShuriken.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SuperShuriken.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -92,6 +100,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				B69BBFDA222236171FF70C0A /* Pods_SuperShuriken.framework in Frameworks */,
+				C7E7B5B42217135E00BBE894 /* GameKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -128,6 +137,7 @@
 		4184BDFA07D24570576DC0D7 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				C7E7B5B32217135E00BBE894 /* GameKit.framework */,
 				FFAE01823C307487EE0B93EF /* Pods_SuperShuriken.framework */,
 			);
 			name = Frameworks;
@@ -167,8 +177,9 @@
 		C7884A2D207291D1005D01AB /* Animations */ = {
 			isa = PBXGroup;
 			children = (
-				C7E7B5B1221705FB00BBE894 /* bloodSplatter.atlas */,
-				C7B35B04220B5F080045E6FF /* PlayerAnimations */,
+				C7E7B5B7221A098700BBE894 /* Minion Animations */,
+				C7E7B5B52218AC7A00BBE894 /* bloodSplatter.atlas */,
+				C7B35B04220B5F080045E6FF /* Player Animations */,
 			);
 			path = Animations;
 			sourceTree = "<group>";
@@ -217,14 +228,17 @@
 			path = Sounds;
 			sourceTree = "<group>";
 		};
-		C7B35B04220B5F080045E6FF /* PlayerAnimations */ = {
+		C7B35B04220B5F080045E6FF /* Player Animations */ = {
 			isa = PBXGroup;
 			children = (
-				C793BFEB2074EDAC00BDC559 /* playerShoot.atlas */,
-				C793BFE92074EDA600BDC559 /* playerDeath.atlas */,
-				C793BFE72074DEB300BDC559 /* playerWalk.atlas */,
+				C7E7B5E5221A284800BBE894 /* Run_Throwing.atlas */,
+				C7E7B5C4221A191D00BBE894 /* Run_Slashing.atlas */,
+				C7E7B5C0221A0E2600BBE894 /* Idle.atlas */,
+				C7E7B5BC221A0D5C00BBE894 /* Throwing.atlas */,
+				C7E7B5BA221A0D3300BBE894 /* Running.atlas */,
+				C7E7B5B8221A0CD000BBE894 /* Dying.atlas */,
 			);
-			path = PlayerAnimations;
+			path = "Player Animations";
 			sourceTree = "<group>";
 		};
 		C7DCF51D204D5F3E00CB1903 /* Managers */ = {
@@ -237,6 +251,13 @@
 				C7C348E3217B34D40099A7C0 /* MonsterManager.swift */,
 			);
 			path = Managers;
+			sourceTree = "<group>";
+		};
+		C7E7B5B7221A098700BBE894 /* Minion Animations */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = "Minion Animations";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -277,6 +298,11 @@
 						DevelopmentTeam = 73B4229N3R;
 						LastSwiftMigration = 0900;
 						ProvisioningStyle = Automatic;
+						SystemCapabilities = {
+							com.apple.GameCenter.iOS = {
+								enabled = 1;
+							};
+						};
 					};
 				};
 			};
@@ -304,17 +330,20 @@
 			buildActionMask = 2147483647;
 			files = (
 				C796D23A1F7AAFC400F770CF /* background-music-aac.caf in Resources */,
-				C793BFEC2074EDAC00BDC559 /* playerShoot.atlas in Resources */,
+				C7E7B5BB221A0D3300BBE894 /* Running.atlas in Resources */,
 				C766D7F3200A392800648287 /* MainMenu.sks in Resources */,
 				C766D7F9200BC71C00648287 /* SettingsScene.sks in Resources */,
+				C7E7B5BD221A0D5C00BBE894 /* Throwing.atlas in Resources */,
 				C796D22B1F7AACAC00F770CF /* Main.storyboard in Resources */,
+				C7E7B5C1221A0E2600BBE894 /* Idle.atlas in Resources */,
+				C7E7B5E6221A284900BBE894 /* Run_Throwing.atlas in Resources */,
 				C766D7FD200C0D2E00648287 /* GameScene.sks in Resources */,
 				C796D22D1F7AACAC00F770CF /* Assets.xcassets in Resources */,
-				C793BFE82074DEB300BDC559 /* playerWalk.atlas in Resources */,
 				C796D23B1F7AAFC400F770CF /* pew-pew-lei.caf in Resources */,
-				C7E7B5B2221705FB00BBE894 /* bloodSplatter.atlas in Resources */,
+				C7E7B5B62218AC7A00BBE894 /* bloodSplatter.atlas in Resources */,
 				C796D2301F7AACAC00F770CF /* LaunchScreen.storyboard in Resources */,
-				C793BFEA2074EDA600BDC559 /* playerDeath.atlas in Resources */,
+				C7E7B5C5221A191D00BBE894 /* Run_Slashing.atlas in Resources */,
+				C7E7B5B9221A0CD000BBE894 /* Dying.atlas in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

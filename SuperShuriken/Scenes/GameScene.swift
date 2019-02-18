@@ -135,9 +135,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, adMobInterstitialDelegate, G
         if staminaBar.isExhausted {
             return
         }
-       
-        player.playAnimation(type: .Shoot, completion: {})
-        
+               
         let projectile = ProjectileNode()
         projectile.position = player.position
         projectile.setup(type: .friendly, assetName: Global.sharedInstance.selectedPlayerShuriken)
@@ -207,8 +205,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, adMobInterstitialDelegate, G
         tapToRetryLabel.removeFromParent()
         updateScoreLabel()
         startNextlevel()
-        player.texture = SKTexture.init(imageNamed: "ic_player")
-
+        player.playAnimation(type: .Idle, completion: {})
     }
     
     func showGameOverScreen() {
@@ -285,6 +282,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, adMobInterstitialDelegate, G
         monster.playDeathAnimation()
 
         if monster.hitAndCheckDead(attackType: .Melee) {
+            player.handleSlash()
             gameManager.updateScore(value: monster.type.rawValue)
             updateScoreLabel()
         } else {
@@ -346,6 +344,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, adMobInterstitialDelegate, G
             player.handleTouchStart(location: location)
             break
         case "shoot":
+            player.handleShootStart()
             break
         default:
             break
@@ -370,6 +369,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, adMobInterstitialDelegate, G
             player.handleTouchEnded(location: location)
             break
         case "shoot":
+            player.handleShootEnd()
             shootProjectile(location: location)
             break
         default:
