@@ -14,6 +14,14 @@ protocol MonsterDelegate {
     func monsterDidShoot(projectile: ProjectileNode)
 }
 
+enum MobAnimationType: String, CaseIterable {
+    case Run = "mobRunAnimation"
+    case Shoot = "mobShootAnimation"
+    case RunShoot = "mobRunShootAnimation"
+    case Death = "mobDeathAnimation"
+    case RunSlash = "mobRunSlashAnimation"
+}
+
 enum MonsterType:Int {
     case basicMob = 1
     case bigMob = 2
@@ -26,17 +34,17 @@ enum MonsterType:Int {
 class MonsterNode: SKSpriteNode {
     var startPoint = CGPoint()
     var type: MonsterType!
-    var hitPoints: Int = 1
+    private var hitPoints: Int = 1
     var monsterDelegate: MonsterDelegate?
     var attackTypeWeaknesses: [AttackType]!
-    var bloodSplatterNode: SKSpriteNode!
-    var bloodSplatterTextures = [SKTexture]()
+    private var bloodSplatterNode: SKSpriteNode!
+    private var bloodSplatterTextures = [SKTexture]()
+    private var meleeOgreRunningFrames: [SKTexture] = []
+
 
     func setup(startPoint: CGPoint, type: MonsterType) {
         self.type = type
-        
-        texture = SKTexture(imageNamed: getImageName(monsterType: type))
-        size = texture?.size() ?? CGSize(width: 50, height: 50) 
+        size = CGSize(width: 100, height: 80)
         
         hitPoints = getNumberOfHits(monsterType: type)
         attackTypeWeaknesses = getWeaknesses(monsterType: type)
@@ -53,7 +61,8 @@ class MonsterNode: SKSpriteNode {
         addChild(bloodSplatterNode)
         
         bloodSplatterTextures = createAtlas(name: "bloodSplatter")
-        
+        meleeOgreRunningFrames = createAtlas(name: "Melee_Ogre_Running")
+
         physicsBody = SKPhysicsBody(rectangleOf: size)
         physicsBody?.isDynamic = true
         physicsBody?.categoryBitMask = PhysicsCategory.Monster
@@ -66,6 +75,7 @@ class MonsterNode: SKSpriteNode {
         let actionMove = SKAction.move(to: CGPoint(x: -100, y: startPoint.y), duration: getDuration(pointA: position, pointB: destination, speed: getSpeed(monsterType: type) * GameManager.sharedInstance.speedUpFactor()))
         
         run(actionMove, withKey: "moveAction")
+        playMeleOgreRunAnimation()
     }
     
     // reduces the hitpoints of the monster and returns boolean indicating if it is dead or not
@@ -107,6 +117,11 @@ class MonsterNode: SKSpriteNode {
         let bloodSplatterAction = SKAction.animate(with: bloodSplatterTextures, timePerFrame: 0.05, resize: false, restore: true)
         removeAction(forKey: "bloodSplatterAction")
         bloodSplatterNode.run(bloodSplatterAction, withKey: "bloodSplatterAction")
+    }
+    
+    func playMeleOgreRunAnimation(){
+        let meleeogreRunAction = SKAction.repeatForever(SKAction.animate(with: meleeOgreRunningFrames, timePerFrame: 0.03))
+        run(meleeogreRunAction, withKey: MobAnimationType.Run.rawValue)
     }
     
     func getScaleFactor(monsterType: MonsterType) -> CGFloat {
