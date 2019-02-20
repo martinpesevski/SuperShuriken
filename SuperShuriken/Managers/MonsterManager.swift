@@ -28,7 +28,7 @@ class MonsterManager: NSObject {
         let type : MonsterType
         if gameManager.isBossLevel {
             type = MonsterType.boss
-            monster = BossNode(imageNamed: "ic_monster")
+            monster = BossNode()
             (monster as! BossNode).setupRandom()
         } else {
             type = MonsterType(rawValue: 1 + Int(arc4random_uniform(UInt32(MonsterType.count)))) ?? MonsterType.basicMob

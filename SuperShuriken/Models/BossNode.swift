@@ -17,23 +17,34 @@ enum BossAttackType : Int {
     static var count: Int { return 3 }
 }
 
+enum BossType : Int {
+    case vampire = 1
+    
+    static var count: Int { return 1}
+}
+
 class BossNode: MonsterNode {
     
     private let bossMoveDistance:CGFloat = 150
     var attackType = BossAttackType.splitShot
-    
+    var bossType = BossType.vampire
+
     func setupRandom(){
         attackType = BossAttackType(rawValue:Int(arc4random_uniform(UInt32(BossAttackType.count)))) ??
             .straightShot
+        bossType = BossType(rawValue:Int(arc4random_uniform(UInt32(BossType.count)))) ??
+            .vampire
     }
     
     func playBossAnimation() {
-        let actionWalkOnScreen = SKAction.move(to: CGPoint(x: startPoint.x - bossMoveDistance, y: startPoint.y), duration: TimeInterval(1))
+        let actionWalkOnScreen = SKAction.group([getWalkAnimationForType(bossType: bossType, shouldRepeatForever: false),
+                                                 SKAction.move(to: CGPoint(x: startPoint.x - bossMoveDistance, y: startPoint.y), duration: TimeInterval(1))])
         guard let scene = scene else {
             return
         }
         
         let walkAndShootAction = getWalkAndShootAction(scene: scene)
+
         let bossMoveAnimation = SKAction.sequence([actionWalkOnScreen, walkAndShootAction])
         run(bossMoveAnimation, withKey: "bossAction")
         runSpecialAttackTimer(scene: scene)
@@ -43,10 +54,16 @@ class BossNode: MonsterNode {
         playBloodSplatterAnimation()
     }
     
+    func getWalkAnimationForType(bossType: BossType, shouldRepeatForever: Bool) -> SKAction {
+        let walkOnScreenFrames = createAtlas(name: "vampire_boss_walking")
+        let actionAnimateWalk = shouldRepeatForever ? SKAction.repeatForever(SKAction.animate(with: walkOnScreenFrames, timePerFrame: 0.03)) : SKAction.animate(with: walkOnScreenFrames, timePerFrame: 0.03)
+        return actionAnimateWalk
+    }
+    
     func getWalkAndShootAction(scene: SKScene) -> SKAction{
         let actionWalkUpDown = getBossWalkUpDownAction(scene: scene)
         let bossShootingAction = getBossRepeatedShootAction(scene: scene)
-        return SKAction.group([actionWalkUpDown, bossShootingAction])
+        return SKAction.group([actionWalkUpDown, bossShootingAction, getWalkAnimationForType(bossType: bossType, shouldRepeatForever: true)])
     }
     
     func runSpecialAttackTimer(scene: SKScene){
