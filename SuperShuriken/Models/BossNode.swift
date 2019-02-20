@@ -37,7 +37,7 @@ class BossNode: MonsterNode {
     }
     
     func playBossAnimation() {
-        let actionWalkOnScreen = SKAction.group([getWalkAnimationForType(bossType: bossType, shouldRepeatForever: false),
+        let actionWalkOnScreen = SKAction.group([getWalkAnimationForType(bossType: bossType),
                                                  SKAction.move(to: CGPoint(x: startPoint.x - bossMoveDistance, y: startPoint.y), duration: TimeInterval(1))])
         guard let scene = scene else {
             return
@@ -54,16 +54,22 @@ class BossNode: MonsterNode {
         playBloodSplatterAnimation()
     }
     
-    func getWalkAnimationForType(bossType: BossType, shouldRepeatForever: Bool) -> SKAction {
-        let walkOnScreenFrames = MonsterManager.getBossAnimationTextures(monsterType: bossType)
-        let actionAnimateWalk = shouldRepeatForever ? SKAction.repeatForever(SKAction.animate(with: walkOnScreenFrames, timePerFrame: 0.03)) : SKAction.animate(with: walkOnScreenFrames, timePerFrame: 0.03)
+    func getWalkAnimationForType(bossType: BossType) -> SKAction {
+        let walkOnScreenFrames = MonsterManager.getBossWalkAnimationTextures(monsterType: bossType)
+        let actionAnimateWalk = SKAction.animate(with: walkOnScreenFrames, timePerFrame: 0.03)
         return actionAnimateWalk
+    }
+    
+    func getRunAnimationForType(bossType: BossType) -> SKAction {
+        let bossRunningFrames = MonsterManager.getBossRunAnimationTextures(monsterType: bossType)
+        let actionAnimateRun = SKAction.repeatForever(SKAction.animate(with: bossRunningFrames, timePerFrame: 0.05))
+        return actionAnimateRun
     }
     
     func getWalkAndShootAction(scene: SKScene) -> SKAction{
         let actionWalkUpDown = getBossWalkUpDownAction(scene: scene)
         let bossShootingAction = getBossRepeatedShootAction(scene: scene)
-        return SKAction.group([actionWalkUpDown, bossShootingAction, getWalkAnimationForType(bossType: bossType, shouldRepeatForever: true)])
+        return SKAction.group([actionWalkUpDown, bossShootingAction, getRunAnimationForType(bossType: bossType)])
     }
     
     func runSpecialAttackTimer(scene: SKScene){

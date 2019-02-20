@@ -50,6 +50,7 @@
 		C7E7B606221DE9AC00BBE894 /* minion_shielded_armored_running.atlas in Resources */ = {isa = PBXBuildFile; fileRef = C7E7B605221DE9AC00BBE894 /* minion_shielded_armored_running.atlas */; };
 		C7E7B608221DEA8C00BBE894 /* barbarian_running.atlas in Resources */ = {isa = PBXBuildFile; fileRef = C7E7B607221DEA8C00BBE894 /* barbarian_running.atlas */; };
 		C7E7B60D221DF08700BBE894 /* vampire_boss_walking.atlas in Resources */ = {isa = PBXBuildFile; fileRef = C7E7B60C221DF08700BBE894 /* vampire_boss_walking.atlas */; };
+		C7E7B611221DF7E400BBE894 /* vampire_boss_running.atlas in Resources */ = {isa = PBXBuildFile; fileRef = C7E7B610221DF7E400BBE894 /* vampire_boss_running.atlas */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -99,6 +100,7 @@
 		C7E7B605221DE9AC00BBE894 /* minion_shielded_armored_running.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = minion_shielded_armored_running.atlas; sourceTree = "<group>"; };
 		C7E7B607221DEA8C00BBE894 /* barbarian_running.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = barbarian_running.atlas; sourceTree = "<group>"; };
 		C7E7B60C221DF08700BBE894 /* vampire_boss_walking.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = vampire_boss_walking.atlas; sourceTree = "<group>"; };
+		C7E7B610221DF7E400BBE894 /* vampire_boss_running.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = vampire_boss_running.atlas; sourceTree = "<group>"; };
 		FFAE01823C307487EE0B93EF /* Pods_SuperShuriken.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SuperShuriken.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -283,6 +285,7 @@
 		C7E7B609221DECFE00BBE894 /* Boss Animations */ = {
 			isa = PBXGroup;
 			children = (
+				C7E7B610221DF7E400BBE894 /* vampire_boss_running.atlas */,
 				C7E7B60C221DF08700BBE894 /* vampire_boss_walking.atlas */,
 			);
 			path = "Boss Animations";
@@ -372,6 +375,7 @@
 				C796D23B1F7AAFC400F770CF /* pew-pew-lei.caf in Resources */,
 				C7E7B5B62218AC7A00BBE894 /* bloodSplatter.atlas in Resources */,
 				C7E7B60D221DF08700BBE894 /* vampire_boss_walking.atlas in Resources */,
+				C7E7B611221DF7E400BBE894 /* vampire_boss_running.atlas in Resources */,
 				C796D2301F7AACAC00F770CF /* LaunchScreen.storyboard in Resources */,
 				C7E7B5C5221A191D00BBE894 /* Run_Slashing.atlas in Resources */,
 				C7E7B5B9221A0CD000BBE894 /* Dying.atlas in Resources */,
