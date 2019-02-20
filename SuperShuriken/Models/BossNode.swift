@@ -55,7 +55,7 @@ class BossNode: MonsterNode {
     }
     
     func getWalkAnimationForType(bossType: BossType, shouldRepeatForever: Bool) -> SKAction {
-        let walkOnScreenFrames = createAtlas(name: "vampire_boss_walking")
+        let walkOnScreenFrames = MonsterManager.getBossAnimationTextures(monsterType: bossType)
         let actionAnimateWalk = shouldRepeatForever ? SKAction.repeatForever(SKAction.animate(with: walkOnScreenFrames, timePerFrame: 0.03)) : SKAction.animate(with: walkOnScreenFrames, timePerFrame: 0.03)
         return actionAnimateWalk
     }

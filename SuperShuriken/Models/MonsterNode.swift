@@ -45,12 +45,12 @@ class MonsterNode: SKSpriteNode {
         self.type = type
         size = CGSize(width: 100, height: 80)
         
-        hitPoints = getNumberOfHits(monsterType: type)
-        attackTypeWeaknesses = getWeaknesses(monsterType: type)
+        hitPoints = MonsterManager.getNumberOfHits(monsterType: type)
+        attackTypeWeaknesses = MonsterManager.getWeaknesses(monsterType: type)
         
         self.startPoint = startPoint
         position = startPoint
-        let scaleFactor = getScaleFactor(monsterType: type)
+        let scaleFactor = MonsterManager.getScaleFactor(monsterType: type)
         scale(to: CGSize(width: size.width * scaleFactor, height: size.height * scaleFactor))
         
         bloodSplatterNode = SKSpriteNode(color: .clear, size: CGSize(width: 30, height: 20))
@@ -70,7 +70,7 @@ class MonsterNode: SKSpriteNode {
     
     func playRunAnimation() {
         let destination = CGPoint(x: -100, y: position.y)
-        let actionMove = SKAction.move(to: CGPoint(x: -100, y: startPoint.y), duration: getDuration(pointA: position, pointB: destination, speed: getSpeed(monsterType: type) * GameManager.sharedInstance.speedUpFactor()))
+        let actionMove = SKAction.move(to: CGPoint(x: -100, y: startPoint.y), duration: getDuration(pointA: position, pointB: destination, speed: MonsterManager.getSpeed(monsterType: type) * GameManager.sharedInstance.speedUpFactor()))
         
         run(actionMove, withKey: "moveAction")
         playTextureRunAnimation ()
@@ -118,81 +118,7 @@ class MonsterNode: SKSpriteNode {
     }
     
     func playTextureRunAnimation(){
-        let meleeogreRunAction = SKAction.repeatForever(SKAction.animate(with: getAnimationTextures(monsterType: type), timePerFrame: 0.03))
+        let meleeogreRunAction = SKAction.repeatForever(SKAction.animate(with: MonsterManager.getAnimationTextures(monsterType: type), timePerFrame: 0.03))
         run(meleeogreRunAction, withKey: MobAnimationType.Run.rawValue)
-    }
-    
-    func getScaleFactor(monsterType: MonsterType) -> CGFloat {
-        let scaleFactor : CGFloat
-        switch monsterType {
-        case .basicMob:
-            scaleFactor = 2
-        case .bigMob:
-            scaleFactor = 3
-        case.meleeMob:
-            scaleFactor = 2
-        case .boss:
-            scaleFactor = 5
-        }
-        
-        return scaleFactor
-    }
-    
-    func getNumberOfHits(monsterType: MonsterType) -> Int {
-        let numberOfHits : Int
-        switch monsterType {
-        case .basicMob:
-            numberOfHits = 1
-        case .bigMob:
-            numberOfHits = 2
-        case .meleeMob:
-            numberOfHits = 1
-        case .boss:
-            numberOfHits = 5
-        }
-        
-        return numberOfHits
-    }
-    
-    func getWeaknesses(monsterType: MonsterType) -> [AttackType] {
-        var weaknessesArray : [AttackType] = [];
-        switch monsterType {
-        case .basicMob:
-            weaknessesArray = [.Melee, .Projectile]
-        case .bigMob:
-            weaknessesArray = [.Projectile]
-        case .meleeMob:
-            weaknessesArray = [.Melee]
-        case .boss:
-            weaknessesArray = [.Projectile]
-        }
-        
-        return weaknessesArray
-    }
-    
-    func getSpeed(monsterType: MonsterType) -> CGFloat {
-        switch monsterType {
-        case .basicMob:
-            return basicMobSpeed
-        case .bigMob:
-            return bigMobSpeed
-        case .meleeMob:
-            return meleeMobSpeed
-        case .boss:
-            return 0
-        }
-    }
-    
-    func getAnimationTextures(monsterType: MonsterType) -> [SKTexture] {
-        switch monsterType {
-        case .basicMob:
-            return createAtlas(name: "barbarian_running")
-        case .bigMob:
-            return createAtlas(name: "Melee_Ogre_Running")
-        case .meleeMob:
-            return createAtlas(name: "minion_shielded_armored_running")
-        case .boss:
-            return createAtlas(name: "barbarian_running")
-        }
     }
 }
