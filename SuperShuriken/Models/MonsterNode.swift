@@ -186,13 +186,13 @@ class MonsterNode: SKSpriteNode {
     func getAnimationTextures(monsterType: MonsterType) -> [SKTexture] {
         switch monsterType {
         case .basicMob:
-            return createAtlas(name: "Melee_Ogre_Running")
+            return createAtlas(name: "barbarian_running")
         case .bigMob:
             return createAtlas(name: "Melee_Ogre_Running")
         case .meleeMob:
             return createAtlas(name: "minion_shielded_armored_running")
         case .boss:
-            return createAtlas(name: "Melee_Ogre_Running")
+            return createAtlas(name: "barbarian_running")
         }
     }
 }

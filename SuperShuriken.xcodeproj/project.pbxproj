@@ -48,6 +48,7 @@
 		C7E7B5E6221A284900BBE894 /* Run_Throwing.atlas in Resources */ = {isa = PBXBuildFile; fileRef = C7E7B5E5221A284800BBE894 /* Run_Throwing.atlas */; };
 		C7E7B5E9221A337D00BBE894 /* Melee_Ogre_Running.atlas in Resources */ = {isa = PBXBuildFile; fileRef = C7E7B5E8221A337D00BBE894 /* Melee_Ogre_Running.atlas */; };
 		C7E7B606221DE9AC00BBE894 /* minion_shielded_armored_running.atlas in Resources */ = {isa = PBXBuildFile; fileRef = C7E7B605221DE9AC00BBE894 /* minion_shielded_armored_running.atlas */; };
+		C7E7B608221DEA8C00BBE894 /* barbarian_running.atlas in Resources */ = {isa = PBXBuildFile; fileRef = C7E7B607221DEA8C00BBE894 /* barbarian_running.atlas */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -95,6 +96,7 @@
 		C7E7B5E5221A284800BBE894 /* Run_Throwing.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = Run_Throwing.atlas; sourceTree = "<group>"; };
 		C7E7B5E8221A337D00BBE894 /* Melee_Ogre_Running.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = Melee_Ogre_Running.atlas; sourceTree = "<group>"; };
 		C7E7B605221DE9AC00BBE894 /* minion_shielded_armored_running.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = minion_shielded_armored_running.atlas; sourceTree = "<group>"; };
+		C7E7B607221DEA8C00BBE894 /* barbarian_running.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = barbarian_running.atlas; sourceTree = "<group>"; };
 		FFAE01823C307487EE0B93EF /* Pods_SuperShuriken.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SuperShuriken.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -260,6 +262,7 @@
 		C7E7B5B7221A098700BBE894 /* Minion Animations */ = {
 			isa = PBXGroup;
 			children = (
+				C7E7B607221DEA8C00BBE894 /* barbarian_running.atlas */,
 				C7E7B605221DE9AC00BBE894 /* minion_shielded_armored_running.atlas */,
 				C7E7B5E8221A337D00BBE894 /* Melee_Ogre_Running.atlas */,
 			);
@@ -343,6 +346,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C7E7B608221DEA8C00BBE894 /* barbarian_running.atlas in Resources */,
 				C796D23A1F7AAFC400F770CF /* background-music-aac.caf in Resources */,
 				C7E7B5BB221A0D3300BBE894 /* Running.atlas in Resources */,
 				C766D7F3200A392800648287 /* MainMenu.sks in Resources */,
