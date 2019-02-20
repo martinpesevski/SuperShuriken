@@ -21,6 +21,7 @@ class MonsterManager: NSObject {
     var minionShieldedArmoredRunningFrames : [SKTexture]
     var vampireBossWalkingFrames : [SKTexture]
     var vampireBossRunningFrames : [SKTexture]
+    var vampireBossRunShootingFrames : [SKTexture]
 
     let gameManager = GameManager.sharedInstance
     
@@ -30,6 +31,7 @@ class MonsterManager: NSObject {
         minionShieldedArmoredRunningFrames = createAtlas(name: "minion_shielded_armored_running")
         vampireBossWalkingFrames = createAtlas(name: "vampire_boss_walking")
         vampireBossRunningFrames = createAtlas(name: "vampire_boss_running")
+        vampireBossRunShootingFrames = createAtlas(name: "vampire_boss_run_shooting")
     }
     
     func addMonsterToScene(scene: GameScene) {
@@ -143,6 +145,14 @@ class MonsterManager: NSObject {
         switch monsterType {
         case .vampire:
             return monsterManager.vampireBossRunningFrames
+        }
+    }
+    
+    static func getBossRunShootAnimationTextures(monsterType: BossType) -> [SKTexture] {
+        let monsterManager = MonsterManager.sharedInstance
+        switch monsterType {
+        case .vampire:
+            return monsterManager.vampireBossRunShootingFrames
         }
     }
 }

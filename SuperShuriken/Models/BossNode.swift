@@ -66,6 +66,12 @@ class BossNode: MonsterNode {
         return actionAnimateRun
     }
     
+    func getRunShootAnimationForType(bossType: BossType) -> SKAction {
+        let bossRunningFrames = MonsterManager.getBossRunShootAnimationTextures(monsterType: bossType)
+        let actionAnimateRun = SKAction.animate(with: bossRunningFrames, timePerFrame: 0.02)
+        return actionAnimateRun
+    }
+    
     func getWalkAndShootAction(scene: SKScene) -> SKAction{
         let actionWalkUpDown = getBossWalkUpDownAction(scene: scene)
         let bossShootingAction = getBossRepeatedShootAction(scene: scene)
@@ -139,6 +145,8 @@ class BossNode: MonsterNode {
     
     func getBossRepeatedShootAction(scene:SKScene) -> SKAction{
         let shootAction = getShootAction(scene: scene, attackType: attackType,offset: 0)
+//        let shootAction = SKAction.group([getShootAction(scene: scene, attackType: attackType,offset: 0),
+//                                          getRunShootAnimationForType(bossType: bossType)])
         let shotFrequency = random(min: 0.2, max: 1)
         
         let normalShootAction = SKAction.sequence([shootAction, SKAction.wait(forDuration: TimeInterval(shotFrequency))])
