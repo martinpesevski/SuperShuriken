@@ -89,7 +89,6 @@ class MonsterNode: SKSpriteNode {
     
     func playDeathAnimation() {
         removeAction(forKey: "moveAction")
-        removeAction(forKey: "bossAction")
         physicsBody?.contactTestBitMask = PhysicsCategory.None
         physicsBody?.categoryBitMask = PhysicsCategory.None
         let rotateAction = SKAction.rotate(byAngle: -CGFloat(Double.pi/2), duration: 0.3)
@@ -118,7 +117,7 @@ class MonsterNode: SKSpriteNode {
     }
     
     func playTextureRunAnimation(){
-        let meleeogreRunAction = SKAction.repeatForever(SKAction.animate(with: MonsterManager.getAnimationTextures(monsterType: type), timePerFrame: 0.03))
+        let meleeogreRunAction = SKAction.repeatForever(SKAction.animate(with: MonsterManager.getRunAnimationTextures(monsterType: type), timePerFrame: 0.03))
         run(meleeogreRunAction, withKey: MobAnimationType.Run.rawValue)
     }
 }

@@ -22,6 +22,7 @@ class MonsterManager: NSObject {
     var vampireBossWalkingFrames : [SKTexture]
     var vampireBossRunningFrames : [SKTexture]
     var vampireBossRunShootingFrames : [SKTexture]
+    var vampireBossDeathFrames : [SKTexture]
 
     let gameManager = GameManager.sharedInstance
     
@@ -32,6 +33,7 @@ class MonsterManager: NSObject {
         vampireBossWalkingFrames = createAtlas(name: "vampire_boss_walking")
         vampireBossRunningFrames = createAtlas(name: "vampire_boss_running")
         vampireBossRunShootingFrames = createAtlas(name: "vampire_boss_run_shooting")
+        vampireBossDeathFrames = createAtlas(name: "vampire_boss_death")
     }
     
     func addMonsterToScene(scene: GameScene) {
@@ -118,7 +120,7 @@ class MonsterManager: NSObject {
         }
     }
     
-    static func getAnimationTextures(monsterType: MonsterType) -> [SKTexture] {
+    static func getRunAnimationTextures(monsterType: MonsterType) -> [SKTexture] {
         let monsterManager = MonsterManager.sharedInstance
         switch monsterType {
         case .basicMob:
@@ -128,7 +130,29 @@ class MonsterManager: NSObject {
         case .meleeMob:
             return monsterManager.minionShieldedArmoredRunningFrames
         case .boss:
+            return MonsterManager.getBossRunAnimationTextures(monsterType: .vampire)
+        }
+    }
+    
+    static func getDeathAnimationTextures(monsterType: MonsterType) -> [SKTexture] {
+        let monsterManager = MonsterManager.sharedInstance
+        switch monsterType {
+        case .basicMob:
             return monsterManager.barbarianRunningFrames
+        case .bigMob:
+            return monsterManager.meleeOgreRunningFrames
+        case .meleeMob:
+            return monsterManager.minionShieldedArmoredRunningFrames
+        case .boss:
+            return monsterManager.vampireBossDeathFrames
+        }
+    }
+    
+    static func getBossDeathAnimationTextures(bossType: BossType) -> [SKTexture] {
+        let monsterManager = MonsterManager.sharedInstance
+        switch bossType {
+        case .vampire:
+            return monsterManager.vampireBossDeathFrames
         }
     }
     

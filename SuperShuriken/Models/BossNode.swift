@@ -54,6 +54,16 @@ class BossNode: MonsterNode {
         playBloodSplatterAnimation()
     }
     
+    override func playDeathAnimation() {
+        removeAction(forKey: "bossAction")
+        physicsBody?.contactTestBitMask = PhysicsCategory.None
+        physicsBody?.categoryBitMask = PhysicsCategory.None
+        let destroyAction = SKAction.removeFromParent()
+        let deathAnimation = getDeathAnimationForType(bossType: bossType)
+        run(SKAction.sequence([deathAnimation, destroyAction]))
+        playBloodSplatterAnimation()
+    }
+    
     func getWalkAnimationForType(bossType: BossType) -> SKAction {
         let walkOnScreenFrames = MonsterManager.getBossWalkAnimationTextures(monsterType: bossType)
         let actionAnimateWalk = SKAction.animate(with: walkOnScreenFrames, timePerFrame: 0.03)
@@ -70,6 +80,12 @@ class BossNode: MonsterNode {
         let bossRunningFrames = MonsterManager.getBossRunShootAnimationTextures(monsterType: bossType)
         let actionAnimateRun = SKAction.animate(with: bossRunningFrames, timePerFrame: 0.02)
         return actionAnimateRun
+    }
+    
+    func getDeathAnimationForType(bossType: BossType) -> SKAction {
+        let bossDeathFrames = MonsterManager.getBossDeathAnimationTextures(bossType: bossType)
+        let actionAnimateDeath = SKAction.animate(with: bossDeathFrames, timePerFrame: 0.03)
+        return actionAnimateDeath
     }
     
     func getWalkAndShootAction(scene: SKScene) -> SKAction{
