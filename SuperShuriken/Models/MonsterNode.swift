@@ -39,7 +39,6 @@ class MonsterNode: SKSpriteNode {
     var attackTypeWeaknesses: [AttackType]!
     private var bloodSplatterNode: SKSpriteNode!
     private var bloodSplatterTextures = [SKTexture]()
-    private var meleeOgreRunningFrames: [SKTexture] = []
 
 
     func setup(startPoint: CGPoint, type: MonsterType) {
@@ -61,7 +60,6 @@ class MonsterNode: SKSpriteNode {
         addChild(bloodSplatterNode)
         
         bloodSplatterTextures = createAtlas(name: "bloodSplatter")
-        meleeOgreRunningFrames = createAtlas(name: "Melee_Ogre_Running")
 
         physicsBody = SKPhysicsBody(rectangleOf: size)
         physicsBody?.isDynamic = true
@@ -75,7 +73,7 @@ class MonsterNode: SKSpriteNode {
         let actionMove = SKAction.move(to: CGPoint(x: -100, y: startPoint.y), duration: getDuration(pointA: position, pointB: destination, speed: getSpeed(monsterType: type) * GameManager.sharedInstance.speedUpFactor()))
         
         run(actionMove, withKey: "moveAction")
-        playMeleOgreRunAnimation()
+        playTextureRunAnimation ()
     }
     
     // reduces the hitpoints of the monster and returns boolean indicating if it is dead or not
@@ -119,8 +117,8 @@ class MonsterNode: SKSpriteNode {
         bloodSplatterNode.run(bloodSplatterAction, withKey: "bloodSplatterAction")
     }
     
-    func playMeleOgreRunAnimation(){
-        let meleeogreRunAction = SKAction.repeatForever(SKAction.animate(with: meleeOgreRunningFrames, timePerFrame: 0.03))
+    func playTextureRunAnimation(){
+        let meleeogreRunAction = SKAction.repeatForever(SKAction.animate(with: getAnimationTextures(monsterType: type), timePerFrame: 0.03))
         run(meleeogreRunAction, withKey: MobAnimationType.Run.rawValue)
     }
     
@@ -185,16 +183,16 @@ class MonsterNode: SKSpriteNode {
         }
     }
     
-    func getImageName(monsterType: MonsterType) -> String {
+    func getAnimationTextures(monsterType: MonsterType) -> [SKTexture] {
         switch monsterType {
         case .basicMob:
-            return "ic_ninja_sword"
+            return createAtlas(name: "Melee_Ogre_Running")
         case .bigMob:
-            return "ic_monster"
+            return createAtlas(name: "Melee_Ogre_Running")
         case .meleeMob:
-            return "ic_monster"
+            return createAtlas(name: "minion_shielded_armored_running")
         case .boss:
-            return "ic_monster"
+            return createAtlas(name: "Melee_Ogre_Running")
         }
     }
 }

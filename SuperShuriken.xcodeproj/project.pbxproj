@@ -47,6 +47,7 @@
 		C7E7B5C5221A191D00BBE894 /* Run_Slashing.atlas in Resources */ = {isa = PBXBuildFile; fileRef = C7E7B5C4221A191D00BBE894 /* Run_Slashing.atlas */; };
 		C7E7B5E6221A284900BBE894 /* Run_Throwing.atlas in Resources */ = {isa = PBXBuildFile; fileRef = C7E7B5E5221A284800BBE894 /* Run_Throwing.atlas */; };
 		C7E7B5E9221A337D00BBE894 /* Melee_Ogre_Running.atlas in Resources */ = {isa = PBXBuildFile; fileRef = C7E7B5E8221A337D00BBE894 /* Melee_Ogre_Running.atlas */; };
+		C7E7B606221DE9AC00BBE894 /* minion_shielded_armored_running.atlas in Resources */ = {isa = PBXBuildFile; fileRef = C7E7B605221DE9AC00BBE894 /* minion_shielded_armored_running.atlas */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -93,6 +94,7 @@
 		C7E7B5C4221A191D00BBE894 /* Run_Slashing.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = Run_Slashing.atlas; sourceTree = "<group>"; };
 		C7E7B5E5221A284800BBE894 /* Run_Throwing.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = Run_Throwing.atlas; sourceTree = "<group>"; };
 		C7E7B5E8221A337D00BBE894 /* Melee_Ogre_Running.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = Melee_Ogre_Running.atlas; sourceTree = "<group>"; };
+		C7E7B605221DE9AC00BBE894 /* minion_shielded_armored_running.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = minion_shielded_armored_running.atlas; sourceTree = "<group>"; };
 		FFAE01823C307487EE0B93EF /* Pods_SuperShuriken.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SuperShuriken.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -258,6 +260,7 @@
 		C7E7B5B7221A098700BBE894 /* Minion Animations */ = {
 			isa = PBXGroup;
 			children = (
+				C7E7B605221DE9AC00BBE894 /* minion_shielded_armored_running.atlas */,
 				C7E7B5E8221A337D00BBE894 /* Melee_Ogre_Running.atlas */,
 			);
 			path = "Minion Animations";
@@ -350,6 +353,7 @@
 				C7E7B5E6221A284900BBE894 /* Run_Throwing.atlas in Resources */,
 				C766D7FD200C0D2E00648287 /* GameScene.sks in Resources */,
 				C796D22D1F7AACAC00F770CF /* Assets.xcassets in Resources */,
+				C7E7B606221DE9AC00BBE894 /* minion_shielded_armored_running.atlas in Resources */,
 				C796D23B1F7AAFC400F770CF /* pew-pew-lei.caf in Resources */,
 				C7E7B5B62218AC7A00BBE894 /* bloodSplatter.atlas in Resources */,
 				C796D2301F7AACAC00F770CF /* LaunchScreen.storyboard in Resources */,
