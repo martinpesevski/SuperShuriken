@@ -91,11 +91,11 @@ class MonsterNode: SKSpriteNode {
         removeAction(forKey: "moveAction")
         physicsBody?.contactTestBitMask = PhysicsCategory.None
         physicsBody?.categoryBitMask = PhysicsCategory.None
-        let rotateAction = SKAction.rotate(byAngle: -CGFloat(Double.pi/2), duration: 0.3)
-        let fadeAction = SKAction.fadeOut(withDuration: 0.3)
-        let rotateFade = SKAction.group([rotateAction, fadeAction])
         let destroyAction = SKAction.removeFromParent()
-        run(SKAction.sequence([rotateFade, destroyAction]))
+        let deathAnimation = SKAction.animate(with: MonsterManager.getDeathAnimationTextures(monsterType: type), timePerFrame: 0.04)
+        
+        removeAllActions()
+        run(SKAction.sequence([deathAnimation, destroyAction]))
         playBloodSplatterAnimation()
     }
     
@@ -117,7 +117,7 @@ class MonsterNode: SKSpriteNode {
     }
     
     func playTextureRunAnimation(){
-        let meleeogreRunAction = SKAction.repeatForever(SKAction.animate(with: MonsterManager.getRunAnimationTextures(monsterType: type), timePerFrame: 0.03))
+        let meleeogreRunAction = SKAction.repeatForever(SKAction.animate(with: MonsterManager.getRunAnimationTextures(monsterType: type), timePerFrame: 0.04))
         run(meleeogreRunAction, withKey: MobAnimationType.Run.rawValue)
     }
 }

@@ -17,8 +17,11 @@ class MonsterManager: NSObject {
     
     var monstersArray = [MonsterNode]()
     var barbarianRunningFrames : [SKTexture]
+    var barbarianDyingFrames : [SKTexture]
     var meleeOgreRunningFrames : [SKTexture]
+    var meleeOgreDyingFrames : [SKTexture]
     var minionShieldedArmoredRunningFrames : [SKTexture]
+    var minionShieldedArmoredDyingFrames : [SKTexture]
     var vampireBossWalkingFrames : [SKTexture]
     var vampireBossRunningFrames : [SKTexture]
     var vampireBossRunShootingFrames : [SKTexture]
@@ -28,8 +31,11 @@ class MonsterManager: NSObject {
     
     override init() {
         barbarianRunningFrames = createAtlas(name: "barbarian_running")
+        barbarianDyingFrames = createAtlas(name: "barbarian_duying")
         meleeOgreRunningFrames = createAtlas(name: "Melee_Ogre_Running")
+        meleeOgreDyingFrames = createAtlas(name: "melee_ogre_dying")
         minionShieldedArmoredRunningFrames = createAtlas(name: "minion_shielded_armored_running")
+        minionShieldedArmoredDyingFrames = createAtlas(name: "minion_shielded_armored_dying")
         vampireBossWalkingFrames = createAtlas(name: "vampire_boss_walking")
         vampireBossRunningFrames = createAtlas(name: "vampire_boss_running")
         vampireBossRunShootingFrames = createAtlas(name: "vampire_boss_run_shooting")
@@ -138,11 +144,11 @@ class MonsterManager: NSObject {
         let monsterManager = MonsterManager.sharedInstance
         switch monsterType {
         case .basicMob:
-            return monsterManager.barbarianRunningFrames
+            return monsterManager.barbarianDyingFrames
         case .bigMob:
-            return monsterManager.meleeOgreRunningFrames
+            return monsterManager.meleeOgreDyingFrames
         case .meleeMob:
-            return monsterManager.minionShieldedArmoredRunningFrames
+            return monsterManager.minionShieldedArmoredDyingFrames
         case .boss:
             return monsterManager.vampireBossDeathFrames
         }

@@ -13,6 +13,9 @@
 		B69BBFDA222236171FF70C0A /* Pods_SuperShuriken.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FFAE01823C307487EE0B93EF /* Pods_SuperShuriken.framework */; };
 		C71E033B20430682001C61C2 /* MonsterNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = C71E033A20430682001C61C2 /* MonsterNode.swift */; };
 		C72035D221283D07000D7C89 /* Consants.swift in Sources */ = {isa = PBXBuildFile; fileRef = C72035D121283D07000D7C89 /* Consants.swift */; };
+		C72DEB3F222888D200591C41 /* barbarian_duying.atlas in Resources */ = {isa = PBXBuildFile; fileRef = C72DEB3E222888D100591C41 /* barbarian_duying.atlas */; };
+		C72DEB4322288A8800591C41 /* melee_ogre_dying.atlas in Resources */ = {isa = PBXBuildFile; fileRef = C72DEB4222288A8800591C41 /* melee_ogre_dying.atlas */; };
+		C72DEB4522288B5100591C41 /* minion_shielded_armored_dying.atlas in Resources */ = {isa = PBXBuildFile; fileRef = C72DEB4422288B5100591C41 /* minion_shielded_armored_dying.atlas */; };
 		C72F6C22207924AE004E9D19 /* SelectionButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = C72F6C21207924AE004E9D19 /* SelectionButton.swift */; };
 		C7345C94200F5FB900A24A16 /* AdsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7345C93200F5FB900A24A16 /* AdsManager.swift */; };
 		C737083B202213F20053F640 /* ProjectileNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = C737083A202213F20053F640 /* ProjectileNode.swift */; };
@@ -63,6 +66,9 @@
 		47C2856E36B2852627AA8E0A /* Pods-SuperShuriken.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SuperShuriken.release.xcconfig"; path = "Pods/Target Support Files/Pods-SuperShuriken/Pods-SuperShuriken.release.xcconfig"; sourceTree = "<group>"; };
 		C71E033A20430682001C61C2 /* MonsterNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonsterNode.swift; sourceTree = "<group>"; };
 		C72035D121283D07000D7C89 /* Consants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Consants.swift; sourceTree = "<group>"; };
+		C72DEB3E222888D100591C41 /* barbarian_duying.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = barbarian_duying.atlas; sourceTree = "<group>"; };
+		C72DEB4222288A8800591C41 /* melee_ogre_dying.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = melee_ogre_dying.atlas; sourceTree = "<group>"; };
+		C72DEB4422288B5100591C41 /* minion_shielded_armored_dying.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = minion_shielded_armored_dying.atlas; sourceTree = "<group>"; };
 		C72F6C21207924AE004E9D19 /* SelectionButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectionButton.swift; sourceTree = "<group>"; };
 		C7345C93200F5FB900A24A16 /* AdsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdsManager.swift; sourceTree = "<group>"; };
 		C737083A202213F20053F640 /* ProjectileNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectileNode.swift; sourceTree = "<group>"; };
@@ -177,6 +183,33 @@
 			path = "Supporting files";
 			sourceTree = "<group>";
 		};
+		C72DEB3D222888BF00591C41 /* Barbarian */ = {
+			isa = PBXGroup;
+			children = (
+				C72DEB3E222888D100591C41 /* barbarian_duying.atlas */,
+				C7E7B607221DEA8C00BBE894 /* barbarian_running.atlas */,
+			);
+			path = Barbarian;
+			sourceTree = "<group>";
+		};
+		C72DEB40222888E100591C41 /* Shielded armored */ = {
+			isa = PBXGroup;
+			children = (
+				C72DEB4422288B5100591C41 /* minion_shielded_armored_dying.atlas */,
+				C7E7B605221DE9AC00BBE894 /* minion_shielded_armored_running.atlas */,
+			);
+			path = "Shielded armored";
+			sourceTree = "<group>";
+		};
+		C72DEB41222888F000591C41 /* Ogre */ = {
+			isa = PBXGroup;
+			children = (
+				C72DEB4222288A8800591C41 /* melee_ogre_dying.atlas */,
+				C7E7B5E8221A337D00BBE894 /* Melee_Ogre_Running.atlas */,
+			);
+			path = Ogre;
+			sourceTree = "<group>";
+		};
 		C72F6C1E20791F1B004E9D19 /* CustomNodes */ = {
 			isa = PBXGroup;
 			children = (
@@ -271,9 +304,9 @@
 		C7E7B5B7221A098700BBE894 /* Minion Animations */ = {
 			isa = PBXGroup;
 			children = (
-				C7E7B607221DEA8C00BBE894 /* barbarian_running.atlas */,
-				C7E7B605221DE9AC00BBE894 /* minion_shielded_armored_running.atlas */,
-				C7E7B5E8221A337D00BBE894 /* Melee_Ogre_Running.atlas */,
+				C72DEB41222888F000591C41 /* Ogre */,
+				C72DEB40222888E100591C41 /* Shielded armored */,
+				C72DEB3D222888BF00591C41 /* Barbarian */,
 			);
 			path = "Minion Animations";
 			sourceTree = "<group>";
@@ -373,6 +406,8 @@
 				C766D7F9200BC71C00648287 /* SettingsScene.sks in Resources */,
 				C7E7B5BD221A0D5C00BBE894 /* Throwing.atlas in Resources */,
 				C796D22B1F7AACAC00F770CF /* Main.storyboard in Resources */,
+				C72DEB4522288B5100591C41 /* minion_shielded_armored_dying.atlas in Resources */,
+				C72DEB4322288A8800591C41 /* melee_ogre_dying.atlas in Resources */,
 				C7E7B5C1221A0E2600BBE894 /* Idle.atlas in Resources */,
 				C7E7B5E6221A284900BBE894 /* Run_Throwing.atlas in Resources */,
 				C766D7FD200C0D2E00648287 /* GameScene.sks in Resources */,
@@ -381,6 +416,7 @@
 				C7E7B613221DFA6800BBE894 /* vampire_boss_run_shooting.atlas in Resources */,
 				C796D23B1F7AAFC400F770CF /* pew-pew-lei.caf in Resources */,
 				C7E7B617221E010F00BBE894 /* vampire_boss_death.atlas in Resources */,
+				C72DEB3F222888D200591C41 /* barbarian_duying.atlas in Resources */,
 				C7E7B5B62218AC7A00BBE894 /* bloodSplatter.atlas in Resources */,
 				C7E7B60D221DF08700BBE894 /* vampire_boss_walking.atlas in Resources */,
 				C7E7B611221DF7E400BBE894 /* vampire_boss_running.atlas in Resources */,
