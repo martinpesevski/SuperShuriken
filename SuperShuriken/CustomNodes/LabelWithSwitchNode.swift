@@ -26,16 +26,16 @@ class LabelWithSwitchNode: SKSpriteNode {
         switchNode.setButtonAction(target: self, triggerEvent: .TouchUpInside, action: #selector(onSwitchTap))
         switchNode.setButtonLabel(title: switchIsOn ? "ON" : "OFF", font: "Chalkduster", fontSize: 30)
         switchNode.size = CGSize.init(width: 100, height: switchNode.size.height)
-        switchNode.position = CGPoint(x: self.frame.maxX - switchNode.size.width/2, y: self.frame.midY - self.position.y)
+        switchNode.position = CGPoint(x: self.frame.size.width/2 - switchNode.size.width/2, y: self.frame.midY - self.position.y)
         switchNode.zPosition = 2
         
         labelNode = SKLabelNode.init(text: labelText)
         labelNode.fontColor = UIColor.white
         labelNode.fontName = "Chalkduster"
         labelNode.fontSize = 30
-        labelNode.position = CGPoint(x: self.frame.minX + labelNode.frame.size.width, y: switchNode.frame.midY)
+        labelNode.position = CGPoint(x: -self.frame.size.width/2 , y: switchNode.frame.midY)
         labelNode.zPosition = 2
-        labelNode.horizontalAlignmentMode = .right
+        labelNode.horizontalAlignmentMode = .left
         
         addChild(labelNode)
         addChild(switchNode)

@@ -379,7 +379,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate, adMobInterstitialDelegate, G
     
     @objc func onMenuTap(){
         gameManager.restart()
-        let reveal = SKTransition.flipHorizontal(withDuration: 1)
+        let reveal = SKTransition.moveIn(with: .up, duration: 0.3)
+
         if let scene = MainMenu(fileNamed: "MainMenu") {
             scene.initialize()
             

@@ -89,7 +89,7 @@ class SettingsScene : SKScene, switchNodeDelegate {
     }
     
     @objc func onMenuTap() {
-        let reveal = SKTransition.flipHorizontal(withDuration: 1)
+        let reveal = SKTransition.fade(withDuration: 1)
         if let scene = MainMenu(fileNamed: "MainMenu") {
             scene.initialize()
             

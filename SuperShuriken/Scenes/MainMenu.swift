@@ -50,7 +50,8 @@ class MainMenu: SKScene {
     }
     
     @objc func onPlayTap() {
-        let reveal = SKTransition.flipHorizontal(withDuration: 1)
+        let reveal = SKTransition.reveal(with: .up, duration: 0.3)
+
         if let scene = GameScene(fileNamed: "GameScene") {
             scene.scaleMode = .fill
             
@@ -59,7 +60,7 @@ class MainMenu: SKScene {
     }
     
     @objc func onSettingsTap() {
-        let reveal = SKTransition.flipHorizontal(withDuration: 1)
+        let reveal = SKTransition.fade(withDuration: 1)
         if let scene = SettingsScene(fileNamed: "SettingsScene") {
             scene.scaleMode = .fill
             
