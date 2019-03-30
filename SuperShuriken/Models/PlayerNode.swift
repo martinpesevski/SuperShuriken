@@ -32,6 +32,13 @@ class PlayerNode: SKSpriteNode, GKAgentDelegate {
     private var playerDeathFrames: [SKTexture] = []
     private var playerIdleFrames: [SKTexture] = []
     private var playerRunSlashFrames: [SKTexture] = []
+    
+    private var walkAction = SKAction()
+    private var shootAction = SKAction()
+    private var runShootAction = SKAction()
+    private var deathAction = SKAction()
+    private var idleAction = SKAction()
+    private var runSlashAction = SKAction()
 
     private var isJumping = false;
     private var isDragging = false;
@@ -49,8 +56,28 @@ class PlayerNode: SKSpriteNode, GKAgentDelegate {
         playerDeathFrames = createAtlas(name: "Dying")
         playerShootingFrames = createAtlas(name: "Throwing")
         playerIdleFrames = createAtlas(name: "Idle")
-
+        
+        setupActions()
+        
         playAnimation(type: .Idle, completion: {})
+    }
+    
+    func setupActions() {
+        walkAction = SKAction.repeatForever(
+            SKAction.animate(with: playerWalkingFrames,
+                             timePerFrame: 0.03,
+                             resize: false,
+                             restore: true))
+        
+        shootAction = SKAction.animate(with: playerShootingFrames, timePerFrame: 0.03, resize: false, restore: true)
+        
+        runShootAction = SKAction.animate(with: playerRunShootFrames, timePerFrame: 0.03, resize: false, restore: true)
+        
+        deathAction = SKAction.animate(with: playerDeathFrames, timePerFrame: 0.05, resize: false, restore: false)
+        
+        idleAction = SKAction.repeatForever(SKAction.animate(with: playerIdleFrames, timePerFrame: 0.05, resize: false, restore: false))
+        
+        runSlashAction = SKAction.animate(with: playerRunSlashFrames, timePerFrame: 0.05, resize: false, restore: false)
     }
     
     //MARK: - touches
@@ -176,38 +203,34 @@ class PlayerNode: SKSpriteNode, GKAgentDelegate {
     }
     
     private func playWalkingAnimation(completion: @escaping () -> Void) {
-        run(SKAction.repeatForever(
-            SKAction.animate(with: playerWalkingFrames,
-                             timePerFrame: 0.03,
-                             resize: false,
-                             restore: true)),
+        run(walkAction,
             withKey:PlayerAnimationType.Walk.rawValue)
     }
     
     private func playShootAnimation(completion: @escaping () -> Void) {
-        run(action: SKAction.animate(with: playerShootingFrames, timePerFrame: 0.03, resize: false, restore: true), withKey: PlayerAnimationType.Shoot.rawValue) {
+        run(action: shootAction, withKey: PlayerAnimationType.Shoot.rawValue) {
             completion()
         }
     }
     
     private func playRunShootAnimation(completion: @escaping () -> Void) {
-        run(action: SKAction.animate(with: playerRunShootFrames, timePerFrame: 0.03, resize: false, restore: true), withKey: PlayerAnimationType.RunShoot.rawValue) {
+        run(action: runShootAction, withKey: PlayerAnimationType.RunShoot.rawValue) {
             completion()
         }
     }
     
     private func playDeathAnimation(completion: @escaping () -> Void) {
-        run(action: SKAction.animate(with: playerDeathFrames, timePerFrame: 0.05, resize: false, restore: false), withKey: PlayerAnimationType.Death.rawValue) {
+        run(action: deathAction, withKey: PlayerAnimationType.Death.rawValue) {
             completion()
         }
     }
     
     private func playIdleAnimation(completion: @escaping () -> Void) {
-        run(SKAction.repeatForever(SKAction.animate(with: playerIdleFrames, timePerFrame: 0.05, resize: false, restore: false)), withKey: PlayerAnimationType.Idle.rawValue)
+        run(idleAction, withKey: PlayerAnimationType.Idle.rawValue)
     }
     
     private func playRunSlashAnimation(completion: @escaping () -> Void) {
-        run(SKAction.animate(with: playerRunSlashFrames, timePerFrame: 0.05, resize: false, restore: false), withKey: PlayerAnimationType.RunSlash.rawValue)
+        run(runSlashAction, withKey: PlayerAnimationType.RunSlash.rawValue)
     }
 }
 

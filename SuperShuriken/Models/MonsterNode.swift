@@ -14,85 +14,24 @@ protocol MonsterDelegate {
     func monsterDidShoot(projectile: ProjectileNode)
 }
 
-enum MobAnimationType: CaseIterable {
-    case Run
-    case Shoot
-    case RunShoot
-    case Death
-    case RunSlash
-    
-    var name: String {
-        switch self {
-        case .Run:
-            return "mobRunAnimation"
-        case .Shoot:
-            return "mobShootAnimation"
-        case .RunShoot:
-            return "mobRunShootAnimation"
-        case .Death:
-            return "mobDeathAnimation"
-        case .RunSlash:
-            return "mobRunSlashAnimation"
-        }
-    }
-}
-
-enum MonsterType: UInt32 {
-    case basicMob
-    case bigMob
-    case meleeMob
-    case boss
-    
-    var scorePoints: Int {
-        switch self {
-        case .basicMob:
-            return 1
-        case .bigMob:
-            return 2
-        case .meleeMob:
-            return 3
-        case .boss:
-            return 10
-        }
-    }
-    
-    var size: CGSize {
-        switch self {
-        case .basicMob:
-            return CGSize(width: 267, height: 267)
-        case .bigMob:
-            return CGSize(width: 400, height: 320)
-        case .meleeMob:
-            return CGSize(width: 267, height: 267)
-        case .boss:
-            return CGSize(width: 667, height: 667)
-        }
-    }
-
-    static func random() -> MonsterType {
-        let rand = arc4random_uniform(self.count)
-        return MonsterType(rawValue: rand) ?? .basicMob
-    }
-    
-    static var count: UInt32 { return 3 }
-}
-
 class MonsterNode: SKSpriteNode {
     var startPoint = CGPoint()
     var type: MonsterType!
     private var hitPoints: Int = 1
     var monsterDelegate: MonsterDelegate?
-    var attackTypeWeaknesses: [AttackType]!
     private var bloodSplatterNode: SKSpriteNode!
     private var bloodSplatterTextures = [SKTexture]()
-
+    private var runAction = SKAction()
+    private var runTextureAction = SKAction()
+    private var hitAction = SKAction()
+    private var bloodSplatterAction = SKAction()
+    private var deathAction = SKAction()
 
     func setup(startPoint: CGPoint, type: MonsterType) {
         self.type = type
         size = self.type.size
         
-        hitPoints = MonsterManager.getNumberOfHits(monsterType: type)
-        attackTypeWeaknesses = MonsterManager.getWeaknesses(monsterType: type)
+        hitPoints = type.numberOfHits
         
         self.startPoint = startPoint
         position = startPoint
@@ -104,25 +43,41 @@ class MonsterNode: SKSpriteNode {
         addChild(bloodSplatterNode)
         
         bloodSplatterTextures = createAtlas(name: "bloodSplatter")
-
+        
         physicsBody = SKPhysicsBody(rectangleOf: size)
         physicsBody?.isDynamic = true
         physicsBody?.categoryBitMask = PhysicsCategory.Monster
         physicsBody?.contactTestBitMask = PhysicsCategory.Projectile | PhysicsCategory.Goal
         physicsBody?.collisionBitMask = PhysicsCategory.None
+
+        setupActions()
+    }
+    
+    func setupActions() {
+        let destroyAction = SKAction.removeFromParent()
+        let fadeOutAction = SKAction.fadeOut(withDuration: 0.3)
+        let deathAnimation = SKAction.animate(with: MonsterManager.getDeathAnimationTextures(monsterType: type), timePerFrame: 0.04)
+        
+        deathAction = SKAction.sequence([deathAnimation, fadeOutAction, destroyAction])
+        
+        bloodSplatterAction = SKAction.animate(with: bloodSplatterTextures, timePerFrame: 0.05, resize: false, restore: true)
+        
+        hitAction = SKAction.move(by: CGVector(dx: 50, dy: 0), duration: 0.2)
+        
+        runTextureAction = SKAction.repeatForever(SKAction.animate(with: MonsterManager.getRunAnimationTextures(monsterType: type), timePerFrame: 0.04))
     }
     
     func playRunAnimation() {
         let destination = CGPoint(x: -100, y: position.y)
-        let actionMove = SKAction.move(to: CGPoint(x: -100, y: startPoint.y), duration: getDuration(pointA: position, pointB: destination, speed: MonsterManager.getSpeed(monsterType: type) * GameManager.sharedInstance.speedUpFactor()))
+        runAction = SKAction.move(to: CGPoint(x: -100, y: startPoint.y), duration: getDuration(pointA: position, pointB: destination, speed: type.speed * GameManager.sharedInstance.speedUpFactor()))
         
-        run(actionMove, withKey: "moveAction")
+        run(runAction, withKey: "moveAction")
         playTextureRunAnimation ()
     }
     
     // reduces the hitpoints of the monster and returns boolean indicating if it is dead or not
     func hitAndCheckDead(attackType: AttackType) -> Bool{
-        if !attackTypeWeaknesses.contains(attackType) {
+        if !type.weaknesses.contains(attackType) {
             return false
         }
         
@@ -135,33 +90,27 @@ class MonsterNode: SKSpriteNode {
         removeAction(forKey: "moveAction")
         physicsBody?.contactTestBitMask = PhysicsCategory.None
         physicsBody?.categoryBitMask = PhysicsCategory.None
-        let destroyAction = SKAction.removeFromParent()
-        let deathAnimation = SKAction.animate(with: MonsterManager.getDeathAnimationTextures(monsterType: type), timePerFrame: 0.04)
-        
+
         removeAllActions()
-        run(SKAction.sequence([deathAnimation, destroyAction]))
+        run(deathAction)
         playBloodSplatterAnimation()
     }
     
     func playHitAnimation(){
         removeAction(forKey: "moveAction")
-        let knockbackAction = SKAction.move(by: CGVector(dx: 50, dy: 0), duration: 0.2)
-        
         playBloodSplatterAnimation()
         
-        run(knockbackAction) { [unowned self] in
+        run(hitAction) { [unowned self] in
             self.playRunAnimation()
         }
     }
     
     func playBloodSplatterAnimation(){
-        let bloodSplatterAction = SKAction.animate(with: bloodSplatterTextures, timePerFrame: 0.05, resize: false, restore: true)
         removeAction(forKey: "bloodSplatterAction")
         bloodSplatterNode.run(bloodSplatterAction, withKey: "bloodSplatterAction")
     }
     
     func playTextureRunAnimation(){
-        let meleeOgreRunAction = SKAction.repeatForever(SKAction.animate(with: MonsterManager.getRunAnimationTextures(monsterType: type), timePerFrame: 0.04))
-        run(meleeOgreRunAction, withKey: MobAnimationType.Run.name)
+        run(runTextureAction, withKey: MobAnimationType.Run.name)
     }
 }

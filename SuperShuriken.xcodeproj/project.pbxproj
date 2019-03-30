@@ -56,6 +56,7 @@
 		C7ECD82D224FC92C00031B01 /* Dying.atlas in Resources */ = {isa = PBXBuildFile; fileRef = C7ECD827224FC92C00031B01 /* Dying.atlas */; };
 		C7ECD82E224FC92C00031B01 /* Run_Throwing.atlas in Resources */ = {isa = PBXBuildFile; fileRef = C7ECD828224FC92C00031B01 /* Run_Throwing.atlas */; };
 		C7ECD82F224FC92C00031B01 /* Running.atlas in Resources */ = {isa = PBXBuildFile; fileRef = C7ECD829224FC92C00031B01 /* Running.atlas */; };
+		C7ECD831224FCCD700031B01 /* MonsterModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7ECD830224FCCD700031B01 /* MonsterModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -111,6 +112,7 @@
 		C7ECD827224FC92C00031B01 /* Dying.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = Dying.atlas; sourceTree = "<group>"; };
 		C7ECD828224FC92C00031B01 /* Run_Throwing.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = Run_Throwing.atlas; sourceTree = "<group>"; };
 		C7ECD829224FC92C00031B01 /* Running.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = Running.atlas; sourceTree = "<group>"; };
+		C7ECD830224FCCD700031B01 /* MonsterModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonsterModel.swift; sourceTree = "<group>"; };
 		FFAE01823C307487EE0B93EF /* Pods_SuperShuriken.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SuperShuriken.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -147,6 +149,7 @@
 				C737083A202213F20053F640 /* ProjectileNode.swift */,
 				C7C348E5217B48850099A7C0 /* BossProjectileNode.swift */,
 				C71E033A20430682001C61C2 /* MonsterNode.swift */,
+				C7ECD830224FCCD700031B01 /* MonsterModel.swift */,
 				C75A375921737A5700293FFF /* BossNode.swift */,
 				C7DCF522204D629900CB1903 /* MonsterGoalNode.swift */,
 				C7BAEC772210B838003EE6C8 /* StaminaBarNode.swift */,
@@ -517,6 +520,7 @@
 				0F735075200CF24100EEFDD7 /* Global.swift in Sources */,
 				C796D2201F7AACAC00F770CF /* AppDelegate.swift in Sources */,
 				C72F6C22207924AE004E9D19 /* SelectionButton.swift in Sources */,
+				C7ECD831224FCCD700031B01 /* MonsterModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

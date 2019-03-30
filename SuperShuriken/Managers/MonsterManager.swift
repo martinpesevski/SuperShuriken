@@ -40,6 +40,8 @@ class MonsterManager: NSObject {
         vampireBossRunningFrames = createAtlas(name: "vampire_boss_running")
         vampireBossRunShootingFrames = createAtlas(name: "vampire_boss_run_shooting")
         vampireBossDeathFrames = createAtlas(name: "vampire_boss_death")
+        
+        super.init()
     }
     
     func addMonsterToScene(scene: GameScene) {
@@ -62,67 +64,6 @@ class MonsterManager: NSObject {
         scene.addChild(monster)
         monstersArray.append(monster)
         gameManager.isBossLevel ? (monster as! BossNode).playBossAnimation() : monster.playRunAnimation()
-    }
-    
-    static func getScaleFactor(monsterType: MonsterType) -> CGFloat {
-        let scaleFactor : CGFloat
-        switch monsterType {
-        case .basicMob:
-            scaleFactor = 2
-        case .bigMob:
-            scaleFactor = 3
-        case.meleeMob:
-            scaleFactor = 2
-        case .boss:
-            scaleFactor = 5
-        }
-        
-        return scaleFactor
-    }
-    
-    static func getNumberOfHits(monsterType: MonsterType) -> Int {
-        let numberOfHits : Int
-        switch monsterType {
-        case .basicMob:
-            numberOfHits = 1
-        case .bigMob:
-            numberOfHits = 2
-        case .meleeMob:
-            numberOfHits = 1
-        case .boss:
-            numberOfHits = 5
-        }
-        
-        return numberOfHits
-    }
-    
-    static func getWeaknesses(monsterType: MonsterType) -> [AttackType] {
-        var weaknessesArray : [AttackType] = [];
-        switch monsterType {
-        case .basicMob:
-            weaknessesArray = [.Melee, .Projectile]
-        case .bigMob:
-            weaknessesArray = [.Projectile]
-        case .meleeMob:
-            weaknessesArray = [.Melee]
-        case .boss:
-            weaknessesArray = [.Projectile]
-        }
-        
-        return weaknessesArray
-    }
-    
-    static func getSpeed(monsterType: MonsterType) -> CGFloat {
-        switch monsterType {
-        case .basicMob:
-            return basicMobSpeed
-        case .bigMob:
-            return bigMobSpeed
-        case .meleeMob:
-            return meleeMobSpeed
-        case .boss:
-            return 0
-        }
     }
     
     static func getRunAnimationTextures(monsterType: MonsterType) -> [SKTexture] {
