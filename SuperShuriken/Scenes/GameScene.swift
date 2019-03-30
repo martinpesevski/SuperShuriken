@@ -244,7 +244,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, adMobInterstitialDelegate, G
                 enemyProjectilesArray.removeAll()
             }
             
-            gameManager.updateScore(value: monster.type.rawValue)
+            gameManager.updateScore(value: monster.type.scorePoints)
             updateScoreLabel()
         } else {
             monster.playHitAnimation()
@@ -283,7 +283,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, adMobInterstitialDelegate, G
 
         if monster.hitAndCheckDead(attackType: .Melee) {
             player.handleSlash()
-            gameManager.updateScore(value: monster.type.rawValue)
+            gameManager.updateScore(value: monster.type.scorePoints)
             updateScoreLabel()
         } else {
             player.handleGotHit()

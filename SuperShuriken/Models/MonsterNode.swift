@@ -22,13 +22,31 @@ enum MobAnimationType: String, CaseIterable {
     case RunSlash = "mobRunSlashAnimation"
 }
 
-enum MonsterType:Int {
-    case basicMob = 1
-    case bigMob = 2
-    case meleeMob = 3
-    case boss = 10
+enum MonsterType: UInt32 {
+    case basicMob
+    case bigMob
+    case meleeMob
+    case boss
+    
+    var scorePoints: Int {
+        switch self {
+        case .basicMob:
+            return 1
+        case .bigMob:
+            return 2
+        case .meleeMob:
+            return 3
+        case .boss:
+            return 10
+        }
+    }
 
-    static var count: Int { return 3 }
+    static func random() -> MonsterType {
+        let rand = arc4random_uniform(self.count)
+        return MonsterType(rawValue: rand) ?? .basicMob
+    }
+    
+    static var count: UInt32 { return 3 }
 }
 
 class MonsterNode: SKSpriteNode {
@@ -117,7 +135,7 @@ class MonsterNode: SKSpriteNode {
     }
     
     func playTextureRunAnimation(){
-        let meleeogreRunAction = SKAction.repeatForever(SKAction.animate(with: MonsterManager.getRunAnimationTextures(monsterType: type), timePerFrame: 0.04))
-        run(meleeogreRunAction, withKey: MobAnimationType.Run.rawValue)
+        let meleeOgreRunAction = SKAction.repeatForever(SKAction.animate(with: MonsterManager.getRunAnimationTextures(monsterType: type), timePerFrame: 0.04))
+        run(meleeOgreRunAction, withKey: MobAnimationType.Run.rawValue)
     }
 }

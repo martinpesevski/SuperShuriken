@@ -43,7 +43,6 @@ class MonsterManager: NSObject {
     }
     
     func addMonsterToScene(scene: GameScene) {
-        
         var monster = MonsterNode()
         let actualY = random(min: monsterSpawner.frame.origin.y + monster.size.height/2,
                              max: (monsterSpawner.frame.origin.y + horizonVerticalLocation) - monster.size.height/2)
@@ -54,7 +53,7 @@ class MonsterManager: NSObject {
             monster = BossNode()
             (monster as! BossNode).setupRandom()
         } else {
-            type = MonsterType(rawValue: 1 + Int(arc4random_uniform(UInt32(MonsterType.count)))) ?? MonsterType.basicMob
+            type = MonsterType.random()
         }
         
         monster.setup(startPoint: CGPoint(x: scene.size.width + monster.size.width/2, y: actualY), type: type)

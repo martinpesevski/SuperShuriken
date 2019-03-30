@@ -25,6 +25,10 @@
 		C766D7F9200BC71C00648287 /* SettingsScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = C766D7F8200BC71C00648287 /* SettingsScene.sks */; };
 		C766D7FB200BC74C00648287 /* SettingsScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = C766D7FA200BC74C00648287 /* SettingsScene.swift */; };
 		C766D7FD200C0D2E00648287 /* GameScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = C766D7FC200C0D2E00648287 /* GameScene.sks */; };
+		C7806EE6224FAF5C00B5CE41 /* vampire_boss_walking.atlas in Resources */ = {isa = PBXBuildFile; fileRef = C7806EE2224FAF5B00B5CE41 /* vampire_boss_walking.atlas */; };
+		C7806EE7224FAF5C00B5CE41 /* vampire_boss_run_shooting.atlas in Resources */ = {isa = PBXBuildFile; fileRef = C7806EE3224FAF5B00B5CE41 /* vampire_boss_run_shooting.atlas */; };
+		C7806EE8224FAF5C00B5CE41 /* vampire_boss_running.atlas in Resources */ = {isa = PBXBuildFile; fileRef = C7806EE4224FAF5C00B5CE41 /* vampire_boss_running.atlas */; };
+		C7806EE9224FAF5C00B5CE41 /* vampire_boss_death.atlas in Resources */ = {isa = PBXBuildFile; fileRef = C7806EE5224FAF5C00B5CE41 /* vampire_boss_death.atlas */; };
 		C796D2201F7AACAC00F770CF /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C796D21F1F7AACAC00F770CF /* AppDelegate.swift */; };
 		C796D2261F7AACAC00F770CF /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = C796D2251F7AACAC00F770CF /* GameScene.swift */; };
 		C796D2281F7AACAC00F770CF /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C796D2271F7AACAC00F770CF /* GameViewController.swift */; };
@@ -52,10 +56,6 @@
 		C7E7B5E9221A337D00BBE894 /* Melee_Ogre_Running.atlas in Resources */ = {isa = PBXBuildFile; fileRef = C7E7B5E8221A337D00BBE894 /* Melee_Ogre_Running.atlas */; };
 		C7E7B606221DE9AC00BBE894 /* minion_shielded_armored_running.atlas in Resources */ = {isa = PBXBuildFile; fileRef = C7E7B605221DE9AC00BBE894 /* minion_shielded_armored_running.atlas */; };
 		C7E7B608221DEA8C00BBE894 /* barbarian_running.atlas in Resources */ = {isa = PBXBuildFile; fileRef = C7E7B607221DEA8C00BBE894 /* barbarian_running.atlas */; };
-		C7E7B60D221DF08700BBE894 /* vampire_boss_walking.atlas in Resources */ = {isa = PBXBuildFile; fileRef = C7E7B60C221DF08700BBE894 /* vampire_boss_walking.atlas */; };
-		C7E7B611221DF7E400BBE894 /* vampire_boss_running.atlas in Resources */ = {isa = PBXBuildFile; fileRef = C7E7B610221DF7E400BBE894 /* vampire_boss_running.atlas */; };
-		C7E7B613221DFA6800BBE894 /* vampire_boss_run_shooting.atlas in Resources */ = {isa = PBXBuildFile; fileRef = C7E7B612221DFA6800BBE894 /* vampire_boss_run_shooting.atlas */; };
-		C7E7B617221E010F00BBE894 /* vampire_boss_death.atlas in Resources */ = {isa = PBXBuildFile; fileRef = C7E7B616221E010F00BBE894 /* vampire_boss_death.atlas */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -78,6 +78,10 @@
 		C766D7F8200BC71C00648287 /* SettingsScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = SettingsScene.sks; sourceTree = "<group>"; };
 		C766D7FA200BC74C00648287 /* SettingsScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsScene.swift; sourceTree = "<group>"; };
 		C766D7FC200C0D2E00648287 /* GameScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = GameScene.sks; sourceTree = "<group>"; };
+		C7806EE2224FAF5B00B5CE41 /* vampire_boss_walking.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = vampire_boss_walking.atlas; sourceTree = "<group>"; };
+		C7806EE3224FAF5B00B5CE41 /* vampire_boss_run_shooting.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = vampire_boss_run_shooting.atlas; sourceTree = "<group>"; };
+		C7806EE4224FAF5C00B5CE41 /* vampire_boss_running.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = vampire_boss_running.atlas; sourceTree = "<group>"; };
+		C7806EE5224FAF5C00B5CE41 /* vampire_boss_death.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = vampire_boss_death.atlas; sourceTree = "<group>"; };
 		C796D21C1F7AACAC00F770CF /* SuperShuriken.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SuperShuriken.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C796D21F1F7AACAC00F770CF /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		C796D2251F7AACAC00F770CF /* GameScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameScene.swift; sourceTree = "<group>"; };
@@ -107,10 +111,6 @@
 		C7E7B5E8221A337D00BBE894 /* Melee_Ogre_Running.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = Melee_Ogre_Running.atlas; sourceTree = "<group>"; };
 		C7E7B605221DE9AC00BBE894 /* minion_shielded_armored_running.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = minion_shielded_armored_running.atlas; sourceTree = "<group>"; };
 		C7E7B607221DEA8C00BBE894 /* barbarian_running.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = barbarian_running.atlas; sourceTree = "<group>"; };
-		C7E7B60C221DF08700BBE894 /* vampire_boss_walking.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = vampire_boss_walking.atlas; sourceTree = "<group>"; };
-		C7E7B610221DF7E400BBE894 /* vampire_boss_running.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = vampire_boss_running.atlas; sourceTree = "<group>"; };
-		C7E7B612221DFA6800BBE894 /* vampire_boss_run_shooting.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = vampire_boss_run_shooting.atlas; sourceTree = "<group>"; };
-		C7E7B616221E010F00BBE894 /* vampire_boss_death.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = vampire_boss_death.atlas; sourceTree = "<group>"; };
 		FFAE01823C307487EE0B93EF /* Pods_SuperShuriken.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SuperShuriken.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -232,6 +232,14 @@
 			path = Animations;
 			sourceTree = "<group>";
 		};
+		C78D4E97223AF617003835CA /* Animations */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Animations;
+			path = "New Group";
+			sourceTree = "<group>";
+		};
 		C796D2131F7AACAC00F770CF = {
 			isa = PBXGroup;
 			children = (
@@ -261,6 +269,7 @@
 				0F73506E200CBEE100EEFDD7 /* Scenes */,
 				C72F6C1E20791F1B004E9D19 /* CustomNodes */,
 				C7DCF51D204D5F3E00CB1903 /* Managers */,
+				C78D4E97223AF617003835CA /* Animations */,
 				0F73506F200CBF2700EEFDD7 /* Models */,
 				C72035D021283CC1000D7C89 /* Supporting files */,
 			);
@@ -322,10 +331,10 @@
 		C7E7B609221DECFE00BBE894 /* Boss Animations */ = {
 			isa = PBXGroup;
 			children = (
-				C7E7B616221E010F00BBE894 /* vampire_boss_death.atlas */,
-				C7E7B612221DFA6800BBE894 /* vampire_boss_run_shooting.atlas */,
-				C7E7B610221DF7E400BBE894 /* vampire_boss_running.atlas */,
-				C7E7B60C221DF08700BBE894 /* vampire_boss_walking.atlas */,
+				C7806EE5224FAF5C00B5CE41 /* vampire_boss_death.atlas */,
+				C7806EE3224FAF5B00B5CE41 /* vampire_boss_run_shooting.atlas */,
+				C7806EE4224FAF5C00B5CE41 /* vampire_boss_running.atlas */,
+				C7806EE2224FAF5B00B5CE41 /* vampire_boss_walking.atlas */,
 			);
 			path = "Boss Animations";
 			sourceTree = "<group>";
@@ -404,22 +413,22 @@
 				C7E7B5BB221A0D3300BBE894 /* Running.atlas in Resources */,
 				C766D7F3200A392800648287 /* MainMenu.sks in Resources */,
 				C766D7F9200BC71C00648287 /* SettingsScene.sks in Resources */,
+				C7806EE9224FAF5C00B5CE41 /* vampire_boss_death.atlas in Resources */,
 				C7E7B5BD221A0D5C00BBE894 /* Throwing.atlas in Resources */,
 				C796D22B1F7AACAC00F770CF /* Main.storyboard in Resources */,
+				C7806EE8224FAF5C00B5CE41 /* vampire_boss_running.atlas in Resources */,
+				C7806EE6224FAF5C00B5CE41 /* vampire_boss_walking.atlas in Resources */,
 				C72DEB4522288B5100591C41 /* minion_shielded_armored_dying.atlas in Resources */,
 				C72DEB4322288A8800591C41 /* melee_ogre_dying.atlas in Resources */,
+				C7806EE7224FAF5C00B5CE41 /* vampire_boss_run_shooting.atlas in Resources */,
 				C7E7B5C1221A0E2600BBE894 /* Idle.atlas in Resources */,
 				C7E7B5E6221A284900BBE894 /* Run_Throwing.atlas in Resources */,
 				C766D7FD200C0D2E00648287 /* GameScene.sks in Resources */,
 				C796D22D1F7AACAC00F770CF /* Assets.xcassets in Resources */,
 				C7E7B606221DE9AC00BBE894 /* minion_shielded_armored_running.atlas in Resources */,
-				C7E7B613221DFA6800BBE894 /* vampire_boss_run_shooting.atlas in Resources */,
 				C796D23B1F7AAFC400F770CF /* pew-pew-lei.caf in Resources */,
-				C7E7B617221E010F00BBE894 /* vampire_boss_death.atlas in Resources */,
 				C72DEB3F222888D200591C41 /* barbarian_duying.atlas in Resources */,
 				C7E7B5B62218AC7A00BBE894 /* bloodSplatter.atlas in Resources */,
-				C7E7B60D221DF08700BBE894 /* vampire_boss_walking.atlas in Resources */,
-				C7E7B611221DF7E400BBE894 /* vampire_boss_running.atlas in Resources */,
 				C796D2301F7AACAC00F770CF /* LaunchScreen.storyboard in Resources */,
 				C7E7B5C5221A191D00BBE894 /* Run_Slashing.atlas in Resources */,
 				C7E7B5B9221A0CD000BBE894 /* Dying.atlas in Resources */,
