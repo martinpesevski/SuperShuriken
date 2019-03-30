@@ -14,7 +14,7 @@ protocol GameManagerDelegate {
 }
 
 let enemyLevelMultiplier = 5//increment in number of enemies for each level
-let bossLevelMultiplier = 5//how many levels does it take to encounter a boss
+let bossLevelMultiplier = 1//how many levels does it take to encounter a boss
 
 class GameManager: NSObject {
     static let sharedInstance = GameManager()

@@ -26,6 +26,8 @@
 		C7806EE7224FAF5C00B5CE41 /* vampire_boss_run_shooting.atlas in Resources */ = {isa = PBXBuildFile; fileRef = C7806EE3224FAF5B00B5CE41 /* vampire_boss_run_shooting.atlas */; };
 		C7806EE8224FAF5C00B5CE41 /* vampire_boss_running.atlas in Resources */ = {isa = PBXBuildFile; fileRef = C7806EE4224FAF5C00B5CE41 /* vampire_boss_running.atlas */; };
 		C7806EE9224FAF5C00B5CE41 /* vampire_boss_death.atlas in Resources */ = {isa = PBXBuildFile; fileRef = C7806EE5224FAF5C00B5CE41 /* vampire_boss_death.atlas */; };
+		C788A11F2250009A009CCA08 /* PlayBackground.swift in Sources */ = {isa = PBXBuildFile; fileRef = C788A11E2250009A009CCA08 /* PlayBackground.swift */; };
+		C788A121225017F2009CCA08 /* EndGameMenuNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = C788A120225017F2009CCA08 /* EndGameMenuNode.swift */; };
 		C796D2201F7AACAC00F770CF /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C796D21F1F7AACAC00F770CF /* AppDelegate.swift */; };
 		C796D2261F7AACAC00F770CF /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = C796D2251F7AACAC00F770CF /* GameScene.swift */; };
 		C796D2281F7AACAC00F770CF /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C796D2271F7AACAC00F770CF /* GameViewController.swift */; };
@@ -81,6 +83,8 @@
 		C7806EE3224FAF5B00B5CE41 /* vampire_boss_run_shooting.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = vampire_boss_run_shooting.atlas; sourceTree = "<group>"; };
 		C7806EE4224FAF5C00B5CE41 /* vampire_boss_running.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = vampire_boss_running.atlas; sourceTree = "<group>"; };
 		C7806EE5224FAF5C00B5CE41 /* vampire_boss_death.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = vampire_boss_death.atlas; sourceTree = "<group>"; };
+		C788A11E2250009A009CCA08 /* PlayBackground.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayBackground.swift; sourceTree = "<group>"; };
+		C788A120225017F2009CCA08 /* EndGameMenuNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EndGameMenuNode.swift; sourceTree = "<group>"; };
 		C796D21C1F7AACAC00F770CF /* SuperShuriken.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SuperShuriken.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C796D21F1F7AACAC00F770CF /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		C796D2251F7AACAC00F770CF /* GameScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameScene.swift; sourceTree = "<group>"; };
@@ -155,6 +159,7 @@
 				C75A375921737A5700293FFF /* BossNode.swift */,
 				C7DCF522204D629900CB1903 /* MonsterGoalNode.swift */,
 				C7BAEC772210B838003EE6C8 /* StaminaBarNode.swift */,
+				C788A11E2250009A009CCA08 /* PlayBackground.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -222,6 +227,7 @@
 				C7A4DF371FE6BD6C007DA58E /* ButtonNode.swift */,
 				0F7350762010C1E600EEFDD7 /* LabelWithSwitchNode.swift */,
 				C72F6C21207924AE004E9D19 /* SelectionButton.swift */,
+				C788A120225017F2009CCA08 /* EndGameMenuNode.swift */,
 			);
 			path = CustomNodes;
 			sourceTree = "<group>";
@@ -510,9 +516,11 @@
 				C7DCF523204D629900CB1903 /* MonsterGoalNode.swift in Sources */,
 				C7C348E4217B34D40099A7C0 /* MonsterManager.swift in Sources */,
 				0F735071200CBF5200EEFDD7 /* PlayerNode.swift in Sources */,
+				C788A11F2250009A009CCA08 /* PlayBackground.swift in Sources */,
 				C7C348E6217B48850099A7C0 /* BossProjectileNode.swift in Sources */,
 				C766D7FB200BC74C00648287 /* SettingsScene.swift in Sources */,
 				0F735075200CF24100EEFDD7 /* Global.swift in Sources */,
+				C788A121225017F2009CCA08 /* EndGameMenuNode.swift in Sources */,
 				C796D2201F7AACAC00F770CF /* AppDelegate.swift in Sources */,
 				C72F6C22207924AE004E9D19 /* SelectionButton.swift in Sources */,
 				C7ECD831224FCCD700031B01 /* MonsterModel.swift in Sources */,

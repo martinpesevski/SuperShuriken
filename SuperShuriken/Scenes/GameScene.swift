@@ -9,11 +9,12 @@
 import SpriteKit
 import GameplayKit
 
-class GameScene: SKScene, SKPhysicsContactDelegate, adMobInterstitialDelegate, GameManagerDelegate, MonsterDelegate {
+class GameScene: SKScene, SKPhysicsContactDelegate, adMobInterstitialDelegate, GameManagerDelegate, MonsterDelegate, EndGameDelegate {
     
-    var menuButton: ButtonNode!
     var player : PlayerNode!
     var didWin = false
+    
+    private var endGameMenu = EndGameMenuNode()
     
     var scoreLabel : SKLabelNode!
     var staminaBar : StaminaBarNode!
@@ -49,9 +50,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate, adMobInterstitialDelegate, G
             return
         }
         
-        guard let menuButtonPlaceholder = childNode(withName: "menuButton") as? SKSpriteNode else {
-            return
-        }
         guard let staminaBarPlaceholder = childNode(withName: "staminaBar") as? SKSpriteNode else {
             return
         }
@@ -62,13 +60,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate, adMobInterstitialDelegate, G
 
         scoreLabel = childNode(withName: "scoreLabel") as? SKLabelNode ?? SKLabelNode(text: "Score")
         updateScoreLabel()
-        
-        menuButton = ButtonNode.init(normalTexture: SKTexture.init(imageNamed: "ic_button"),
-                                                  selectedTexture: SKTexture.init(imageNamed: "ic_buttonClicked"),
-                                                  disabledTexture: nil)
-        menuButton.setupWithNode(node: menuButtonPlaceholder)
-        menuButton.setButtonAction(target: self, triggerEvent: .TouchUpInside, action: #selector(onMenuTap))
-        menuButton.setButtonLabel(title: "MENU", font: "Chalkduster", fontSize: 40)
         
         player = PlayerNode(imageNamed: "ic_player")
         player.setupWithNode(node: spawnPoint)
@@ -83,14 +74,19 @@ class GameScene: SKScene, SKPhysicsContactDelegate, adMobInterstitialDelegate, G
         
         monsterManager.monsterSpawner.setupWithNode(node: enemySpawner)
         
+        endGameMenu.isHidden = true
+        endGameMenu.zPosition = 10
+        endGameMenu.position = CGPoint(x: size.width/2, y: size.height/2)
+        endGameMenu.delegate = self
+        
         addChild(player)
         addChild(staminaBar)
         addChild(monsterManager.monsterGoal.copy() as! SKNode)
         addChild(monsterManager.monsterSpawner.copy() as! SKNode)
-        addChild(menuButton)
+        addChild(endGameMenu)
 
         setupWalls()
-        startNextlevel()
+        restart()
         
         if Global.sharedInstance.isSoundOn {
             let backgroundMusic = SKAudioNode.init(fileNamed: "background-music-aac.caf")
@@ -203,6 +199,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, adMobInterstitialDelegate, G
         player.stopAnimation(type: .Death)
         gameOverLabel.removeFromParent()
         tapToRetryLabel.removeFromParent()
+        endGameMenu.isHidden = true
         updateScoreLabel()
         startNextlevel()
         player.playAnimation(type: .Idle, completion: {})
@@ -225,6 +222,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate, adMobInterstitialDelegate, G
             projectile.removeFromParent()
         }
         enemyProjectilesArray.removeAll()
+        
+        endGameMenu.isHidden = false
     }
         
     //MARK: - collisions
@@ -296,7 +295,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate, adMobInterstitialDelegate, G
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         if gameManager.isGameFinished {
-            restart()
             return
         }
 
@@ -433,6 +431,19 @@ class GameScene: SKScene, SKPhysicsContactDelegate, adMobInterstitialDelegate, G
                 projectileDidColideWithProjectile(projectile1: projectile1, projectile2: projectile2)
             }
         }
+    }
+    
+    func onMenu() {
+        let reveal = SKTransition.fade(withDuration: 1)
+        if let mainMenuScene = MainMenu(fileNamed: "MainMenu") {
+            mainMenuScene.initialize()
+            
+            self.view?.presentScene(mainMenuScene, transition: reveal)
+        }
+    }
+    
+    func onRetry() {
+        restart()
     }
     
     //MARK: - admob delegate
