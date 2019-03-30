@@ -14,12 +14,27 @@ protocol MonsterDelegate {
     func monsterDidShoot(projectile: ProjectileNode)
 }
 
-enum MobAnimationType: String, CaseIterable {
-    case Run = "mobRunAnimation"
-    case Shoot = "mobShootAnimation"
-    case RunShoot = "mobRunShootAnimation"
-    case Death = "mobDeathAnimation"
-    case RunSlash = "mobRunSlashAnimation"
+enum MobAnimationType: CaseIterable {
+    case Run
+    case Shoot
+    case RunShoot
+    case Death
+    case RunSlash
+    
+    var name: String {
+        switch self {
+        case .Run:
+            return "mobRunAnimation"
+        case .Shoot:
+            return "mobShootAnimation"
+        case .RunShoot:
+            return "mobRunShootAnimation"
+        case .Death:
+            return "mobDeathAnimation"
+        case .RunSlash:
+            return "mobRunSlashAnimation"
+        }
+    }
 }
 
 enum MonsterType: UInt32 {
@@ -38,6 +53,19 @@ enum MonsterType: UInt32 {
             return 3
         case .boss:
             return 10
+        }
+    }
+    
+    var size: CGSize {
+        switch self {
+        case .basicMob:
+            return CGSize(width: 267, height: 267)
+        case .bigMob:
+            return CGSize(width: 400, height: 320)
+        case .meleeMob:
+            return CGSize(width: 267, height: 267)
+        case .boss:
+            return CGSize(width: 667, height: 667)
         }
     }
 
@@ -61,17 +89,15 @@ class MonsterNode: SKSpriteNode {
 
     func setup(startPoint: CGPoint, type: MonsterType) {
         self.type = type
-        size = CGSize(width: 100, height: 80)
+        size = self.type.size
         
         hitPoints = MonsterManager.getNumberOfHits(monsterType: type)
         attackTypeWeaknesses = MonsterManager.getWeaknesses(monsterType: type)
         
         self.startPoint = startPoint
         position = startPoint
-        let scaleFactor = MonsterManager.getScaleFactor(monsterType: type)
-        scale(to: CGSize(width: size.width * scaleFactor, height: size.height * scaleFactor))
         
-        bloodSplatterNode = SKSpriteNode(color: .clear, size: CGSize(width: 30, height: 20))
+        bloodSplatterNode = SKSpriteNode(color: .clear, size: CGSize(width: 90, height: 60))
         bloodSplatterNode.anchorPoint = CGPoint(x: 0, y: 0)
         bloodSplatterNode.zPosition = 1
         bloodSplatterNode.position = CGPoint(x: 0, y: 0)
@@ -136,6 +162,6 @@ class MonsterNode: SKSpriteNode {
     
     func playTextureRunAnimation(){
         let meleeOgreRunAction = SKAction.repeatForever(SKAction.animate(with: MonsterManager.getRunAnimationTextures(monsterType: type), timePerFrame: 0.04))
-        run(meleeOgreRunAction, withKey: MobAnimationType.Run.rawValue)
+        run(meleeOgreRunAction, withKey: MobAnimationType.Run.name)
     }
 }
