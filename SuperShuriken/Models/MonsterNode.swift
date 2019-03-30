@@ -42,8 +42,8 @@ class MonsterNode: SKSpriteNode {
         bloodSplatterNode.zPosition = 1
         bloodSplatterNode.position = CGPoint(x: 0, y: 0)
         addChild(bloodSplatterNode)
-                
-        physicsBody = SKPhysicsBody(rectangleOf: size)
+        
+        physicsBody = SKPhysicsBody(rectangleOf: type.hitBoxSize.size, center: type.hitBoxSize.center)
         physicsBody?.isDynamic = true
         physicsBody?.categoryBitMask = PhysicsCategory.Monster
         physicsBody?.contactTestBitMask = PhysicsCategory.Projectile | PhysicsCategory.Goal

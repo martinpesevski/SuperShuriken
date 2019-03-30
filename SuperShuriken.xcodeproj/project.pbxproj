@@ -237,14 +237,6 @@
 			path = Animations;
 			sourceTree = "<group>";
 		};
-		C78D4E97223AF617003835CA /* Animations */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = Animations;
-			path = "New Group";
-			sourceTree = "<group>";
-		};
 		C796D2131F7AACAC00F770CF = {
 			isa = PBXGroup;
 			children = (
@@ -274,7 +266,6 @@
 				0F73506E200CBEE100EEFDD7 /* Scenes */,
 				C72F6C1E20791F1B004E9D19 /* CustomNodes */,
 				C7DCF51D204D5F3E00CB1903 /* Managers */,
-				C78D4E97223AF617003835CA /* Animations */,
 				0F73506F200CBF2700EEFDD7 /* Models */,
 				C72035D021283CC1000D7C89 /* Supporting files */,
 			);

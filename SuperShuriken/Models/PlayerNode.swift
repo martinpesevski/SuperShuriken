@@ -38,12 +38,14 @@ class PlayerNode: SKSpriteNode, GKAgentDelegate {
     private var isDragging = false;
 
     func setup() {
-        physicsBody = SKPhysicsBody(rectangleOf: size)
+        let prevAnchor = anchorPoint
+        physicsBody = SKPhysicsBody(rectangleOf: CGSize(width: 111, height: 156), center: CGPoint(x: 0, y: 20))
         physicsBody?.isDynamic = true
         physicsBody?.categoryBitMask = PhysicsCategory.Player
         physicsBody?.contactTestBitMask = PhysicsCategory.EnemyProjectile
         physicsBody?.collisionBitMask = PhysicsCategory.None
-                
+        anchorPoint = prevAnchor
+        
         setupActions()
         
         playAnimation(type: .Idle, completion: {})

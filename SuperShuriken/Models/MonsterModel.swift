@@ -76,6 +76,19 @@ enum MonsterType: UInt32 {
         }
     }
     
+    var hitBoxSize: (size: CGSize, center: CGPoint) {
+        switch self {
+        case .basicMob:
+            return (CGSize(width: 122, height: 169), CGPoint(x: 0, y: 0))
+        case .bigMob:
+            return (CGSize(width: 229, height: 184), CGPoint(x: 0, y: -30))
+        case .meleeMob:
+            return (CGSize(width: 92, height: 165), CGPoint(x: 0, y: 0))
+        case .boss:
+            return (CGSize(width: 288, height: 406), CGPoint(x: 0, y: 0))
+        }
+    }
+    
     var weaknesses: [AttackType] {
         switch self {
         case .basicMob:

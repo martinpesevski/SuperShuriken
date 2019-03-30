@@ -20,7 +20,8 @@ class GameViewController: UIViewController, GADBannerViewDelegate {
         skView.showsFPS = true
         skView.showsNodeCount = true
         skView.ignoresSiblingOrder = true
-        
+//        skView.showsPhysics = true
+
         if let scene = MainMenu(fileNamed: "MainMenu") {
             scene.initialize()
             skView.presentScene(scene)

@@ -36,7 +36,7 @@ func / (point: CGPoint, scalar: CGFloat) -> CGPoint {
 }
 
 func random() -> CGFloat {
-    return CGFloat(Float(arc4random()) / 0xFFFFFFFF)
+    return CGFloat(Float(arc4random()) / Float(UINT32_MAX))
 }
 
 public func random(min: CGFloat, max: CGFloat) -> CGFloat {
