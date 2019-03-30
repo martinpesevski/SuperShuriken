@@ -25,20 +25,14 @@ enum AttackType: Int {
     case Projectile = 1
 }
 
-class PlayerNode: SKSpriteNode, GKAgentDelegate {
-    private var playerWalkingFrames: [SKTexture] = []
-    private var playerShootingFrames: [SKTexture] = []
-    private var playerRunShootFrames: [SKTexture] = []
-    private var playerDeathFrames: [SKTexture] = []
-    private var playerIdleFrames: [SKTexture] = []
-    private var playerRunSlashFrames: [SKTexture] = []
-    
+class PlayerNode: SKSpriteNode, GKAgentDelegate {    
     private var walkAction = SKAction()
     private var shootAction = SKAction()
     private var runShootAction = SKAction()
     private var deathAction = SKAction()
     private var idleAction = SKAction()
     private var runSlashAction = SKAction()
+    private var animationManager = AnimationManager.sharedInstance
 
     private var isJumping = false;
     private var isDragging = false;
@@ -49,14 +43,7 @@ class PlayerNode: SKSpriteNode, GKAgentDelegate {
         physicsBody?.categoryBitMask = PhysicsCategory.Player
         physicsBody?.contactTestBitMask = PhysicsCategory.EnemyProjectile
         physicsBody?.collisionBitMask = PhysicsCategory.None
-        
-        playerRunShootFrames = createAtlas(name: "Run_Throwing")
-        playerRunSlashFrames = createAtlas(name: "Run_Slashing")
-        playerWalkingFrames = createAtlas(name: "Running")
-        playerDeathFrames = createAtlas(name: "Dying")
-        playerShootingFrames = createAtlas(name: "Throwing")
-        playerIdleFrames = createAtlas(name: "Idle")
-        
+                
         setupActions()
         
         playAnimation(type: .Idle, completion: {})
@@ -64,20 +51,20 @@ class PlayerNode: SKSpriteNode, GKAgentDelegate {
     
     func setupActions() {
         walkAction = SKAction.repeatForever(
-            SKAction.animate(with: playerWalkingFrames,
+            SKAction.animate(with: animationManager.playerWalkingFrames,
                              timePerFrame: 0.03,
                              resize: false,
                              restore: true))
         
-        shootAction = SKAction.animate(with: playerShootingFrames, timePerFrame: 0.03, resize: false, restore: true)
+        shootAction = SKAction.animate(with: animationManager.playerShootingFrames, timePerFrame: 0.03, resize: false, restore: true)
         
-        runShootAction = SKAction.animate(with: playerRunShootFrames, timePerFrame: 0.03, resize: false, restore: true)
+        runShootAction = SKAction.animate(with: animationManager.playerRunShootFrames, timePerFrame: 0.03, resize: false, restore: true)
         
-        deathAction = SKAction.animate(with: playerDeathFrames, timePerFrame: 0.05, resize: false, restore: false)
+        deathAction = SKAction.animate(with: animationManager.playerDeathFrames, timePerFrame: 0.05, resize: false, restore: false)
         
-        idleAction = SKAction.repeatForever(SKAction.animate(with: playerIdleFrames, timePerFrame: 0.05, resize: false, restore: false))
+        idleAction = SKAction.repeatForever(SKAction.animate(with: animationManager.playerIdleFrames, timePerFrame: 0.05, resize: false, restore: false))
         
-        runSlashAction = SKAction.animate(with: playerRunSlashFrames, timePerFrame: 0.05, resize: false, restore: false)
+        runSlashAction = SKAction.animate(with: animationManager.playerRunSlashFrames, timePerFrame: 0.05, resize: false, restore: false)
     }
     
     //MARK: - touches

@@ -19,8 +19,9 @@ class MonsterNode: SKSpriteNode {
     var type: MonsterType!
     private var hitPoints: Int = 1
     var monsterDelegate: MonsterDelegate?
+    internal let monsterManager = MonsterManager.sharedInstance
+    internal let animationManager = AnimationManager.sharedInstance
     private var bloodSplatterNode: SKSpriteNode!
-    private var bloodSplatterTextures = [SKTexture]()
     private var runAction = SKAction()
     private var runTextureAction = SKAction()
     private var hitAction = SKAction()
@@ -41,9 +42,7 @@ class MonsterNode: SKSpriteNode {
         bloodSplatterNode.zPosition = 1
         bloodSplatterNode.position = CGPoint(x: 0, y: 0)
         addChild(bloodSplatterNode)
-        
-        bloodSplatterTextures = createAtlas(name: "bloodSplatter")
-        
+                
         physicsBody = SKPhysicsBody(rectangleOf: size)
         physicsBody?.isDynamic = true
         physicsBody?.categoryBitMask = PhysicsCategory.Monster
@@ -56,15 +55,15 @@ class MonsterNode: SKSpriteNode {
     func setupActions() {
         let destroyAction = SKAction.removeFromParent()
         let fadeOutAction = SKAction.fadeOut(withDuration: 0.3)
-        let deathAnimation = SKAction.animate(with: MonsterManager.getDeathAnimationTextures(monsterType: type), timePerFrame: 0.04)
+        let deathAnimation = SKAction.animate(with: monsterManager.getDeathAnimationTextures(monsterType: type), timePerFrame: 0.04)
         
         deathAction = SKAction.sequence([deathAnimation, fadeOutAction, destroyAction])
         
-        bloodSplatterAction = SKAction.animate(with: bloodSplatterTextures, timePerFrame: 0.05, resize: false, restore: true)
+        bloodSplatterAction = SKAction.animate(with: animationManager.bloodSplatterTextures, timePerFrame: 0.05, resize: false, restore: true)
         
         hitAction = SKAction.move(by: CGVector(dx: 50, dy: 0), duration: 0.2)
         
-        runTextureAction = SKAction.repeatForever(SKAction.animate(with: MonsterManager.getRunAnimationTextures(monsterType: type), timePerFrame: 0.04))
+        runTextureAction = SKAction.repeatForever(SKAction.animate(with: monsterManager.getRunAnimationTextures(monsterType: type), timePerFrame: 0.04))
     }
     
     func playRunAnimation() {

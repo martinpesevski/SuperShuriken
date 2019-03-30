@@ -76,16 +76,18 @@ extension SKSpriteNode {
     }
 }
 
-public func createAtlas(name: String) -> [SKTexture] {
+public func createAtlas(name: String, completion: @escaping ([SKTexture]) -> ()) {
     let animationAtlas = SKTextureAtlas(named: name)
-    var animationFrames: [SKTexture] = []
-    
-    let numImages = animationAtlas.textureNames.count
-    for i in 0..<numImages {
-        let textureName = "\(name)_\(String.init(format: "%03d", i))"
-        animationFrames.append(animationAtlas.textureNamed(textureName))
+    animationAtlas.preload {
+        var animationFrames: [SKTexture] = []
+        
+        let numImages = animationAtlas.textureNames.count
+        for i in 0..<numImages {
+            let textureName = "\(name)_\(String.init(format: "%03d", i))"
+            animationFrames.append(animationAtlas.textureNamed(textureName))
+        }
+        completion(animationFrames)
     }
-    return animationFrames
 }
 
 class Util {

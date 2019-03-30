@@ -65,25 +65,25 @@ class BossNode: MonsterNode {
     }
     
     func getWalkAnimationForType(bossType: BossType) -> SKAction {
-        let walkOnScreenFrames = MonsterManager.getBossWalkAnimationTextures(monsterType: bossType)
+        let walkOnScreenFrames = monsterManager.getBossWalkAnimationTextures(monsterType: bossType)
         let actionAnimateWalk = SKAction.animate(with: walkOnScreenFrames, timePerFrame: 0.03)
         return actionAnimateWalk
     }
     
     func getRunAnimationForType(bossType: BossType) -> SKAction {
-        let bossRunningFrames = MonsterManager.getBossRunAnimationTextures(monsterType: bossType)
+        let bossRunningFrames = monsterManager.getBossRunAnimationTextures(monsterType: bossType)
         let actionAnimateRun = SKAction.repeatForever(SKAction.animate(with: bossRunningFrames, timePerFrame: 0.05))
         return actionAnimateRun
     }
     
     func getRunShootAnimationForType(bossType: BossType) -> SKAction {
-        let bossRunningFrames = MonsterManager.getBossRunShootAnimationTextures(monsterType: bossType)
+        let bossRunningFrames = monsterManager.getBossRunShootAnimationTextures(monsterType: bossType)
         let actionAnimateRun = SKAction.animate(with: bossRunningFrames, timePerFrame: 0.02)
         return actionAnimateRun
     }
     
     func getDeathAnimationForType(bossType: BossType) -> SKAction {
-        let bossDeathFrames = MonsterManager.getBossDeathAnimationTextures(bossType: bossType)
+        let bossDeathFrames = monsterManager.getBossDeathAnimationTextures(bossType: bossType)
         let actionAnimateDeath = SKAction.animate(with: bossDeathFrames, timePerFrame: 0.03)
         return actionAnimateDeath
     }

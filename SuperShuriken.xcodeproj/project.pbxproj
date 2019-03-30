@@ -57,6 +57,7 @@
 		C7ECD82E224FC92C00031B01 /* Run_Throwing.atlas in Resources */ = {isa = PBXBuildFile; fileRef = C7ECD828224FC92C00031B01 /* Run_Throwing.atlas */; };
 		C7ECD82F224FC92C00031B01 /* Running.atlas in Resources */ = {isa = PBXBuildFile; fileRef = C7ECD829224FC92C00031B01 /* Running.atlas */; };
 		C7ECD831224FCCD700031B01 /* MonsterModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7ECD830224FCCD700031B01 /* MonsterModel.swift */; };
+		C7ECD833224FE52C00031B01 /* AnimationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7ECD832224FE52C00031B01 /* AnimationManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -113,6 +114,7 @@
 		C7ECD828224FC92C00031B01 /* Run_Throwing.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = Run_Throwing.atlas; sourceTree = "<group>"; };
 		C7ECD829224FC92C00031B01 /* Running.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = Running.atlas; sourceTree = "<group>"; };
 		C7ECD830224FCCD700031B01 /* MonsterModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonsterModel.swift; sourceTree = "<group>"; };
+		C7ECD832224FE52C00031B01 /* AnimationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimationManager.swift; sourceTree = "<group>"; };
 		FFAE01823C307487EE0B93EF /* Pods_SuperShuriken.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SuperShuriken.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -309,6 +311,7 @@
 				C7345C93200F5FB900A24A16 /* AdsManager.swift */,
 				C7DCF520204D624100CB1903 /* GameManager.swift */,
 				C7C348E3217B34D40099A7C0 /* MonsterManager.swift */,
+				C7ECD832224FE52C00031B01 /* AnimationManager.swift */,
 			);
 			path = Managers;
 			sourceTree = "<group>";
@@ -510,6 +513,7 @@
 				C71E033B20430682001C61C2 /* MonsterNode.swift in Sources */,
 				C7DCF51F204D5F6600CB1903 /* Util.swift in Sources */,
 				C766D7F7200BC66400648287 /* CustomLabel.swift in Sources */,
+				C7ECD833224FE52C00031B01 /* AnimationManager.swift in Sources */,
 				C796D2281F7AACAC00F770CF /* GameViewController.swift in Sources */,
 				C7345C94200F5FB900A24A16 /* AdsManager.swift in Sources */,
 				C7DCF523204D629900CB1903 /* MonsterGoalNode.swift in Sources */,

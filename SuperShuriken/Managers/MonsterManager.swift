@@ -16,34 +16,10 @@ class MonsterManager: NSObject {
     var monsterGoal = MonsterGoalNode()
     
     var monstersArray = [MonsterNode]()
-    var barbarianRunningFrames : [SKTexture]
-    var barbarianDyingFrames : [SKTexture]
-    var meleeOgreRunningFrames : [SKTexture]
-    var meleeOgreDyingFrames : [SKTexture]
-    var minionShieldedArmoredRunningFrames : [SKTexture]
-    var minionShieldedArmoredDyingFrames : [SKTexture]
-    var vampireBossWalkingFrames : [SKTexture]
-    var vampireBossRunningFrames : [SKTexture]
-    var vampireBossRunShootingFrames : [SKTexture]
-    var vampireBossDeathFrames : [SKTexture]
-
+    
     let gameManager = GameManager.sharedInstance
-    
-    override init() {
-        barbarianRunningFrames = createAtlas(name: "barbarian_running")
-        barbarianDyingFrames = createAtlas(name: "barbarian_duying")
-        meleeOgreRunningFrames = createAtlas(name: "Melee_Ogre_Running")
-        meleeOgreDyingFrames = createAtlas(name: "melee_ogre_dying")
-        minionShieldedArmoredRunningFrames = createAtlas(name: "minion_shielded_armored_running")
-        minionShieldedArmoredDyingFrames = createAtlas(name: "minion_shielded_armored_dying")
-        vampireBossWalkingFrames = createAtlas(name: "vampire_boss_walking")
-        vampireBossRunningFrames = createAtlas(name: "vampire_boss_running")
-        vampireBossRunShootingFrames = createAtlas(name: "vampire_boss_run_shooting")
-        vampireBossDeathFrames = createAtlas(name: "vampire_boss_death")
-        
-        super.init()
-    }
-    
+    let animationManager = AnimationManager.sharedInstance
+
     func addMonsterToScene(scene: GameScene) {
         var monster = MonsterNode()
         let actualY = random(min: monsterSpawner.frame.origin.y + monster.size.height/2,
@@ -66,63 +42,57 @@ class MonsterManager: NSObject {
         gameManager.isBossLevel ? (monster as! BossNode).playBossAnimation() : monster.playRunAnimation()
     }
     
-    static func getRunAnimationTextures(monsterType: MonsterType) -> [SKTexture] {
-        let monsterManager = MonsterManager.sharedInstance
+    func getRunAnimationTextures(monsterType: MonsterType) -> [SKTexture] {
         switch monsterType {
         case .basicMob:
-            return monsterManager.barbarianRunningFrames
+            return animationManager.barbarianRunningFrames
         case .bigMob:
-            return monsterManager.meleeOgreRunningFrames
+            return animationManager.meleeOgreRunningFrames
         case .meleeMob:
-            return monsterManager.minionShieldedArmoredRunningFrames
+            return animationManager.minionShieldedArmoredRunningFrames
         case .boss:
-            return MonsterManager.getBossRunAnimationTextures(monsterType: .vampire)
+            return getBossRunAnimationTextures(monsterType: .vampire)
         }
     }
     
-    static func getDeathAnimationTextures(monsterType: MonsterType) -> [SKTexture] {
-        let monsterManager = MonsterManager.sharedInstance
+    func getDeathAnimationTextures(monsterType: MonsterType) -> [SKTexture] {
         switch monsterType {
         case .basicMob:
-            return monsterManager.barbarianDyingFrames
+            return animationManager.barbarianDyingFrames
         case .bigMob:
-            return monsterManager.meleeOgreDyingFrames
+            return animationManager.meleeOgreDyingFrames
         case .meleeMob:
-            return monsterManager.minionShieldedArmoredDyingFrames
+            return animationManager.minionShieldedArmoredDyingFrames
         case .boss:
-            return monsterManager.vampireBossDeathFrames
+            return animationManager.vampireBossDeathFrames
         }
     }
     
-    static func getBossDeathAnimationTextures(bossType: BossType) -> [SKTexture] {
-        let monsterManager = MonsterManager.sharedInstance
+    func getBossDeathAnimationTextures(bossType: BossType) -> [SKTexture] {
         switch bossType {
         case .vampire:
-            return monsterManager.vampireBossDeathFrames
+            return animationManager.vampireBossDeathFrames
         }
     }
     
-    static func getBossWalkAnimationTextures(monsterType: BossType) -> [SKTexture] {
-        let monsterManager = MonsterManager.sharedInstance
+    func getBossWalkAnimationTextures(monsterType: BossType) -> [SKTexture] {
         switch monsterType {
         case .vampire:
-            return monsterManager.vampireBossWalkingFrames
+            return animationManager.vampireBossWalkingFrames
         }
     }
     
-    static func getBossRunAnimationTextures(monsterType: BossType) -> [SKTexture] {
-        let monsterManager = MonsterManager.sharedInstance
+    func getBossRunAnimationTextures(monsterType: BossType) -> [SKTexture] {
         switch monsterType {
         case .vampire:
-            return monsterManager.vampireBossRunningFrames
+            return animationManager.vampireBossRunningFrames
         }
     }
     
-    static func getBossRunShootAnimationTextures(monsterType: BossType) -> [SKTexture] {
-        let monsterManager = MonsterManager.sharedInstance
+    func getBossRunShootAnimationTextures(monsterType: BossType) -> [SKTexture] {
         switch monsterType {
         case .vampire:
-            return monsterManager.vampireBossRunShootingFrames
+            return animationManager.vampireBossRunShootingFrames
         }
     }
 }
