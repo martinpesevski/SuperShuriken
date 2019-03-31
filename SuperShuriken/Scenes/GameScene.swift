@@ -15,12 +15,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate, adMobInterstitialDelegate, G
     var didWin = false
     
     private var endGameMenu = EndGameMenuNode()
+    private var background = PlayBackground()
     
     var scoreLabel : SKLabelNode!
     var staminaBar : StaminaBarNode!
     var gameOverLabel : SKLabelNode!
     var nextLevelLabel : SKLabelNode!
-    var tapToRetryLabel : SKLabelNode!
     
     var gameManager = GameManager.sharedInstance
     var monsterManager = MonsterManager.sharedInstance
@@ -56,7 +56,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate, adMobInterstitialDelegate, G
         
         gameOverLabel = gameManager.createLabel(text: "YOU LOST :(", size: 80)
         nextLevelLabel = gameManager.createLabel(text: "GET READY FOR NEXT LEVEL", size: 80)
-        tapToRetryLabel = gameManager.createLabel(text: "Tap to retry", size: 40)
 
         scoreLabel = childNode(withName: "scoreLabel") as? SKLabelNode ?? SKLabelNode(text: "Score")
         updateScoreLabel()
@@ -79,6 +78,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, adMobInterstitialDelegate, G
         endGameMenu.position = CGPoint(x: size.width/2, y: size.height/2)
         endGameMenu.delegate = self
         
+        addChild(background)
         addChild(player)
         addChild(staminaBar)
         addChild(monsterManager.monsterGoal.copy() as! SKNode)
@@ -119,7 +119,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, adMobInterstitialDelegate, G
         if gameManager.isGameFinished {
             return
         }
-        
+        gameManager.isBossLevel ? background.stopScrolling() : background.startScrollingPlatform()
         run(SKAction.repeat(SKAction.sequence([SKAction.run(addMonster), SKAction.wait(forDuration: TimeInterval(1.0))]), count: gameManager.numberOfMonstersForCurrentLevel()), withKey:"spawnAction")
     }
     
@@ -173,17 +173,16 @@ class GameScene: SKScene, SKPhysicsContactDelegate, adMobInterstitialDelegate, G
         if gameManager.isGameFinished {return}
         
         self.didWin = didWin
+        background.stopScrolling()
         scene?.view?.isPaused = true
         
         removeAction(forKey: "startNextLevel")
         removeAction(forKey: "spawnAction")
         
         if gameOverLabel.parent == nil { addChild(gameOverLabel) }
-        if tapToRetryLabel.parent == nil { addChild(tapToRetryLabel) }
         nextLevelLabel.removeFromParent()
         
         gameOverLabel.position = CGPoint(x: frame.midX, y: frame.midY)
-        tapToRetryLabel.position = CGPoint(x: frame.midX, y: frame.midY/2)
         
         gameManager.isGameFinished = true
         if Global.sharedInstance.adsEnabled {
@@ -198,7 +197,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate, adMobInterstitialDelegate, G
         removeAction(forKey: "startNextLevel")
         player.stopAnimation(type: .Death)
         gameOverLabel.removeFromParent()
-        tapToRetryLabel.removeFromParent()
         endGameMenu.isHidden = true
         updateScoreLabel()
         startNextlevel()
