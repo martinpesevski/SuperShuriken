@@ -84,7 +84,7 @@ class BossNode: MonsterNode {
     
     func getDeathAnimationForType(bossType: BossType) -> SKAction {
         let bossDeathFrames = monsterManager.getBossDeathAnimationTextures(bossType: bossType)
-        let actionAnimateDeath = SKAction.animate(with: bossDeathFrames, timePerFrame: 0.03)
+        let actionAnimateDeath = SKAction.animate(with: bossDeathFrames, timePerFrame: 0.04)
         return actionAnimateDeath
     }
     

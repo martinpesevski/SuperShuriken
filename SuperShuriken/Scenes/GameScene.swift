@@ -119,7 +119,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, adMobInterstitialDelegate, G
         if gameManager.isGameFinished {
             return
         }
-        gameManager.isBossLevel ? background.stopScrolling() : background.startScrollingPlatform()
+        gameManager.isBossLevel ? background.stopScrolling() : background.startScrolling()
         run(SKAction.repeat(SKAction.sequence([SKAction.run(addMonster), SKAction.wait(forDuration: TimeInterval(1.0))]), count: gameManager.numberOfMonstersForCurrentLevel()), withKey:"spawnAction")
     }
     
