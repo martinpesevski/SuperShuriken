@@ -8,5 +8,5 @@
 
 import UIKit
 
-let horizonVerticalLocation:CGFloat = 560.0
+let horizonVerticalLocation:CGFloat = 800.0
 

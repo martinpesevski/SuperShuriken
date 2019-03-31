@@ -76,10 +76,10 @@ class PlayerNode: SKSpriteNode, GKAgentDelegate {
         playAnimation(type: .Walk, completion: {})
         if fabs(location.y.distance(to: position.y)) < 50 {
             isDragging = true
-            position = CGPoint(x: position.x, y: location.y)
+            position = CGPoint(x: position.x, y: min(horizonVerticalLocation, location.y))
         } else {
             isDragging = false
-            walkToPoint(point: CGPoint(x: position.x, y: location.y), completion: {})
+            walkToPoint(point: CGPoint(x: position.x, y: min(horizonVerticalLocation, location.y)), completion: {})
         }
     }
     
@@ -94,7 +94,7 @@ class PlayerNode: SKSpriteNode, GKAgentDelegate {
             self.stopAnimation(type: .walkToPoint)
             self.stopAnimation(type: .Idle)
             isDragging = true;
-            position = CGPoint(x: position.x, y: location.y)
+            position = CGPoint(x: position.x, y: min(horizonVerticalLocation, location.y))
         }
     }
     
@@ -108,7 +108,7 @@ class PlayerNode: SKSpriteNode, GKAgentDelegate {
         
         stopAllAnimations()
         playAnimation(type: .Walk, completion: {})
-        walkToPoint(point: location) { [unowned self] in
+        walkToPoint(point: CGPoint(x: position.x, y: min(horizonVerticalLocation, location.y))) { [unowned self] in
             self.playAnimation(type: .Idle, completion: {}   )
         }
     }

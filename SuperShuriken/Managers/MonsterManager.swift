@@ -22,9 +22,9 @@ class MonsterManager: NSObject {
 
     func addMonsterToScene(scene: GameScene) {
         var monster = MonsterNode()
-        let actualY = random(min: monsterSpawner.frame.origin.y + monster.size.height/2,
-                             max: (monsterSpawner.frame.origin.y + horizonVerticalLocation) - monster.size.height/2)
-        
+        let actualY = random(min: 100,
+                             max: horizonVerticalLocation - monster.size.height/2)
+        monster.zPosition = horizonVerticalLocation/actualY
         let type : MonsterType
         if gameManager.isBossLevel {
             type = MonsterType.boss

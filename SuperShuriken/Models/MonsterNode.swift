@@ -39,7 +39,7 @@ class MonsterNode: SKSpriteNode {
         
         bloodSplatterNode = SKSpriteNode(color: .clear, size: CGSize(width: 90, height: 60))
         bloodSplatterNode.anchorPoint = CGPoint(x: 0, y: 0)
-        bloodSplatterNode.zPosition = 1
+        bloodSplatterNode.zPosition = zPosition
         bloodSplatterNode.position = CGPoint(x: 0, y: 0)
         addChild(bloodSplatterNode)
         
