@@ -57,7 +57,7 @@ class GameManager: NSObject {
     }
     
     func speedUpFactor() -> CGFloat {
-        return level - 1 >= 10 ? 0.1 : CGFloat((10.0 - Double(level - 1)) / 10.0)
+        return level > 10 ? 3 : CGFloat(level / 5 + 1)
     }
     
     func createLabel(text: String, size: CGFloat) -> SKLabelNode {
