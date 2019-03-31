@@ -129,7 +129,7 @@ class PlayBackground: SKSpriteNode {
     private func positionNodes(_ nodes: [SKSpriteNode], yPosition: CGFloat, zIndex: CGFloat) {
         for (index, node) in nodes.enumerated() {
             node.anchorPoint = CGPoint.zero
-            node.position = CGPoint(x: (node.size.width * CGFloat(index)) - CGFloat(index), y: yPosition)
+            node.position = CGPoint(x: (node.size.width - 1) * CGFloat(index), y: yPosition)
             node.zPosition = zIndex
             addChild(node)
         }
@@ -152,7 +152,7 @@ class PlayBackground: SKSpriteNode {
     private func startScrolling(_ nodes: [SKSpriteNode], action: SKAction) {
         for node in nodes {
             if node.position.x + node.size.width < 0 {
-                node.position = CGPoint(x: node.position.x + node.size.width * CGFloat(nodes.count), y: node.position.y)
+                node.position = CGPoint(x: node.position.x + (node.size.width - 1) * CGFloat(nodes.count), y: node.position.y)
             }
             
             node.run(action, withKey: "scroll")
