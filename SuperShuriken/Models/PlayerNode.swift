@@ -25,7 +25,8 @@ enum AttackType: Int {
     case Projectile = 1
 }
 
-class PlayerNode: SKSpriteNode, GKAgentDelegate {    
+class PlayerNode: SKSpriteNode, GKAgentDelegate {
+    private var defaultAnimationType = PlayerAnimationType.Walk
     private var walkAction = SKAction()
     private var shootAction = SKAction()
     private var runShootAction = SKAction()
@@ -48,7 +49,50 @@ class PlayerNode: SKSpriteNode, GKAgentDelegate {
         
         setupActions()
         
-        playAnimation(type: .Idle, completion: {})
+        playAnimation(type: defaultAnimationType, completion: {})
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(onLevelChanged), name: Notification.Name.newLevelStarted, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(onGameStarted), name: Notification.Name.gameStarted, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(onGameEnded), name: Notification.Name.gameOver, object: nil)
+    }
+    
+    deinit {
+        NotificationCenter.default.removeObserver(self)
+    }
+    
+    @objc func onLevelChanged(notification: Notification) {
+        guard let isBossLevel = notification.userInfo?["isBossLevel"] as? Bool else {
+            return
+        }
+            
+        setNewDefaultAnimation(isBossLevel ? .Idle : .Walk)
+    }
+    
+    @objc func onGameStarted() {
+        setNewDefaultAnimation(.Walk)
+    }
+    
+    @objc func onGameEnded() {
+        if self.action(forKey: PlayerAnimationType.Death.rawValue) == nil {
+            setNewDefaultAnimation(.Idle)
+        }
+    }
+    
+    func setNewDefaultAnimation(_ type: PlayerAnimationType) {
+        switch type {
+        case .Walk:
+            stopAnimation(type: .Idle)
+        case .Idle:
+            stopAnimation(type: .Walk)
+        default:
+            break
+        }
+        
+        defaultAnimationType = type
+        
+        if self.action(forKey: defaultAnimationType.rawValue) == nil {
+            playAnimation(type: defaultAnimationType, completion: {}   )
+        }
     }
     
     func setupActions() {
@@ -107,9 +151,15 @@ class PlayerNode: SKSpriteNode, GKAgentDelegate {
         }
         
         stopAllAnimations()
-        playAnimation(type: .Walk, completion: {})
+        
+        if self.action(forKey: PlayerAnimationType.Walk.rawValue) == nil {
+            playAnimation(type: .Walk, completion: {})
+        }
+    
         walkToPoint(point: CGPoint(x: position.x, y: min(horizonVerticalLocation, location.y))) { [unowned self] in
-            self.playAnimation(type: .Idle, completion: {}   )
+            if self.action(forKey: self.defaultAnimationType.rawValue) == nil {
+                self.playAnimation(type: self.defaultAnimationType, completion: {}   )
+            }
         }
     }
     
@@ -121,11 +171,11 @@ class PlayerNode: SKSpriteNode, GKAgentDelegate {
         stopAllAnimations()
         if isDragging {
             playAnimation(type: .RunShoot, completion: { [unowned self] in
-                self.playAnimation(type: self.isDragging ? .Walk : .Idle, completion: {})
+                self.playAnimation(type: self.isDragging ? .Walk : self.defaultAnimationType, completion: {})
             })
         } else {
             playAnimation(type: .Shoot) { [unowned self] in
-                self.playAnimation(type: self.isDragging ? .Walk : .Idle, completion: {})
+                self.playAnimation(type: self.isDragging ? .Walk : self.defaultAnimationType, completion: {})
             }
         }
     }
@@ -137,7 +187,7 @@ class PlayerNode: SKSpriteNode, GKAgentDelegate {
     
     func handleSlash() {
         playAnimation(type: .RunSlash) { [unowned self] in
-            self.playAnimation(type: .Idle, completion: {})
+            self.playAnimation(type: self.defaultAnimationType, completion: {})
         }
     }
     

@@ -13,8 +13,15 @@ protocol GameManagerDelegate {
     func levelFinished()
 }
 
-let enemyLevelMultiplier = 5//increment in number of enemies for each level
-let bossLevelMultiplier = 1//how many levels does it take to encounter a boss
+let enemyLevelMultiplier = 2//increment in number of enemies for each level
+let bossLevelMultiplier = 2//how many levels does it take to encounter a boss
+
+extension Notification.Name {
+    static let gameOver = Notification.Name("GameOverNotification")
+    static let levelFinished = Notification.Name("levelFinished")
+    static let gameStarted = Notification.Name("GameStartedNotification")
+    static let newLevelStarted = Notification.Name("NewLevelStartedNotification")
+}
 
 class GameManager: NSObject {
     static let sharedInstance = GameManager()
@@ -32,13 +39,15 @@ class GameManager: NSObject {
         monstersForCurrentLevel = 0
         isBossLevel = false
         isGameFinished = false
+        
+        NotificationCenter.default.post(Notification(name: Notification.Name.gameStarted))
     }
 
     func updateScore(value: Int) {
         score += value
         monstersForCurrentLevel += 1
         if monstersForCurrentLevel == numberOfMonstersForCurrentLevel() {
-            delegate?.levelFinished()
+            loadNextLevel()
         }
     }
     
@@ -46,6 +55,17 @@ class GameManager: NSObject {
         level += 1
         isBossLevel = level % bossLevelMultiplier == 0 
         monstersForCurrentLevel = 0
+        NotificationCenter.default.post(name: Notification.Name.levelFinished, object: nil, userInfo: ["isBossLevelNext": self.isBossLevel])
+
+        DispatchQueue.main.asyncAfter(deadline: .now() + 5.0) {
+            NotificationCenter.default.post(name: Notification.Name.newLevelStarted, object: nil, userInfo: ["isBossLevel": self.isBossLevel])
+        }
+    }
+    
+    func endGame() {
+        isGameFinished = true
+        
+        NotificationCenter.default.post(Notification(name: Notification.Name.gameOver))
     }
     
     func numberOfMonstersForCurrentLevel() -> Int {

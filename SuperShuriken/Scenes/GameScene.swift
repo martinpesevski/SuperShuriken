@@ -12,14 +12,12 @@ import GameplayKit
 class GameScene: SKScene, SKPhysicsContactDelegate, adMobInterstitialDelegate, GameManagerDelegate, MonsterDelegate, EndGameDelegate {
     
     var player : PlayerNode!
-    var didWin = false
     
     private var endGameMenu = EndGameMenuNode()
     private var background = PlayBackground()
     
     var scoreLabel : SKLabelNode!
     var staminaBar : StaminaBarNode!
-    var gameOverLabel : SKLabelNode!
     var nextLevelLabel : SKLabelNode!
     
     var gameManager = GameManager.sharedInstance
@@ -54,13 +52,15 @@ class GameScene: SKScene, SKPhysicsContactDelegate, adMobInterstitialDelegate, G
             return
         }
         
-        gameOverLabel = gameManager.createLabel(text: "YOU LOST :(", size: 80)
         nextLevelLabel = gameManager.createLabel(text: "GET READY FOR NEXT LEVEL", size: 80)
+        nextLevelLabel.position = CGPoint(x: frame.midX, y: frame.midY)
+        nextLevelLabel.zPosition = 10
+        addChild(nextLevelLabel)
 
         scoreLabel = childNode(withName: "scoreLabel") as? SKLabelNode ?? SKLabelNode(text: "Score")
         updateScoreLabel()
         
-        player = PlayerNode(imageNamed: "ic_player")
+        player = PlayerNode(imageNamed: "Idle")
         player.setupWithNode(node: spawnPoint)
         player.setup()
         
@@ -93,6 +93,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate, adMobInterstitialDelegate, G
             backgroundMusic.autoplayLooped = true
             addChild(backgroundMusic)
         }
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(startNextlevel), name: .newLevelStarted, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(levelFinished), name: .levelFinished, object: nil)
 
         AdsManager.sharedInstance.createAndLoadInterstitial()
         AdsManager.sharedInstance.interstitialDelegate = self
@@ -115,10 +118,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate, adMobInterstitialDelegate, G
         wallBottom.physicsBody?.collisionBitMask = PhysicsCategory.None
     }
     
-    func startNextlevel(){
+    @objc func startNextlevel(){
         if gameManager.isGameFinished {
             return
         }
+        nextLevelLabel.run(SKAction.fadeOut(withDuration: 0.2))
         gameManager.isBossLevel ? background.stopScrolling() : background.startScrolling()
         run(SKAction.repeat(SKAction.sequence([SKAction.run(addMonster), SKAction.wait(forDuration: TimeInterval(1.0))]), count: gameManager.numberOfMonstersForCurrentLevel()), withKey:"spawnAction")
     }
@@ -153,38 +157,20 @@ class GameScene: SKScene, SKPhysicsContactDelegate, adMobInterstitialDelegate, G
         scoreLabel.text = "Score: \(gameManager.score)"
     }
     
-    func levelFinished() {
-        if gameManager.isGameFinished {return}
-        gameManager.loadNextLevel()
-        if nextLevelLabel.parent == nil { addChild(nextLevelLabel) }
-        nextLevelLabel.position = CGPoint(x: frame.midX, y: frame.midY)
-        run(SKAction.sequence([ SKAction.wait(forDuration: 5), SKAction.run({
-            [weak self] in
-            
-            if let weakSelf = self {
-                weakSelf.nextLevelLabel.removeFromParent()
-                weakSelf.startNextlevel()
-            }
-            
-        })]), withKey: "startNextLevel")
+    @objc func levelFinished() {
+        nextLevelLabel.run(SKAction.fadeIn(withDuration: 0.3))
     }
     
-    func endGame(didWin: Bool) {
+    func endGame() {
         if gameManager.isGameFinished {return}
         
-        self.didWin = didWin
         background.stopScrolling()
         scene?.view?.isPaused = true
         
         removeAction(forKey: "startNextLevel")
         removeAction(forKey: "spawnAction")
         
-        if gameOverLabel.parent == nil { addChild(gameOverLabel) }
-        nextLevelLabel.removeFromParent()
-        
-        gameOverLabel.position = CGPoint(x: frame.midX, y: frame.midY)
-        
-        gameManager.isGameFinished = true
+        gameManager.endGame()
         if Global.sharedInstance.adsEnabled {
             AdsManager.sharedInstance.showInterstitial()
         } else {
@@ -196,11 +182,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate, adMobInterstitialDelegate, G
         gameManager.restart()
         removeAction(forKey: "startNextLevel")
         player.stopAnimation(type: .Death)
-        gameOverLabel.removeFromParent()
         endGameMenu.isHidden = true
         updateScoreLabel()
         startNextlevel()
-        player.playAnimation(type: .Idle, completion: {})
     }
     
     func showGameOverScreen() {
@@ -260,7 +244,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, adMobInterstitialDelegate, G
         projectile.removeFromParent()
         enemyProjectilesArray = enemyProjectilesArray.filter{$0 != projectile}
         player.handleGotHit()
-        endGame(didWin: false)
+        endGame()
     }
     
     func projectileDidColideWithWall(projectile: ProjectileNode, wall: SKSpriteNode) {
@@ -271,7 +255,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, adMobInterstitialDelegate, G
         monster.removeFromParent()
         monsterManager.monstersArray = monsterManager.monstersArray.filter{$0 != monster}
 
-        endGame(didWin: false)
+        endGame()
     }
     
     func monsterDidCollideWithPlayer(monster: MonsterNode, player: PlayerNode) {
@@ -284,9 +268,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate, adMobInterstitialDelegate, G
             updateScoreLabel()
         } else {
             player.handleGotHit()
-            endGame(didWin: false)
+            endGame()
         }
-        
     }
     
     // MARK: - touches
