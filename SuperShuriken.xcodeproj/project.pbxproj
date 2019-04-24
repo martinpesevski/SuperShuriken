@@ -16,6 +16,8 @@
 		C72F6C22207924AE004E9D19 /* SelectionButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = C72F6C21207924AE004E9D19 /* SelectionButton.swift */; };
 		C7345C94200F5FB900A24A16 /* AdsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7345C93200F5FB900A24A16 /* AdsManager.swift */; };
 		C737083B202213F20053F640 /* ProjectileNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = C737083A202213F20053F640 /* ProjectileNode.swift */; };
+		C745F08622673EC1008E2D2A /* Shuriken.swift in Sources */ = {isa = PBXBuildFile; fileRef = C745F08522673EC1008E2D2A /* Shuriken.swift */; };
+		C745F08A226740CE008E2D2A /* ShurikenCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C745F089226740CE008E2D2A /* ShurikenCell.swift */; };
 		C75A375A21737A5700293FFF /* BossNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = C75A375921737A5700293FFF /* BossNode.swift */; };
 		C766D7F3200A392800648287 /* MainMenu.sks in Resources */ = {isa = PBXBuildFile; fileRef = C766D7F2200A392800648287 /* MainMenu.sks */; };
 		C766D7F7200BC66400648287 /* CustomLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C766D7F6200BC66400648287 /* CustomLabel.swift */; };
@@ -73,6 +75,8 @@
 		C72F6C21207924AE004E9D19 /* SelectionButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectionButton.swift; sourceTree = "<group>"; };
 		C7345C93200F5FB900A24A16 /* AdsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdsManager.swift; sourceTree = "<group>"; };
 		C737083A202213F20053F640 /* ProjectileNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectileNode.swift; sourceTree = "<group>"; };
+		C745F08522673EC1008E2D2A /* Shuriken.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Shuriken.swift; sourceTree = "<group>"; };
+		C745F089226740CE008E2D2A /* ShurikenCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShurikenCell.swift; sourceTree = "<group>"; };
 		C75A375921737A5700293FFF /* BossNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BossNode.swift; sourceTree = "<group>"; };
 		C766D7F2200A392800648287 /* MainMenu.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = MainMenu.sks; sourceTree = "<group>"; };
 		C766D7F6200BC66400648287 /* CustomLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomLabel.swift; sourceTree = "<group>"; };
@@ -138,12 +142,10 @@
 		0F73506E200CBEE100EEFDD7 /* Scenes */ = {
 			isa = PBXGroup;
 			children = (
-				C766D7FA200BC74C00648287 /* SettingsScene.swift */,
-				C766D7F8200BC71C00648287 /* SettingsScene.sks */,
+				C745F088226740AA008E2D2A /* Settings */,
 				C796D2251F7AACAC00F770CF /* GameScene.swift */,
 				C766D7FC200C0D2E00648287 /* GameScene.sks */,
-				C7D2DDBF1FE5281E00A23537 /* MainMenu.swift */,
-				C766D7F2200A392800648287 /* MainMenu.sks */,
+				C745F08722674098008E2D2A /* Main Menu */,
 			);
 			path = Scenes;
 			sourceTree = "<group>";
@@ -160,6 +162,7 @@
 				C7DCF522204D629900CB1903 /* MonsterGoalNode.swift */,
 				C7BAEC772210B838003EE6C8 /* StaminaBarNode.swift */,
 				C788A11E2250009A009CCA08 /* PlayBackground.swift */,
+				C745F08522673EC1008E2D2A /* Shuriken.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -230,6 +233,25 @@
 				C788A120225017F2009CCA08 /* EndGameMenuNode.swift */,
 			);
 			path = CustomNodes;
+			sourceTree = "<group>";
+		};
+		C745F08722674098008E2D2A /* Main Menu */ = {
+			isa = PBXGroup;
+			children = (
+				C7D2DDBF1FE5281E00A23537 /* MainMenu.swift */,
+				C766D7F2200A392800648287 /* MainMenu.sks */,
+			);
+			path = "Main Menu";
+			sourceTree = "<group>";
+		};
+		C745F088226740AA008E2D2A /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+				C766D7FA200BC74C00648287 /* SettingsScene.swift */,
+				C766D7F8200BC71C00648287 /* SettingsScene.sks */,
+				C745F089226740CE008E2D2A /* ShurikenCell.swift */,
+			);
+			path = Settings;
 			sourceTree = "<group>";
 		};
 		C7884A2D207291D1005D01AB /* Animations */ = {
@@ -464,9 +486,12 @@
 			files = (
 			);
 			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-SuperShuriken/Pods-SuperShuriken-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/SnapKit/SnapKit.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SnapKit.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -501,12 +526,14 @@
 				C72035D221283D07000D7C89 /* Consants.swift in Sources */,
 				0F7350772010C1E600EEFDD7 /* LabelWithSwitchNode.swift in Sources */,
 				C7DCF521204D624100CB1903 /* GameManager.swift in Sources */,
+				C745F08622673EC1008E2D2A /* Shuriken.swift in Sources */,
 				C7D2DDC01FE5281E00A23537 /* MainMenu.swift in Sources */,
 				C737083B202213F20053F640 /* ProjectileNode.swift in Sources */,
 				C7BAEC782210B838003EE6C8 /* StaminaBarNode.swift in Sources */,
 				C796D2261F7AACAC00F770CF /* GameScene.swift in Sources */,
 				C75A375A21737A5700293FFF /* BossNode.swift in Sources */,
 				C7A4DF381FE6BD6C007DA58E /* ButtonNode.swift in Sources */,
+				C745F08A226740CE008E2D2A /* ShurikenCell.swift in Sources */,
 				C71E033B20430682001C61C2 /* MonsterNode.swift in Sources */,
 				C7DCF51F204D5F6600CB1903 /* Util.swift in Sources */,
 				C766D7F7200BC66400648287 /* CustomLabel.swift in Sources */,
@@ -670,6 +697,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 73B4229N3R;
 				INFOPLIST_FILE = SuperShuriken/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.mpesevski.superShuriken;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -690,6 +718,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 73B4229N3R;
 				INFOPLIST_FILE = SuperShuriken/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.mpesevski.superShuriken;
 				PRODUCT_NAME = "$(TARGET_NAME)";

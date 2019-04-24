@@ -8,5 +8,6 @@ target 'SuperShuriken' do
   # Pods for SuperShuriken
 
 pod 'Google-Mobile-Ads-SDK'
+pod 'SnapKit', '~> 4.0.0'
 
 end

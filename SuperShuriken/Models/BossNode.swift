@@ -140,7 +140,7 @@ class BossNode: MonsterNode {
         let projectile = BossProjectileNode()
         projectile.setupWithBossAttackType(attackType: attackType, angle: angle)
         projectile.position = CGPoint(x: self.position.x, y: self.position.y + offset)
-        projectile.setup(type: .enemy, assetName: "ic_shuriken3")
+        projectile.setup(type: .enemy, shuriken: .red)
         
         let offset = CGPoint(x: -100, y: 0)
         

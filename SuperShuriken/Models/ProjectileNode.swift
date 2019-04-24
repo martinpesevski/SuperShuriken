@@ -25,22 +25,14 @@ class ProjectileNode: SKSpriteNode {
     var type: ProjectileType!
     var style: projectileStyle!
     
-    func setup(type: ProjectileType, assetName: String) {
-        self.texture = SKTexture(imageNamed: assetName)
+    func setup(type: ProjectileType, shuriken: Shuriken) {
+        self.texture = SKTexture(image: shuriken.image)
         self.type = type
-        switch assetName {
-        case "ic_shuriken":
-            style = .rotating
-            break
-        case "ic_shuriken2":
+        switch shuriken {
+        case .straight:
             style = .straight
-            break
-        case "ic_shuriken3":
-            style = .rotating
-            break
         default:
             style = .rotating
-            break
         }
 
         size = CGSize.init(width: style == .straight ? 110 : 75, height: style == .straight ? 45 : 75)

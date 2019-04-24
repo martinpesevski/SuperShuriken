@@ -43,12 +43,15 @@ class Global: NSObject {
         }
     }
     
-    var selectedPlayerShuriken: String {
+    var selectedPlayerShuriken: Shuriken {
         get {
-            return UserDefaults.standard.string(forKey: "playerShurikenAssetName") ?? "ic_shuriken"
+            guard let shuriken = Shuriken(rawValue: UserDefaults.standard.integer(forKey: "selectedShuriken")) else {
+                return.basic
+            }
+            return shuriken
         }
         set {
-            UserDefaults.standard.set(newValue, forKey: "playerShurikenAssetName")
+            UserDefaults.standard.set(newValue.rawValue, forKey: "selectedShuriken")
         }
     }
     
