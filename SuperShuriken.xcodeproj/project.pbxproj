@@ -19,10 +19,11 @@
 		C745F08622673EC1008E2D2A /* Shuriken.swift in Sources */ = {isa = PBXBuildFile; fileRef = C745F08522673EC1008E2D2A /* Shuriken.swift */; };
 		C745F08A226740CE008E2D2A /* ShurikenCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C745F089226740CE008E2D2A /* ShurikenCell.swift */; };
 		C75A375A21737A5700293FFF /* BossNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = C75A375921737A5700293FFF /* BossNode.swift */; };
-		C766D7F3200A392800648287 /* MainMenu.sks in Resources */ = {isa = PBXBuildFile; fileRef = C766D7F2200A392800648287 /* MainMenu.sks */; };
+		C7611C6C227083DF0089B3F5 /* MainMenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7611C6B227083DF0089B3F5 /* MainMenuViewController.swift */; };
+		C7611C6F227085770089B3F5 /* MenuButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7611C6E227085770089B3F5 /* MenuButton.swift */; };
+		C7611C712271D2690089B3F5 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7611C702271D2690089B3F5 /* SettingsViewController.swift */; };
+		C7611C732271D3900089B3F5 /* ToggleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7611C722271D3900089B3F5 /* ToggleView.swift */; };
 		C766D7F7200BC66400648287 /* CustomLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C766D7F6200BC66400648287 /* CustomLabel.swift */; };
-		C766D7F9200BC71C00648287 /* SettingsScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = C766D7F8200BC71C00648287 /* SettingsScene.sks */; };
-		C766D7FB200BC74C00648287 /* SettingsScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = C766D7FA200BC74C00648287 /* SettingsScene.swift */; };
 		C766D7FD200C0D2E00648287 /* GameScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = C766D7FC200C0D2E00648287 /* GameScene.sks */; };
 		C7806EE6224FAF5C00B5CE41 /* vampire_boss_walking.atlas in Resources */ = {isa = PBXBuildFile; fileRef = C7806EE2224FAF5B00B5CE41 /* vampire_boss_walking.atlas */; };
 		C7806EE7224FAF5C00B5CE41 /* vampire_boss_run_shooting.atlas in Resources */ = {isa = PBXBuildFile; fileRef = C7806EE3224FAF5B00B5CE41 /* vampire_boss_run_shooting.atlas */; };
@@ -42,7 +43,6 @@
 		C7BAEC782210B838003EE6C8 /* StaminaBarNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7BAEC772210B838003EE6C8 /* StaminaBarNode.swift */; };
 		C7C348E4217B34D40099A7C0 /* MonsterManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7C348E3217B34D40099A7C0 /* MonsterManager.swift */; };
 		C7C348E6217B48850099A7C0 /* BossProjectileNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7C348E5217B48850099A7C0 /* BossProjectileNode.swift */; };
-		C7D2DDC01FE5281E00A23537 /* MainMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7D2DDBF1FE5281E00A23537 /* MainMenu.swift */; };
 		C7DCF51F204D5F6600CB1903 /* Util.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7DCF51E204D5F6600CB1903 /* Util.swift */; };
 		C7DCF521204D624100CB1903 /* GameManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7DCF520204D624100CB1903 /* GameManager.swift */; };
 		C7DCF523204D629900CB1903 /* MonsterGoalNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7DCF522204D629900CB1903 /* MonsterGoalNode.swift */; };
@@ -78,10 +78,11 @@
 		C745F08522673EC1008E2D2A /* Shuriken.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Shuriken.swift; sourceTree = "<group>"; };
 		C745F089226740CE008E2D2A /* ShurikenCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShurikenCell.swift; sourceTree = "<group>"; };
 		C75A375921737A5700293FFF /* BossNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BossNode.swift; sourceTree = "<group>"; };
-		C766D7F2200A392800648287 /* MainMenu.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = MainMenu.sks; sourceTree = "<group>"; };
+		C7611C6B227083DF0089B3F5 /* MainMenuViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainMenuViewController.swift; sourceTree = "<group>"; };
+		C7611C6E227085770089B3F5 /* MenuButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuButton.swift; sourceTree = "<group>"; };
+		C7611C702271D2690089B3F5 /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
+		C7611C722271D3900089B3F5 /* ToggleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToggleView.swift; sourceTree = "<group>"; };
 		C766D7F6200BC66400648287 /* CustomLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomLabel.swift; sourceTree = "<group>"; };
-		C766D7F8200BC71C00648287 /* SettingsScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = SettingsScene.sks; sourceTree = "<group>"; };
-		C766D7FA200BC74C00648287 /* SettingsScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsScene.swift; sourceTree = "<group>"; };
 		C766D7FC200C0D2E00648287 /* GameScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = GameScene.sks; sourceTree = "<group>"; };
 		C7806EE2224FAF5B00B5CE41 /* vampire_boss_walking.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = vampire_boss_walking.atlas; sourceTree = "<group>"; };
 		C7806EE3224FAF5B00B5CE41 /* vampire_boss_run_shooting.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = vampire_boss_run_shooting.atlas; sourceTree = "<group>"; };
@@ -103,7 +104,6 @@
 		C7BAEC772210B838003EE6C8 /* StaminaBarNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StaminaBarNode.swift; sourceTree = "<group>"; };
 		C7C348E3217B34D40099A7C0 /* MonsterManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonsterManager.swift; sourceTree = "<group>"; };
 		C7C348E5217B48850099A7C0 /* BossProjectileNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BossProjectileNode.swift; sourceTree = "<group>"; };
-		C7D2DDBF1FE5281E00A23537 /* MainMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainMenu.swift; sourceTree = "<group>"; };
 		C7DCF51E204D5F6600CB1903 /* Util.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Util.swift; sourceTree = "<group>"; };
 		C7DCF520204D624100CB1903 /* GameManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameManager.swift; sourceTree = "<group>"; };
 		C7DCF522204D629900CB1903 /* MonsterGoalNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonsterGoalNode.swift; sourceTree = "<group>"; };
@@ -142,6 +142,7 @@
 		0F73506E200CBEE100EEFDD7 /* Scenes */ = {
 			isa = PBXGroup;
 			children = (
+				C7611C6D227085650089B3F5 /* Views */,
 				C745F088226740AA008E2D2A /* Settings */,
 				C796D2251F7AACAC00F770CF /* GameScene.swift */,
 				C766D7FC200C0D2E00648287 /* GameScene.sks */,
@@ -238,8 +239,7 @@
 		C745F08722674098008E2D2A /* Main Menu */ = {
 			isa = PBXGroup;
 			children = (
-				C7D2DDBF1FE5281E00A23537 /* MainMenu.swift */,
-				C766D7F2200A392800648287 /* MainMenu.sks */,
+				C7611C6B227083DF0089B3F5 /* MainMenuViewController.swift */,
 			);
 			path = "Main Menu";
 			sourceTree = "<group>";
@@ -247,11 +247,19 @@
 		C745F088226740AA008E2D2A /* Settings */ = {
 			isa = PBXGroup;
 			children = (
-				C766D7FA200BC74C00648287 /* SettingsScene.swift */,
-				C766D7F8200BC71C00648287 /* SettingsScene.sks */,
 				C745F089226740CE008E2D2A /* ShurikenCell.swift */,
+				C7611C702271D2690089B3F5 /* SettingsViewController.swift */,
 			);
 			path = Settings;
+			sourceTree = "<group>";
+		};
+		C7611C6D227085650089B3F5 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				C7611C6E227085770089B3F5 /* MenuButton.swift */,
+				C7611C722271D3900089B3F5 /* ToggleView.swift */,
+			);
+			path = Views;
 			sourceTree = "<group>";
 		};
 		C7884A2D207291D1005D01AB /* Animations */ = {
@@ -436,10 +444,8 @@
 			files = (
 				C796D23A1F7AAFC400F770CF /* background-music-aac.caf in Resources */,
 				C7ECD7F3224FC4CF00031B01 /* barbarian_duying.atlas in Resources */,
-				C766D7F3200A392800648287 /* MainMenu.sks in Resources */,
 				C7ECD7F7224FC52000031B01 /* minion_shielded_armored_running.atlas in Resources */,
 				C7ECD7F0224FC46B00031B01 /* Melee_Ogre_Running.atlas in Resources */,
-				C766D7F9200BC71C00648287 /* SettingsScene.sks in Resources */,
 				C7ECD82F224FC92C00031B01 /* Running.atlas in Resources */,
 				C7ECD7F8224FC52000031B01 /* minion_shielded_armored_dying.atlas in Resources */,
 				C7806EE9224FAF5C00B5CE41 /* vampire_boss_death.atlas in Resources */,
@@ -525,10 +531,11 @@
 			files = (
 				C72035D221283D07000D7C89 /* Consants.swift in Sources */,
 				0F7350772010C1E600EEFDD7 /* LabelWithSwitchNode.swift in Sources */,
+				C7611C6F227085770089B3F5 /* MenuButton.swift in Sources */,
 				C7DCF521204D624100CB1903 /* GameManager.swift in Sources */,
 				C745F08622673EC1008E2D2A /* Shuriken.swift in Sources */,
-				C7D2DDC01FE5281E00A23537 /* MainMenu.swift in Sources */,
 				C737083B202213F20053F640 /* ProjectileNode.swift in Sources */,
+				C7611C6C227083DF0089B3F5 /* MainMenuViewController.swift in Sources */,
 				C7BAEC782210B838003EE6C8 /* StaminaBarNode.swift in Sources */,
 				C796D2261F7AACAC00F770CF /* GameScene.swift in Sources */,
 				C75A375A21737A5700293FFF /* BossNode.swift in Sources */,
@@ -541,11 +548,12 @@
 				C796D2281F7AACAC00F770CF /* GameViewController.swift in Sources */,
 				C7345C94200F5FB900A24A16 /* AdsManager.swift in Sources */,
 				C7DCF523204D629900CB1903 /* MonsterGoalNode.swift in Sources */,
+				C7611C712271D2690089B3F5 /* SettingsViewController.swift in Sources */,
 				C7C348E4217B34D40099A7C0 /* MonsterManager.swift in Sources */,
 				0F735071200CBF5200EEFDD7 /* PlayerNode.swift in Sources */,
 				C788A11F2250009A009CCA08 /* PlayBackground.swift in Sources */,
+				C7611C732271D3900089B3F5 /* ToggleView.swift in Sources */,
 				C7C348E6217B48850099A7C0 /* BossProjectileNode.swift in Sources */,
-				C766D7FB200BC74C00648287 /* SettingsScene.swift in Sources */,
 				0F735075200CF24100EEFDD7 /* Global.swift in Sources */,
 				C788A121225017F2009CCA08 /* EndGameMenuNode.swift in Sources */,
 				C796D2201F7AACAC00F770CF /* AppDelegate.swift in Sources */,

@@ -19,9 +19,9 @@ class EndGameMenuNode: SKSpriteNode {
     weak var delegate: EndGameDelegate?
     
     init() {
-        menuButton = ButtonNode(normalTexture: SKTexture(imageNamed: "ic_button"), selectedTexture: SKTexture(imageNamed: "ic_buttonClicked"), disabledTexture: nil)
+        menuButton = ButtonNode(normalTexture: SKTexture(imageNamed: "ic_button"), selectedTexture: SKTexture(imageNamed: "ic_button_clicked"), disabledTexture: nil)
         
-        retryButton = ButtonNode(normalTexture: SKTexture(imageNamed: "ic_button"), selectedTexture: SKTexture(imageNamed: "ic_buttonClicked"), disabledTexture: nil)
+        retryButton = ButtonNode(normalTexture: SKTexture(imageNamed: "ic_button"), selectedTexture: SKTexture(imageNamed: "ic_button_clicked"), disabledTexture: nil)
 
         super.init(texture: nil, color: .blue, size: CGSize(width: 700, height: 700))
         

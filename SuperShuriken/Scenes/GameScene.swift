@@ -9,9 +9,15 @@
 import SpriteKit
 import GameplayKit
 
+protocol GameSceneDelegate: class {
+    func onDismiss()
+}
+
 class GameScene: SKScene, SKPhysicsContactDelegate, adMobInterstitialDelegate, GameManagerDelegate, MonsterDelegate, EndGameDelegate {
     
     var player : PlayerNode!
+    
+    weak var gameSceneDelegate: GameSceneDelegate?
     
     private var endGameMenu = EndGameMenuNode()
     private var background = PlayBackground()
@@ -356,17 +362,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate, adMobInterstitialDelegate, G
         }
     }
     
-    @objc func onMenuTap(){
-        gameManager.restart()
-        let reveal = SKTransition.moveIn(with: .up, duration: 0.3)
-
-        if let scene = MainMenu(fileNamed: "MainMenu") {
-            scene.initialize()
-            
-            view?.presentScene(scene, transition: reveal)
-        }
-    }
-    
     // MARK: - Physics
     
     func didBegin(_ contact: SKPhysicsContact) {
@@ -415,12 +410,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, adMobInterstitialDelegate, G
     }
     
     func onMenu() {
-        let reveal = SKTransition.fade(withDuration: 1)
-        if let mainMenuScene = MainMenu(fileNamed: "MainMenu") {
-            mainMenuScene.initialize()
-            
-            self.view?.presentScene(mainMenuScene, transition: reveal)
-        }
+        gameSceneDelegate?.onDismiss()
     }
     
     func onRetry() {

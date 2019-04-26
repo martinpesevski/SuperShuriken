@@ -11,7 +11,7 @@ import SpriteKit
 import GameplayKit
 import GoogleMobileAds
 
-class GameViewController: UIViewController, GADBannerViewDelegate {
+class GameViewController: UIViewController, GADBannerViewDelegate, GameSceneDelegate {
     var bannerView : GADBannerView!
     
     override func viewDidLoad() {
@@ -22,8 +22,9 @@ class GameViewController: UIViewController, GADBannerViewDelegate {
         skView.ignoresSiblingOrder = true
 //        skView.showsPhysics = true
 
-        if let scene = MainMenu(fileNamed: "MainMenu") {
-            scene.initialize()
+        if let scene = GameScene(fileNamed: "GameScene") {
+            scene.scaleMode = .fill
+            scene.gameSceneDelegate = self
             skView.presentScene(scene)
         }
         
@@ -32,5 +33,9 @@ class GameViewController: UIViewController, GADBannerViewDelegate {
 
     override var prefersStatusBarHidden: Bool {
         return true
+    }
+    
+    func onDismiss() {
+        dismiss(animated: true, completion: nil)
     }
 }
