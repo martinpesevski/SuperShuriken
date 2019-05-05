@@ -27,8 +27,6 @@ class GameViewController: UIViewController, GADBannerViewDelegate, GameSceneDele
             scene.gameSceneDelegate = self
             skView.presentScene(scene)
         }
-        
-        AdsManager.sharedInstance.showBanner()
     }
 
     override var prefersStatusBarHidden: Bool {

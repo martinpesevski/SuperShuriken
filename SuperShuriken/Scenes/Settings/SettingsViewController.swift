@@ -9,7 +9,8 @@
 import UIKit
 import SnapKit
 
-class SettingsViewController: UIViewController, ToggleViewDelegate {
+class SettingsViewController: UIViewController, ToggleViewDelegate, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+    
     let backgroundImageView: UIImageView = {
         let image = UIImageView(image: UIImage(named: "splashScreen"))
         image.contentMode = .scaleAspectFill
@@ -27,6 +28,9 @@ class SettingsViewController: UIViewController, ToggleViewDelegate {
         collection.layer.borderColor = UIColor.gray.cgColor
         collection.contentInset = UIEdgeInsets(top: 20, left: 20, bottom: 20, right: 20)
         collection.alpha = 0
+        collection.dataSource = self
+        collection.delegate = self
+        
         return collection
     }()
     
@@ -40,6 +44,7 @@ class SettingsViewController: UIViewController, ToggleViewDelegate {
     
     lazy var adsToggle: ToggleView = {
         let togView = ToggleView(title: "Ads enabled")
+        togView.toggle.isOn = Global.sharedInstance.adsEnabled
         togView.delegate = self
         
         return togView
@@ -47,6 +52,7 @@ class SettingsViewController: UIViewController, ToggleViewDelegate {
     
     lazy var soundToggle: ToggleView = {
         let togView = ToggleView(title: "Enable sound")
+        togView.toggle.isOn = Global.sharedInstance.isSoundOn
         togView.delegate = self
         
         return togView
@@ -64,6 +70,7 @@ class SettingsViewController: UIViewController, ToggleViewDelegate {
         super.viewDidLoad()
         view.addSubview(backgroundImageView)
         view.addSubview(container)
+        view.addSubview(shurikenCollectionView)
         
         backgroundImageView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
@@ -73,6 +80,13 @@ class SettingsViewController: UIViewController, ToggleViewDelegate {
             make.right.equalTo(view.safeAreaLayoutGuide).inset(20)
             make.top.equalTo(view.safeAreaLayoutGuide).offset(20)
         }
+        
+        shurikenCollectionView.snp.makeConstraints { make in
+            make.left.equalTo(view.safeAreaLayoutGuide).offset(20)
+            make.bottom.right.equalTo(view.safeAreaLayoutGuide).inset(20)
+            make.height.equalTo(120)
+        }
+        shurikenCollectionView.fadeIn()
     }
     
     func onToggle(sender: ToggleView, selected: Bool) {
@@ -89,4 +103,27 @@ class SettingsViewController: UIViewController, ToggleViewDelegate {
     @objc func onMenu(){
         dismiss(animated: true)
     }
-}     
+    
+    //MARK: - collectionView
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "shurikenCell", for: indexPath) as! ShurikenCell
+        
+        cell.setup(shuriken: Shuriken(rawValue: indexPath.item) ?? .basic)
+        
+        return cell
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        return CGSize(width: 80, height: 80)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        Global.sharedInstance.selectedPlayerShuriken = Shuriken(rawValue: indexPath.item) ?? .basic
+        collectionView.reloadData()
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return Shuriken.count
+    }
+}

@@ -30,9 +30,7 @@ enum Shuriken: Int, Codable {
     
     var damage: Int {
         switch self {
-        case .basic:
-            return 1
-        case .straight:
+        case .basic, .straight:
             return 1
         case .red:
             return 2
@@ -41,11 +39,9 @@ enum Shuriken: Int, Codable {
     
     var isPiercing: Bool {
         switch self {
-        case .basic:
-            return false
         case .straight:
             return true
-        case .red:
+        default:
             return false
         }
     }

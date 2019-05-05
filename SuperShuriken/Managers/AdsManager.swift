@@ -16,24 +16,20 @@ protocol adMobInterstitialDelegate {
 class AdsManager: NSObject, GADBannerViewDelegate, GADInterstitialDelegate{
     static let sharedInstance = AdsManager()
 
-    var rootViewController : UIViewController!
-    var bannerView : GADBannerView!
+    var rootViewController: UIViewController {
+        get {
+            let appDelegate  = UIApplication.shared.delegate as! AppDelegate
+
+            guard let root = appDelegate.window?.rootViewController else {
+                return UIViewController()
+            }
+            
+            return root.presentedViewController ?? root
+        }
+    }
+    
     var interstitialView : GADInterstitial!
     var interstitialDelegate : adMobInterstitialDelegate?
-    
-    func showBanner() {
-        if !Global.sharedInstance.adsEnabled {
-            return
-        }
-        
-        bannerView = GADBannerView(adSize: kGADAdSizeSmartBannerLandscape)
-        bannerView.adUnitID = "ca-app-pub-3940256099942544/2934735716"
-        bannerView.rootViewController = rootViewController
-        bannerView.load(GADRequest())
-        bannerView.delegate = self
-        
-        addBannerViewToView(bannerView)
-    }
     
     func createAndLoadInterstitial() {
         interstitialView = GADInterstitial(adUnitID: "ca-app-pub-3940256099942544/4411468910")
@@ -56,20 +52,14 @@ class AdsManager: NSObject, GADBannerViewDelegate, GADInterstitialDelegate{
     
     func removeAds() {
         Global.sharedInstance.adsEnabled = false
-        bannerView.removeFromSuperview()
-        bannerView = nil
     }
     
     func showAds() {
         Global.sharedInstance.adsEnabled = true
-        self.showBanner()
     }
     
     private override init() {
         super.init()
-        
-        let appDelegate  = UIApplication.shared.delegate as! AppDelegate
-        rootViewController = appDelegate.window!.rootViewController as UIViewController? ?? UIViewController()
     }
     
     func addBannerViewToView(_ bannerView: GADBannerView) {
@@ -117,7 +107,7 @@ class AdsManager: NSObject, GADBannerViewDelegate, GADInterstitialDelegate{
         rootViewController.view.addConstraint(NSLayoutConstraint(item: bannerView,
                                               attribute: .bottom,
                                               relatedBy: .equal,
-                                              toItem: rootViewController.bottomLayoutGuide,
+                                              toItem: rootViewController.view.safeAreaLayoutGuide.bottomAnchor,
                                               attribute: .top,
                                               multiplier: 1,
                                               constant: 0))

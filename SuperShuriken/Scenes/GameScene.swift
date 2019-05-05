@@ -13,13 +13,12 @@ protocol GameSceneDelegate: class {
     func onDismiss()
 }
 
-class GameScene: SKScene, SKPhysicsContactDelegate, adMobInterstitialDelegate, GameManagerDelegate, MonsterDelegate, EndGameDelegate {
+class GameScene: SKScene, SKPhysicsContactDelegate, adMobInterstitialDelegate, GameManagerDelegate, MonsterDelegate, EndGameDelegate, UIGestureRecognizerDelegate {
     
     var player : PlayerNode!
     
     weak var gameSceneDelegate: GameSceneDelegate?
     
-    private var endGameMenu = EndGameMenuNode()
     private var background = PlayBackground()
     
     var scoreLabel : SKLabelNode!
@@ -33,6 +32,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate, adMobInterstitialDelegate, G
 
     private var activeTouches = [UITouch:String]()
     
+    private lazy var endGameMenu: EndGameMenu = {
+        let menu = EndGameMenu()
+        menu.delegate = self
+        menu.alpha = 0
+        return menu
+    }()
     
     override func didMove(to view: SKView) {
         gameManager.delegate = self
@@ -42,19 +47,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate, adMobInterstitialDelegate, G
         physicsWorld.gravity = CGVector.zero
         physicsWorld.contactDelegate = self
 
-        guard let spawnPoint = childNode(withName: "spawnPoint") as? SKSpriteNode else {
-            return
-        }
-        
-        guard let enemySpawner = childNode(withName: "enemySpawner") as? SKSpriteNode else {
-            return
-        }
-        
-        guard let monsterGoalPlaceholder = childNode(withName: "goal") as? SKSpriteNode else {
-            return
-        }
-        
-        guard let staminaBarPlaceholder = childNode(withName: "staminaBar") as? SKSpriteNode else {
+        guard let spawnPoint = childNode(withName: "spawnPoint") as? SKSpriteNode,
+        let enemySpawner = childNode(withName: "enemySpawner") as? SKSpriteNode,
+        let monsterGoalPlaceholder = childNode(withName: "goal") as? SKSpriteNode,
+        let staminaBarPlaceholder = childNode(withName: "staminaBar") as? SKSpriteNode,
+        let view = scene?.view else {
             return
         }
         
@@ -78,19 +75,18 @@ class GameScene: SKScene, SKPhysicsContactDelegate, adMobInterstitialDelegate, G
         monsterManager.monsterGoal.setup()
         
         monsterManager.monsterSpawner.setupWithNode(node: enemySpawner)
-        
-        endGameMenu.isHidden = true
-        endGameMenu.zPosition = 10
-        endGameMenu.position = CGPoint(x: size.width/2, y: size.height/2)
-        endGameMenu.delegate = self
-        
+                
         addChild(background)
         addChild(player)
         addChild(staminaBar)
         addChild(monsterManager.monsterGoal.copy() as! SKNode)
         addChild(monsterManager.monsterSpawner.copy() as! SKNode)
-        addChild(endGameMenu)
-
+        
+        view.addSubview(endGameMenu)
+        endGameMenu.snp.makeConstraints { make in
+            make.center.equalToSuperview()
+        }
+        
         setupWalls()
         restart()
         
@@ -125,9 +121,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate, adMobInterstitialDelegate, G
     }
     
     @objc func startNextlevel(){
-        if gameManager.isGameFinished {
-            return
-        }
+        guard !gameManager.isGameFinished else { return }
+
         nextLevelLabel.run(SKAction.fadeOut(withDuration: 0.2))
         gameManager.isBossLevel ? background.stopScrolling() : background.startScrolling()
         run(SKAction.repeat(SKAction.sequence([SKAction.run(addMonster), SKAction.wait(forDuration: TimeInterval(1.0))]), count: gameManager.numberOfMonstersForCurrentLevel()), withKey:"spawnAction")
@@ -138,9 +133,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, adMobInterstitialDelegate, G
     }
     
     func shootProjectile(location: CGPoint) {
-        if staminaBar.isExhausted {
-            return
-        }
+        guard !staminaBar.isExhausted else { return }
                
         let projectile = ProjectileNode()
         projectile.position = player.position
@@ -168,7 +161,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, adMobInterstitialDelegate, G
     }
     
     func endGame() {
-        if gameManager.isGameFinished {return}
+        guard !gameManager.isGameFinished else {return}
         
         background.stopScrolling()
         scene?.view?.isPaused = true
@@ -188,9 +181,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate, adMobInterstitialDelegate, G
         gameManager.restart()
         removeAction(forKey: "startNextLevel")
         player.stopAnimation(type: .Death)
-        endGameMenu.isHidden = true
         updateScoreLabel()
         startNextlevel()
+    }
+    
+    func showEndGameMenu() {
+        endGameMenu.fadeIn()
     }
     
     func showGameOverScreen() {
@@ -211,7 +207,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, adMobInterstitialDelegate, G
         }
         enemyProjectilesArray.removeAll()
         
-        endGameMenu.isHidden = false
+        showEndGameMenu()
     }
         
     //MARK: - collisions
@@ -293,7 +289,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate, adMobInterstitialDelegate, G
     }
     
     override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
-        
         for touch in touches {
             guard let touchName = activeTouches[touch] else {
                 return
@@ -414,6 +409,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, adMobInterstitialDelegate, G
     }
     
     func onRetry() {
+        endGameMenu.fadeOut()
         restart()
     }
     

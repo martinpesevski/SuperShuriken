@@ -90,6 +90,20 @@ public func createAtlas(name: String, completion: @escaping ([SKTexture]) -> ())
     }
 }
 
+extension UIView {
+    func fadeIn() {
+        UIView.animate(withDuration: 0.3) {
+            self.alpha = 1
+        }
+    }
+    
+    func fadeOut() {
+        UIView.animate(withDuration: 0.3) {
+            self.alpha = 0
+        }
+    }
+}
+
 class Util {
 
 }
