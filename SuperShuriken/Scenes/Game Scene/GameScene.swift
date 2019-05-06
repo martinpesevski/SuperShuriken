@@ -24,6 +24,7 @@ class GameScene: SKScene, adMobInterstitialDelegate, GameManagerDelegate, Monste
     var scoreLabel: SKLabelNode!
     var staminaBar: StaminaBarNode!
     var nextLevelLabel : SKLabelNode!
+    let countdownNode = CountdownNode()
     
     var gameManager = GameManager.sharedInstance
     var monsterManager = MonsterManager.sharedInstance
@@ -60,7 +61,11 @@ class GameScene: SKScene, adMobInterstitialDelegate, GameManagerDelegate, Monste
         nextLevelLabel.zPosition = 10
         nextLevelLabel.alpha = 0
         addChild(nextLevelLabel)
-
+        
+        countdownNode.position = CGPoint(x: frame.midX, y: frame.midY)
+        countdownNode.zPosition = 100
+        addChild(countdownNode)
+        
         scoreLabel = childNode(withName: "scoreLabel") as? SKLabelNode ?? SKLabelNode(text: "Score")
         updateScoreLabel()
         
@@ -161,11 +166,13 @@ class GameScene: SKScene, adMobInterstitialDelegate, GameManagerDelegate, Monste
     }
     
     func restart() {
-        gameManager.restart()
-        removeAction(forKey: "startNextLevel")
-        player.stopAnimation(type: .Death)
-        updateScoreLabel()
-        startNextlevel()
+        countdownNode.startCounting { [unowned self] in
+            self.gameManager.restart()
+            self.removeAction(forKey: "startNextLevel")
+            self.player.stopAnimation(type: .Death)
+            self.updateScoreLabel()
+            self.startNextlevel()
+        }
     }
     
     func showEndGameMenu() {
