@@ -79,13 +79,4 @@ class GameManager: NSObject {
     func speedUpFactor() -> CGFloat {
         return level > 10 ? 3 : CGFloat(level / 5 + 1)
     }
-    
-    func createLabel(text: String, size: CGFloat) -> SKLabelNode {
-        let nextLevelTextNode = SKLabelNode(text: text)
-        nextLevelTextNode.fontName = "Chalkduster"
-        nextLevelTextNode.fontSize = size;
-        nextLevelTextNode.color = UIColor.white
-        nextLevelTextNode.zPosition = 5
-        return nextLevelTextNode
-    }
 }

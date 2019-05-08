@@ -21,11 +21,6 @@ class GameScene: SKScene, adMobInterstitialDelegate, GameManagerDelegate, Monste
     
     private var background = PlayBackground()
     
-    var scoreLabel: SKLabelNode!
-    var staminaBar: StaminaBarNode!
-    var nextLevelLabel : SKLabelNode!
-    let countdownNode = CountdownNode()
-    
     var gameManager = GameManager.sharedInstance
     var monsterManager = MonsterManager.sharedInstance
     var playerProjectilesArray = [ProjectileNode]()
@@ -40,6 +35,8 @@ class GameScene: SKScene, adMobInterstitialDelegate, GameManagerDelegate, Monste
         return menu
     }()
     
+    private let overlay = GameSceneOverlay()
+    
     override func didMove(to view: SKView) {
         gameManager.delegate = self
         
@@ -51,31 +48,13 @@ class GameScene: SKScene, adMobInterstitialDelegate, GameManagerDelegate, Monste
         guard let spawnPoint = childNode(withName: "spawnPoint") as? SKSpriteNode,
         let enemySpawner = childNode(withName: "enemySpawner") as? SKSpriteNode,
         let monsterGoalPlaceholder = childNode(withName: "goal") as? SKSpriteNode,
-        let staminaBarPlaceholder = childNode(withName: "staminaBar") as? SKSpriteNode,
         let view = scene?.view else {
             return
         }
         
-        nextLevelLabel = gameManager.createLabel(text: "GET READY FOR NEXT LEVEL", size: 80)
-        nextLevelLabel.position = CGPoint(x: frame.midX, y: frame.midY)
-        nextLevelLabel.zPosition = 10
-        nextLevelLabel.alpha = 0
-        addChild(nextLevelLabel)
-        
-        countdownNode.position = CGPoint(x: frame.midX, y: frame.midY)
-        countdownNode.zPosition = 100
-        addChild(countdownNode)
-        
-        scoreLabel = childNode(withName: "scoreLabel") as? SKLabelNode ?? SKLabelNode(text: "Score")
-        updateScoreLabel()
-        
         player = PlayerNode(imageNamed: "Idle")
         player.setupWithNode(node: spawnPoint)
         player.setup()
-        
-        staminaBar = StaminaBarNode(imageNamed: "ic_stamina_bar_edge")
-        staminaBar.setupWithNode(node: staminaBarPlaceholder)
-        staminaBar.setupStaminaBar()
         
         monsterManager.monsterGoal.setupWithNode(node: monsterGoalPlaceholder)
         monsterManager.monsterGoal.setup()
@@ -84,15 +63,20 @@ class GameScene: SKScene, adMobInterstitialDelegate, GameManagerDelegate, Monste
                 
         addChild(background)
         addChild(player)
-        addChild(staminaBar)
         addChild(monsterManager.monsterGoal.copy() as! SKNode)
         addChild(monsterManager.monsterSpawner.copy() as! SKNode)
+        
+        view.addSubview(overlay)
+        overlay.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
+        }
         
         view.addSubview(endGameMenu)
         endGameMenu.snp.makeConstraints { make in
             make.center.equalToSuperview()
         }
         
+        updateScoreLabel()
         restart()
         
         if Global.sharedInstance.isSoundOn {
@@ -111,7 +95,7 @@ class GameScene: SKScene, adMobInterstitialDelegate, GameManagerDelegate, Monste
     @objc func startNextlevel(){
         guard !gameManager.isGameFinished else { return }
 
-        nextLevelLabel.run(SKAction.fadeOut(withDuration: 0.2))
+        overlay.nextLevelLabel.fadeOut()
         gameManager.isBossLevel ? background.stopScrolling() : background.startScrolling()
         run(SKAction.repeat(SKAction.sequence([SKAction.run(addMonster), SKAction.wait(forDuration: TimeInterval(1.0))]), count: gameManager.numberOfMonstersForCurrentLevel()), withKey:"spawnAction")
     }
@@ -121,8 +105,8 @@ class GameScene: SKScene, adMobInterstitialDelegate, GameManagerDelegate, Monste
     }
     
     func shootProjectile(location: CGPoint) {
-        guard !staminaBar.isExhausted else { return }
-               
+        guard !overlay.staminaBar.isExhausted else { return }
+        
         let projectile = ProjectileNode()
         projectile.position = player.position
         projectile.setup(type: .friendly, shuriken: Global.sharedInstance.selectedPlayerShuriken)
@@ -137,15 +121,15 @@ class GameScene: SKScene, adMobInterstitialDelegate, GameManagerDelegate, Monste
         playerProjectilesArray.append(projectile)
         let direction = offset.normalized()
         projectile.shootWithDirection(direction: direction)
-        staminaBar.didShoot()
+        overlay.staminaBar.didShoot()
     }
     
     func updateScoreLabel() {
-        scoreLabel.text = "Score: \(gameManager.score)"
+        overlay.scoreLabel.text = "Score: \(gameManager.score)"
     }
     
     @objc func levelFinished() {
-        nextLevelLabel.run(SKAction.fadeIn(withDuration: 0.3))
+        overlay.nextLevelLabel.fadeIn()
     }
     
     func endGame() {
@@ -166,13 +150,13 @@ class GameScene: SKScene, adMobInterstitialDelegate, GameManagerDelegate, Monste
     }
     
     func restart() {
-        countdownNode.startCounting { [unowned self] in
+//        overlay.countdownNode.startCounting { [unowned self] in
             self.gameManager.restart()
             self.removeAction(forKey: "startNextLevel")
             self.player.stopAnimation(type: .Death)
             self.updateScoreLabel()
             self.startNextlevel()
-        }
+//        }
     }
     
     func showEndGameMenu() {

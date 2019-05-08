@@ -23,6 +23,7 @@ class CountdownNode: SKSpriteNode {
         
         anchorPoint = CGPoint(x: 0.5, y: 0.5)
         addChild(counterNode)
+        counterNode.position = CGPoint(x: 0, y: 0)
     }
     
     required init?(coder aDecoder: NSCoder) {
