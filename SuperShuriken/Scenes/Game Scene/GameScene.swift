@@ -38,19 +38,17 @@ class GameScene: SKScene, adMobInterstitialDelegate, GameManagerDelegate, Monste
     private let overlay = GameSceneOverlay()
     
     override func didMove(to view: SKView) {
-        gameManager.delegate = self
-        
-        backgroundColor = SKColor.white
-        
-        physicsWorld.gravity = CGVector.zero
-        physicsWorld.contactDelegate = self
-
         guard let spawnPoint = childNode(withName: "spawnPoint") as? SKSpriteNode,
         let enemySpawner = childNode(withName: "enemySpawner") as? SKSpriteNode,
         let monsterGoalPlaceholder = childNode(withName: "goal") as? SKSpriteNode,
         let view = scene?.view else {
             return
         }
+        
+        gameManager.delegate = self
+        
+        physicsWorld.gravity = CGVector.zero
+        physicsWorld.contactDelegate = self
         
         player = PlayerNode(imageNamed: "Idle")
         player.setupWithNode(node: spawnPoint)
@@ -75,10 +73,7 @@ class GameScene: SKScene, adMobInterstitialDelegate, GameManagerDelegate, Monste
         endGameMenu.snp.makeConstraints { make in
             make.center.equalToSuperview()
         }
-        
-        updateScoreLabel()
-        restart()
-        
+                
         if Global.sharedInstance.isSoundOn {
             let backgroundMusic = SKAudioNode.init(fileNamed: "background-music-aac.caf")
             backgroundMusic.autoplayLooped = true
@@ -150,13 +145,13 @@ class GameScene: SKScene, adMobInterstitialDelegate, GameManagerDelegate, Monste
     }
     
     func restart() {
-//        overlay.countdownNode.startCounting { [unowned self] in
+        overlay.countDownView.startCounting { [unowned self] in
             self.gameManager.restart()
             self.removeAction(forKey: "startNextLevel")
             self.player.stopAnimation(type: .Death)
             self.updateScoreLabel()
             self.startNextlevel()
-//        }
+        }
     }
     
     func showEndGameMenu() {

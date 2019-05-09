@@ -15,12 +15,8 @@ class GameSceneOverlay: UIView {
     
     lazy var nextLevelLabel = OverlayLabel(text: "GET READY FOR NEXT LEVEL", alpha: 0, textColor: .white)
     
-//    lazy var countdownNode: CountdownNode = {
-//        let node = CountdownNode()
-//        node.position = CGPoint(x: frame.midX, y: frame.midY)
-//
-//        return node
-//    }()
+    lazy var countDownView = CountdownView()
+
     
     init() {
         super.init(frame: .zero)
@@ -40,6 +36,11 @@ class GameSceneOverlay: UIView {
         staminaBar.snp.makeConstraints { make in
             make.top.equalTo(safeAreaLayoutGuide).offset(20)
             make.centerX.equalToSuperview()
+        }
+        
+        addSubview(countDownView)
+        countDownView.snp.makeConstraints { make in
+            make.center.equalToSuperview()
         }
     }
     

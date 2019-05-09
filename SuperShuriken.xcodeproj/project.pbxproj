@@ -41,7 +41,7 @@
 		C7BAEC782210B838003EE6C8 /* StaminaBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7BAEC772210B838003EE6C8 /* StaminaBar.swift */; };
 		C7BCCA8B227F8F9C001C14B5 /* GameScene+Collisions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7BCCA8A227F8F9C001C14B5 /* GameScene+Collisions.swift */; };
 		C7BCCA8D227F902E001C14B5 /* GameScene+Touches.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7BCCA8C227F902E001C14B5 /* GameScene+Touches.swift */; };
-		C7BCCA8F227F9477001C14B5 /* CountdownNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7BCCA8E227F9477001C14B5 /* CountdownNode.swift */; };
+		C7BCCA8F227F9477001C14B5 /* CountdownView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7BCCA8E227F9477001C14B5 /* CountdownView.swift */; };
 		C7BCCA9122805A45001C14B5 /* GameSceneOverlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7BCCA9022805A45001C14B5 /* GameSceneOverlay.swift */; };
 		C7C348E4217B34D40099A7C0 /* MonsterManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7C348E3217B34D40099A7C0 /* MonsterManager.swift */; };
 		C7C348E6217B48850099A7C0 /* BossProjectileNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7C348E5217B48850099A7C0 /* BossProjectileNode.swift */; };
@@ -104,7 +104,7 @@
 		C7BAEC772210B838003EE6C8 /* StaminaBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StaminaBar.swift; sourceTree = "<group>"; };
 		C7BCCA8A227F8F9C001C14B5 /* GameScene+Collisions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "GameScene+Collisions.swift"; sourceTree = "<group>"; };
 		C7BCCA8C227F902E001C14B5 /* GameScene+Touches.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "GameScene+Touches.swift"; sourceTree = "<group>"; };
-		C7BCCA8E227F9477001C14B5 /* CountdownNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountdownNode.swift; sourceTree = "<group>"; };
+		C7BCCA8E227F9477001C14B5 /* CountdownView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountdownView.swift; sourceTree = "<group>"; };
 		C7BCCA9022805A45001C14B5 /* GameSceneOverlay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameSceneOverlay.swift; sourceTree = "<group>"; };
 		C7C348E3217B34D40099A7C0 /* MonsterManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonsterManager.swift; sourceTree = "<group>"; };
 		C7C348E5217B48850099A7C0 /* BossProjectileNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BossProjectileNode.swift; sourceTree = "<group>"; };
@@ -231,7 +231,6 @@
 			children = (
 				C766D7F6200BC66400648287 /* CustomLabel.swift */,
 				C7A4DF371FE6BD6C007DA58E /* ButtonNode.swift */,
-				C7BCCA8E227F9477001C14B5 /* CountdownNode.swift */,
 			);
 			path = CustomNodes;
 			sourceTree = "<group>";
@@ -259,6 +258,7 @@
 				C7611C6E227085770089B3F5 /* MenuButton.swift */,
 				C7611C722271D3900089B3F5 /* ToggleView.swift */,
 				C7611C74227533CE0089B3F5 /* EndGameMenu.swift */,
+				C7BCCA8E227F9477001C14B5 /* CountdownView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -299,7 +299,6 @@
 				C7884A2D207291D1005D01AB /* Animations */,
 				C796D2371F7AAFC400F770CF /* Sounds */,
 				C796D21F1F7AACAC00F770CF /* AppDelegate.swift */,
-				C796D2271F7AACAC00F770CF /* GameViewController.swift */,
 				C7611C6D227085650089B3F5 /* Views */,
 				0F73506E200CBEE100EEFDD7 /* Scenes */,
 				C72F6C1E20791F1B004E9D19 /* CustomNodes */,
@@ -335,6 +334,7 @@
 		C7BCCA89227F8F83001C14B5 /* Game Scene */ = {
 			isa = PBXGroup;
 			children = (
+				C796D2271F7AACAC00F770CF /* GameViewController.swift */,
 				C796D2251F7AACAC00F770CF /* GameScene.swift */,
 				C7BCCA8C227F902E001C14B5 /* GameScene+Touches.swift */,
 				C766D7FC200C0D2E00648287 /* GameScene.sks */,
@@ -562,7 +562,7 @@
 				C7345C94200F5FB900A24A16 /* AdsManager.swift in Sources */,
 				C7BCCA8D227F902E001C14B5 /* GameScene+Touches.swift in Sources */,
 				C7DCF523204D629900CB1903 /* MonsterGoalNode.swift in Sources */,
-				C7BCCA8F227F9477001C14B5 /* CountdownNode.swift in Sources */,
+				C7BCCA8F227F9477001C14B5 /* CountdownView.swift in Sources */,
 				C7611C712271D2690089B3F5 /* SettingsViewController.swift in Sources */,
 				C7611C75227533CE0089B3F5 /* EndGameMenu.swift in Sources */,
 				C7C348E4217B34D40099A7C0 /* MonsterManager.swift in Sources */,
