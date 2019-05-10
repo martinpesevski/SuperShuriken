@@ -12,6 +12,14 @@ import SnapKit
 let staminaWidth = 140.0
 
 class StaminaBar: UIView {
+    let red = 1.0
+    let green = 0.0
+    let blue = 0.0
+    
+    let finalRed = 0.0
+    let finalGreen = 1.0
+    let finalBlue = 0.0
+    
     var isExhausted = false
     private var staminaBarView: UIView = {
         let staminaBar = UIView()
@@ -61,15 +69,16 @@ class StaminaBar: UIView {
             stamina = 0
             handleExhausted()
         }
-        staminaBarRightConstraint?.update(inset: (10 - stamina) * 14)
+        
+        updateBar()
     }
     
     func increaseStamina(){
         guard stamina < 10, !isExhausted else { return }
         stamina += 0.1
         if stamina > 10 { stamina = 10 }
-        staminaBarRightConstraint?.update(inset: max((10 - stamina) * 14, 5))
         
+        updateBar()
     }
     
     func handleExhausted(){
@@ -77,5 +86,16 @@ class StaminaBar: UIView {
         DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) { [unowned self] in
             self.isExhausted = false
         }
+    }
+    
+    func updateBar() {
+        staminaBarRightConstraint?.update(inset: max((10 - stamina) * 14, 5))
+        let progress = stamina/10
+        
+        let newRed = (1 - progress) * red + progress * finalRed
+        let newGreen = (1 - progress) * green + progress * finalGreen
+        let newBlue = (1 - progress) * blue + progress * finalBlue
+
+        staminaBarView.backgroundColor = UIColor(red: CGFloat(newRed), green: CGFloat(newGreen), blue: CGFloat(newBlue), alpha: 1)
     }
 }

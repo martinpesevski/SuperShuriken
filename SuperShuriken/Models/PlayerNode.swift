@@ -37,6 +37,7 @@ class PlayerNode: SKSpriteNode, GKAgentDelegate {
 
     private var isJumping = false;
     private var isDragging = false;
+    private var isScrollingBackground = true;
 
     func setup() {
         let prevAnchor = anchorPoint
@@ -64,7 +65,7 @@ class PlayerNode: SKSpriteNode, GKAgentDelegate {
         guard let isBossLevel = notification.userInfo?["isBossLevel"] as? Bool else {
             return
         }
-            
+        isScrollingBackground = !isBossLevel
         setNewDefaultAnimation(isBossLevel ? .Idle : .Walk)
     }
     
@@ -169,7 +170,7 @@ class PlayerNode: SKSpriteNode, GKAgentDelegate {
     
     func handleShootEnd(){
         stopAllAnimations()
-        if isDragging {
+        if isDragging || isScrollingBackground {
             playAnimation(type: .RunShoot, completion: { [unowned self] in
                 self.playAnimation(type: self.isDragging ? .Walk : self.defaultAnimationType, completion: {})
             })

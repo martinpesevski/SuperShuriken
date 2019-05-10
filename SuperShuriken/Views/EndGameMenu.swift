@@ -41,7 +41,7 @@ class EndGameMenu: UIView {
     
     lazy var retryButton: MenuButton = {
         let button = MenuButton()
-        button.setTitle("retry", for: .normal)
+        button.setTitle("Retry", for: .normal)
         button.addTarget(self, action: #selector(onRetryTap), for: .touchUpInside)
         
         return button
@@ -49,7 +49,7 @@ class EndGameMenu: UIView {
     
     lazy var menuButton: MenuButton = {
         let button = MenuButton()
-        button.setTitle("menu", for: .normal)
+        button.setTitle("Menu", for: .normal)
         button.addTarget(self, action: #selector(onMenuTap), for: .touchUpInside)
         
         return button
