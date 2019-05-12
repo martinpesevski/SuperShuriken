@@ -119,7 +119,15 @@ class SettingsViewController: UIViewController, ToggleViewDelegate, UICollection
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        Global.sharedInstance.selectedPlayerShuriken = Shuriken(rawValue: indexPath.item) ?? .basic
+        guard let shuriken = Shuriken(rawValue: indexPath.item) else {
+            return
+        }
+        
+        if !shuriken.isUnlocked {
+            shuriken.unlock()
+        }
+        
+        Global.sharedInstance.selectedPlayerShuriken = shuriken
         collectionView.reloadData()
     }
     

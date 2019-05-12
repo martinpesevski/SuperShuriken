@@ -15,6 +15,12 @@ let bigMobSpeed : CGFloat = 400
 
 class Global: NSObject {
     static let sharedInstance = Global()
+    override init() {
+        super.init()
+        if isFirstRun {
+            lockedShurikenAssets = [Shuriken.red]
+        }
+    }
 
     var isFirstRun : Bool {
         get {
@@ -55,12 +61,24 @@ class Global: NSObject {
         }
     }
     
-    var lockedShurikenAssets: [String] {
+    var lockedShurikenAssets: [Shuriken] {
         get {
-            return UserDefaults.standard.array(forKey: "lockedShurikenAssets") as? [String] ?? ["ic_shuriken3"]
+            guard let decoded = UserDefaults.standard.array(forKey: "lockedShurikenAssets") as? [Int] else {
+                return []
+            }
+            
+            var shurikens: [Shuriken] = []
+            for name in decoded {
+                if let shuriken = Shuriken(rawValue: name) {
+                    shurikens.append(shuriken)
+                }
+            }
+            return  shurikens
         }
+        
         set {
-            UserDefaults.standard.set(newValue, forKey: "lockedShurikenAssets")
+            let shurikenValuesArray = newValue.map { $0.rawValue }
+            UserDefaults.standard.set(shurikenValuesArray, forKey: "lockedShurikenAssets")
         }
     }
 }

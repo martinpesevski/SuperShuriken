@@ -55,4 +55,16 @@ enum Shuriken: Int, Codable {
             if newValue { Global.sharedInstance.selectedPlayerShuriken = self }
         }
     }
+    
+    var isUnlocked: Bool {
+        get {
+            return !Global.sharedInstance.lockedShurikenAssets.contains(self)
+        }
+    }
+    
+    func unlock() {
+        var shurikens = Global.sharedInstance.lockedShurikenAssets
+        shurikens = shurikens.filter{$0 != self}
+        Global.sharedInstance.lockedShurikenAssets = shurikens
+    }
 }

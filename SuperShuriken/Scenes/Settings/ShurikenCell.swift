@@ -10,20 +10,33 @@ import UIKit
 import SnapKit
 
 class ShurikenCell: UICollectionViewCell {
-    var shurikenImageView: UIImageView!
+    lazy var shurikenImageView: UIImageView = {
+        let shuriken = UIImageView()
+        shuriken.center = center
+        shuriken.contentMode = .scaleAspectFit
+        shuriken.translatesAutoresizingMaskIntoConstraints = false
+
+        return shuriken
+    }()
     
+    lazy var lockIcon: UIImageView = {
+        let lock = UIImageView(image: UIImage(named: "lock_icon"))
+        lock.contentMode = .scaleAspectFit
+        addSubview(lock)
+        lock.snp.makeConstraints({ make in
+            make.bottom.right.equalTo(shurikenImageView)
+            make.width.height.equalTo(30)
+        })
+        
+        return lock
+    }()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
         
         backgroundColor = UIColor.clear
         
-        shurikenImageView = UIImageView()
-        shurikenImageView.center = center
-        shurikenImageView.contentMode = .scaleAspectFit
         addSubview(shurikenImageView)
-        shurikenImageView.translatesAutoresizingMaskIntoConstraints = false
-        
         shurikenImageView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }
@@ -36,5 +49,6 @@ class ShurikenCell: UICollectionViewCell {
     func setup(shuriken: Shuriken) {
         shurikenImageView.image = shuriken.image
         self.backgroundView = shuriken.isSelected ? UIImageView.init(image: UIImage(named: "ic_highlight")) : nil
+        self.lockIcon.isHidden = shuriken.isUnlocked
     }
 }
