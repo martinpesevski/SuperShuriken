@@ -60,9 +60,23 @@ class AdsManager: NSObject, GADBannerViewDelegate, GADInterstitialDelegate, GADR
 
     
     func showRewardedVideo() {
-        guard Global.sharedInstance.adsEnabled, rewardedVideo.isReady else { return }
+        guard rewardedVideo.isReady else {
+            let alert = UIAlertController(title: "Could not load video, please try again later", message: nil, preferredStyle: .alert)
+            let okButton = UIAlertAction(title: "OK", style: .cancel, handler: nil)
+            alert.addAction(okButton)
+            rootViewController.present(alert, animated: true, completion: nil)
+            
+            return
+        }
         
-        rewardedVideo.present(fromRootViewController: rootViewController, delegate: self)
+        let alert = UIAlertController(title: "Would you like to watch a video to receive this reward?", message: nil, preferredStyle: .alert)
+        let okButton = UIAlertAction(title: "Watch", style: .default, handler: { [unowned self] action in
+            self.rewardedVideo.present(fromRootViewController: self.rootViewController, delegate: self)
+        })
+        let cancelButton = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+        alert.addAction(okButton)
+        alert.addAction(cancelButton)
+        rootViewController.present(alert, animated: true, completion: nil)
     }
     
     func removeAds() {
@@ -75,24 +89,17 @@ class AdsManager: NSObject, GADBannerViewDelegate, GADInterstitialDelegate, GADR
     
     private override init() {
         super.init()
+        
+        createAndLoadInterstitial()
+        createAndLoadRewardedVideo()
     }
     
     func addBannerViewToView(_ bannerView: GADBannerView) {
         bannerView.translatesAutoresizingMaskIntoConstraints = false
         rootViewController.view.addSubview(bannerView)
-        if #available(iOS 11.0, *) {
-            // In iOS 11, we need to constrain the view to the safe area.
-            positionBannerViewFullWidthAtBottomOfSafeArea(bannerView)
-        }
-        else {
-            // In lower iOS versions, safe area is not available so we use
-            // bottom layout guide and view edges.
-            positionBannerViewFullWidthAtBottomOfView(bannerView)
-        }
+        positionBannerViewFullWidthAtBottomOfSafeArea(bannerView)
     }
     
-    // MARK: - view positioning
-    @available (iOS 11, *)
     func positionBannerViewFullWidthAtBottomOfSafeArea(_ bannerView: UIView) {
         // Position the banner. Stick it to the bottom of the Safe Area.
         // Make it constrained to the edges of the safe area.
@@ -102,30 +109,6 @@ class AdsManager: NSObject, GADBannerViewDelegate, GADInterstitialDelegate, GADR
             guide.rightAnchor.constraint(equalTo: bannerView.rightAnchor),
             guide.bottomAnchor.constraint(equalTo: bannerView.bottomAnchor)
             ])
-    }
-    
-    func positionBannerViewFullWidthAtBottomOfView(_ bannerView: UIView) {
-        rootViewController.view.addConstraint(NSLayoutConstraint(item: bannerView,
-                                              attribute: .leading,
-                                              relatedBy: .equal,
-                                              toItem: rootViewController.view,
-                                              attribute: .leading,
-                                              multiplier: 1,
-                                              constant: 0))
-        rootViewController.view.addConstraint(NSLayoutConstraint(item: bannerView,
-                                              attribute: .trailing,
-                                              relatedBy: .equal,
-                                              toItem: rootViewController.view,
-                                              attribute: .trailing,
-                                              multiplier: 1,
-                                              constant: 0))
-        rootViewController.view.addConstraint(NSLayoutConstraint(item: bannerView,
-                                              attribute: .bottom,
-                                              relatedBy: .equal,
-                                              toItem: rootViewController.view.safeAreaLayoutGuide.bottomAnchor,
-                                              attribute: .top,
-                                              multiplier: 1,
-                                              constant: 0))
     }
     
     // MARK: - banner delegate
@@ -199,13 +182,11 @@ class AdsManager: NSObject, GADBannerViewDelegate, GADInterstitialDelegate, GADR
         print("interstitialWillLeaveApplication")
     }
     
-    
     // MARK: - rewarded ad delegate
 
     /// Tells the delegate that the user earned a reward.
     func rewardedAd(_ rewardedAd: GADRewardedAd, userDidEarn reward: GADAdReward) {
         print("rewardedAd:userDidEarnReward:");
-        // TODO: Reward the user.
         rewardedVideoDelegate?.didEarnReward(reward)
     }
     

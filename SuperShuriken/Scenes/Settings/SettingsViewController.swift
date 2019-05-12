@@ -8,8 +8,11 @@
 
 import UIKit
 import SnapKit
+import GoogleMobileAds
 
-class SettingsViewController: UIViewController, ToggleViewDelegate, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+class SettingsViewController: UIViewController, ToggleViewDelegate, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, adMobRewardedVideoDelegate {
+    
+    var selectedShuriken = Global.sharedInstance.selectedPlayerShuriken
     
     let backgroundImageView: UIImageView = {
         let image = UIImageView(image: UIImage(named: "splashScreen"))
@@ -87,6 +90,8 @@ class SettingsViewController: UIViewController, ToggleViewDelegate, UICollection
             make.height.equalTo(120)
         }
         shurikenCollectionView.fadeIn()
+        
+        AdsManager.sharedInstance.rewardedVideoDelegate = self
     }
     
     func onToggle(sender: ToggleView, selected: Bool) {
@@ -122,16 +127,28 @@ class SettingsViewController: UIViewController, ToggleViewDelegate, UICollection
         guard let shuriken = Shuriken(rawValue: indexPath.item) else {
             return
         }
-        
+
+
         if !shuriken.isUnlocked {
-            shuriken.unlock()
+            selectedShuriken = shuriken
+            AdsManager.sharedInstance.showRewardedVideo()
+            return
         }
         
+        selectShuriken(shuriken)
+    }
+    
+    func selectShuriken(_ shuriken: Shuriken) {
         Global.sharedInstance.selectedPlayerShuriken = shuriken
-        collectionView.reloadData()
+        shurikenCollectionView.reloadData()
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return Shuriken.count
+    }
+    
+    func didEarnReward(_ reward: GADAdReward) {
+        selectedShuriken.unlock()
+        selectShuriken(selectedShuriken)
     }
 }

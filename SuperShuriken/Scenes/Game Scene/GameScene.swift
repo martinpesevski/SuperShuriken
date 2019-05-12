@@ -83,7 +83,6 @@ class GameScene: SKScene, adMobInterstitialDelegate, GameManagerDelegate, Monste
         NotificationCenter.default.addObserver(self, selector: #selector(startNextlevel), name: .newLevelStarted, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(levelFinished), name: .levelFinished, object: nil)
 
-        AdsManager.sharedInstance.createAndLoadInterstitial()
         AdsManager.sharedInstance.interstitialDelegate = self
     }
     
