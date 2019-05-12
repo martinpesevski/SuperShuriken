@@ -44,7 +44,7 @@ extension GameScene {
     
     func getTouchName(touch: UITouch) -> String {
         let touchLocation = touch.location(in: self)
-        if touchLocation.x < frame.width/10 {
+        if touchLocation.x < frame.width/5 {
             return "movePlayer"
         } else {
             return "shoot"

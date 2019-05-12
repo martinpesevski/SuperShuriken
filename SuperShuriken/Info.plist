@@ -35,6 +35,8 @@
 	<true/>
 	<key>UIStatusBarHidden</key>
 	<true/>
+	<key>GADIsAdManagerApp</key>
+	<true/>
 	<key>UISupportedInterfaceOrientations</key>
 	<array>
 		<string>UIInterfaceOrientationLandscapeLeft</string>

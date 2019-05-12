@@ -95,7 +95,7 @@ class BossNode: MonsterNode {
     }
     
     func runSpecialAttackTimer(scene: SKScene){
-        run(action: SKAction.wait(forDuration: 5), withKey: "waitForSpecial") { [unowned self] in
+        run(action: SKAction.wait(forDuration: TimeInterval(random(min: 3, max: 5))), withKey: "waitForSpecial") { [unowned self] in
             self.shootSpecialAttack(scene: scene)
         }
     }
@@ -119,8 +119,8 @@ class BossNode: MonsterNode {
     }
     
     func getBossWalkUpDownAction(scene: SKScene) -> SKAction {
-        let actionWalkTop = SKAction.move(to: CGPoint(x:startPoint.x - bossMoveDistance, y:scene.size.height/2), duration: 1)
-        let actionWalkBottom = SKAction.move(to: CGPoint(x:startPoint.x - bossMoveDistance, y:0), duration: 1)
+        let actionWalkTop = SKAction.move(to: CGPoint(x: startPoint.x - bossMoveDistance, y: horizonVerticalLocation), duration: 1)
+        let actionWalkBottom = SKAction.move(to: CGPoint(x: startPoint.x - bossMoveDistance, y: 170), duration: 1)
         return SKAction.repeatForever(SKAction.sequence([actionWalkTop, actionWalkBottom]))
     }
     
@@ -161,9 +161,7 @@ class BossNode: MonsterNode {
     
     func getBossRepeatedShootAction(scene:SKScene) -> SKAction{
         let shootAction = getShootAction(scene: scene, attackType: attackType,offset: 0)
-//        let shootAction = SKAction.group([getShootAction(scene: scene, attackType: attackType,offset: 0),
-//                                          getRunShootAnimationForType(bossType: bossType)])
-        let shotFrequency = random(min: 0.2, max: 1)
+        let shotFrequency = random(min: 0.2, max: 0.7)
         
         let normalShootAction = SKAction.sequence([shootAction, SKAction.wait(forDuration: TimeInterval(shotFrequency))])
         return SKAction.repeatForever(normalShootAction)

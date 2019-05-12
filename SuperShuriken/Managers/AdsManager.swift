@@ -13,7 +13,11 @@ protocol adMobInterstitialDelegate {
     func didHideInterstitial()
 }
 
-class AdsManager: NSObject, GADBannerViewDelegate, GADInterstitialDelegate{
+protocol adMobRewardedVideoDelegate {
+    func didEarnReward(_ reward: GADAdReward)
+}
+
+class AdsManager: NSObject, GADBannerViewDelegate, GADInterstitialDelegate, GADRewardedAdDelegate {
     static let sharedInstance = AdsManager()
 
     var rootViewController: UIViewController {
@@ -28,8 +32,13 @@ class AdsManager: NSObject, GADBannerViewDelegate, GADInterstitialDelegate{
         }
     }
     
-    var interstitialView : GADInterstitial!
-    var interstitialDelegate : adMobInterstitialDelegate?
+    var interstitialView: GADInterstitial!
+    var rewardedVideo: GADRewardedAd!
+    
+    func createAndLoadRewardedVideo() {
+        rewardedVideo = GADRewardedAd(adUnitID: "ca-app-pub-3940256099942544/1712485313")
+        rewardedVideo.load(GADRequest())
+    }
     
     func createAndLoadInterstitial() {
         interstitialView = GADInterstitial(adUnitID: "ca-app-pub-3940256099942544/4411468910")
@@ -37,17 +46,23 @@ class AdsManager: NSObject, GADBannerViewDelegate, GADInterstitialDelegate{
         interstitialView.load(GADRequest())
     }
     
+    var rewardedVideoDelegate: adMobRewardedVideoDelegate?
+    var interstitialDelegate : adMobInterstitialDelegate?
+    
     func showInterstitial() {
-        if !Global.sharedInstance.adsEnabled {
+        guard Global.sharedInstance.adsEnabled, interstitialView.isReady else {
             interstitialDelegate?.didHideInterstitial()
             return
         }
         
-        if (interstitialView!.isReady) {
-            interstitialView!.present(fromRootViewController: rootViewController)
-        } else {
-            interstitialDelegate?.didHideInterstitial()
-        }
+        interstitialView.present(fromRootViewController: rootViewController)
+    }
+
+    
+    func showRewardedVideo() {
+        guard Global.sharedInstance.adsEnabled, rewardedVideo.isReady else { return }
+        
+        rewardedVideo.present(fromRootViewController: rootViewController, delegate: self)
     }
     
     func removeAds() {
@@ -182,5 +197,30 @@ class AdsManager: NSObject, GADBannerViewDelegate, GADInterstitialDelegate{
     /// (such as the App Store), backgrounding the current app.
     func interstitialWillLeaveApplication(_ ad: GADInterstitial) {
         print("interstitialWillLeaveApplication")
+    }
+    
+    
+    // MARK: - rewarded ad delegate
+
+    /// Tells the delegate that the user earned a reward.
+    func rewardedAd(_ rewardedAd: GADRewardedAd, userDidEarn reward: GADAdReward) {
+        print("rewardedAd:userDidEarnReward:");
+        // TODO: Reward the user.
+        rewardedVideoDelegate?.didEarnReward(reward)
+    }
+    
+    /// Tells the delegate that the rewarded ad was presented.
+    func rewardedAdDidPresent(_ rewardedAd: GADRewardedAd) {
+        print("rewardedAdDidPresent")
+    }
+    
+    func rewardedAd(_ rewardedAd: GADRewardedAd, didFailToPresentWithError error: Error) {
+        print("rewardedAd")
+    }
+    
+    func rewardedAdDidDismiss(_ rewardedAd: GADRewardedAd) {
+        print("rewardedAdDidDismiss")
+        
+        createAndLoadRewardedVideo()
     }
 }
