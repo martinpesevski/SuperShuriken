@@ -17,36 +17,29 @@ class Global: NSObject {
     static let sharedInstance = Global()
     override init() {
         super.init()
-        if isFirstRun {
+//        if isFirstRun {
             lockedShurikenAssets = [Shuriken.red]
-        }
+//        }
     }
 
     var isFirstRun : Bool {
-        get {
-            return !UserDefaults.standard.bool(forKey: "wasLaunchedBefore")
-        }
-        set {
-            UserDefaults.standard.set(true, forKey: "wasLaunchedBefore")
-        }
+        get { return !UserDefaults.standard.bool(forKey: "wasLaunchedBefore") }
+        set { UserDefaults.standard.set(true, forKey: "wasLaunchedBefore") }
+    }
+    
+    var hasFinishedTutorial : Bool {
+        get { return UserDefaults.standard.bool(forKey: "hasFinishedTutorial") }
+        set { UserDefaults.standard.set(newValue, forKey: "hasFinishedTutorial") }
     }
     
     var isSoundOn : Bool {
-        get {
-            return UserDefaults.standard.bool(forKey: "isSoundOn")
-        }
-        set {
-            UserDefaults.standard.set(newValue, forKey: "isSoundOn")
-        }
+        get { return UserDefaults.standard.bool(forKey: "isSoundOn") }
+        set { UserDefaults.standard.set(newValue, forKey: "isSoundOn") }
     }
     
     var adsEnabled : Bool {
-        get {
-            return UserDefaults.standard.bool(forKey: "shurikenAdsEnabled")
-        }
-        set {
-            UserDefaults.standard.set(newValue, forKey: "shurikenAdsEnabled")
-        }
+        get { return UserDefaults.standard.bool(forKey: "shurikenAdsEnabled") }
+        set { UserDefaults.standard.set(newValue, forKey: "shurikenAdsEnabled") }
     }
     
     var selectedPlayerShuriken: Shuriken {
@@ -56,9 +49,7 @@ class Global: NSObject {
             }
             return shuriken
         }
-        set {
-            UserDefaults.standard.set(newValue.rawValue, forKey: "selectedShuriken")
-        }
+        set { UserDefaults.standard.set(newValue.rawValue, forKey: "selectedShuriken") }
     }
     
     var lockedShurikenAssets: [Shuriken] {

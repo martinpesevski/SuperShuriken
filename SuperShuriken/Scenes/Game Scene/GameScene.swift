@@ -13,7 +13,7 @@ protocol GameSceneDelegate: class {
     func onDismiss()
 }
 
-class GameScene: SKScene, adMobInterstitialDelegate, GameManagerDelegate, MonsterDelegate, EndGameDelegate, UIGestureRecognizerDelegate {
+class GameScene: SKScene, adMobInterstitialDelegate, GameManagerDelegate, MonsterDelegate, EndGameDelegate, TutorialDelegate, UIGestureRecognizerDelegate {
     
     var player : PlayerNode!
     
@@ -27,6 +27,8 @@ class GameScene: SKScene, adMobInterstitialDelegate, GameManagerDelegate, Monste
     var enemyProjectilesArray = [ProjectileNode]()
 
     var activeTouches = [UITouch:String]()
+    
+    private lazy var tutorial = TutorialView()
     
     private lazy var endGameMenu: EndGameMenu = {
         let menu = EndGameMenu()
@@ -143,6 +145,14 @@ class GameScene: SKScene, adMobInterstitialDelegate, GameManagerDelegate, Monste
         }
     }
     
+    func playTutorial() {
+        scene?.view?.addSubview(tutorial)
+        tutorial.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
+        }
+        tutorial.delegate = self
+    }
+    
     func restart() {
         overlay.countDownView.startCounting { [unowned self] in
             self.gameManager.restart()
@@ -199,5 +209,11 @@ class GameScene: SKScene, adMobInterstitialDelegate, GameManagerDelegate, Monste
     
     func monsterDidShoot(projectile: ProjectileNode) {
         enemyProjectilesArray.append(projectile)
+    }
+    
+    //MARK: - tutorial delegate
+    
+    func didComplete() {
+        restart()
     }
 }

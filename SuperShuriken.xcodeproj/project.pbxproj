@@ -43,6 +43,7 @@
 		C7BCCA8D227F902E001C14B5 /* GameScene+Touches.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7BCCA8C227F902E001C14B5 /* GameScene+Touches.swift */; };
 		C7BCCA8F227F9477001C14B5 /* CountdownView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7BCCA8E227F9477001C14B5 /* CountdownView.swift */; };
 		C7BCCA9122805A45001C14B5 /* GameSceneOverlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7BCCA9022805A45001C14B5 /* GameSceneOverlay.swift */; };
+		C7BCCA93228AE1D9001C14B5 /* TutorialView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7BCCA92228AE1D9001C14B5 /* TutorialView.swift */; };
 		C7C348E4217B34D40099A7C0 /* MonsterManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7C348E3217B34D40099A7C0 /* MonsterManager.swift */; };
 		C7C348E6217B48850099A7C0 /* BossProjectileNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7C348E5217B48850099A7C0 /* BossProjectileNode.swift */; };
 		C7DCF51F204D5F6600CB1903 /* Util.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7DCF51E204D5F6600CB1903 /* Util.swift */; };
@@ -106,6 +107,7 @@
 		C7BCCA8C227F902E001C14B5 /* GameScene+Touches.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "GameScene+Touches.swift"; sourceTree = "<group>"; };
 		C7BCCA8E227F9477001C14B5 /* CountdownView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountdownView.swift; sourceTree = "<group>"; };
 		C7BCCA9022805A45001C14B5 /* GameSceneOverlay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameSceneOverlay.swift; sourceTree = "<group>"; };
+		C7BCCA92228AE1D9001C14B5 /* TutorialView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TutorialView.swift; sourceTree = "<group>"; };
 		C7C348E3217B34D40099A7C0 /* MonsterManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonsterManager.swift; sourceTree = "<group>"; };
 		C7C348E5217B48850099A7C0 /* BossProjectileNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BossProjectileNode.swift; sourceTree = "<group>"; };
 		C7DCF51E204D5F6600CB1903 /* Util.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Util.swift; sourceTree = "<group>"; };
@@ -340,6 +342,7 @@
 				C766D7FC200C0D2E00648287 /* GameScene.sks */,
 				C7BCCA8A227F8F9C001C14B5 /* GameScene+Collisions.swift */,
 				C7BCCA9022805A45001C14B5 /* GameSceneOverlay.swift */,
+				C7BCCA92228AE1D9001C14B5 /* TutorialView.swift */,
 			);
 			path = "Game Scene";
 			sourceTree = "<group>";
@@ -575,6 +578,7 @@
 				C7611C732271D3900089B3F5 /* ToggleView.swift in Sources */,
 				C7BCCA9122805A45001C14B5 /* GameSceneOverlay.swift in Sources */,
 				C7C348E6217B48850099A7C0 /* BossProjectileNode.swift in Sources */,
+				C7BCCA93228AE1D9001C14B5 /* TutorialView.swift in Sources */,
 				0F735075200CF24100EEFDD7 /* Global.swift in Sources */,
 				C796D2201F7AACAC00F770CF /* AppDelegate.swift in Sources */,
 				C7ECD831224FCCD700031B01 /* MonsterModel.swift in Sources */,

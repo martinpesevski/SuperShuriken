@@ -32,7 +32,11 @@ class GameViewController: UIViewController, GADBannerViewDelegate, GameSceneDele
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        
+        guard Global.sharedInstance.hasFinishedTutorial else {
+            scene?.playTutorial()
+            return
+        }
+            
         scene?.restart()
     }
 
