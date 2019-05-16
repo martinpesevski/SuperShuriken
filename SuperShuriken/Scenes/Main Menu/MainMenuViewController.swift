@@ -35,8 +35,16 @@ class MainMenuViewController: UIViewController {
         return button
     }()
     
+    lazy var leaderboardButton: MenuButton = {
+        let button = MenuButton()
+        button.addTarget(self, action: #selector(onLeaderboard), for: .touchUpInside)
+        button.setTitle("Leaderboard", for: .normal)
+        
+        return button
+    }()
+    
     lazy var buttonContainer: UIStackView = {
-        let stack = UIStackView(arrangedSubviews: [playButton, settingsButton])
+        let stack = UIStackView(arrangedSubviews: [playButton, settingsButton, leaderboardButton])
         stack.axis = .vertical
         stack.spacing = 20
         
@@ -45,6 +53,9 @@ class MainMenuViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        GameCenterManager.shared.authenticate(viewController: self)
+        
         view.addSubview(backgroundImageView)
         view.addSubview(buttonContainer)
         
@@ -64,5 +75,9 @@ class MainMenuViewController: UIViewController {
     
     @objc func onSettings() {
         performSegue(withIdentifier: "settings", sender: nil)
+    }
+    
+    @objc func onLeaderboard() {
+        GameCenterManager.shared.showLeaderboard(viewController: self)
     }
 }

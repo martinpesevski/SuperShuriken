@@ -18,7 +18,7 @@ protocol adMobRewardedVideoDelegate {
 }
 
 class AdsManager: NSObject, GADBannerViewDelegate, GADInterstitialDelegate, GADRewardedAdDelegate {
-    static let sharedInstance = AdsManager()
+    static let shared = AdsManager()
 
     var rootViewController: UIViewController {
         get {

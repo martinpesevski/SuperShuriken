@@ -44,6 +44,7 @@
 		C7BCCA8F227F9477001C14B5 /* CountdownView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7BCCA8E227F9477001C14B5 /* CountdownView.swift */; };
 		C7BCCA9122805A45001C14B5 /* GameSceneOverlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7BCCA9022805A45001C14B5 /* GameSceneOverlay.swift */; };
 		C7BCCA93228AE1D9001C14B5 /* TutorialView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7BCCA92228AE1D9001C14B5 /* TutorialView.swift */; };
+		C7BCCA95228C3141001C14B5 /* GameCenterManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7BCCA94228C3141001C14B5 /* GameCenterManager.swift */; };
 		C7C348E4217B34D40099A7C0 /* MonsterManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7C348E3217B34D40099A7C0 /* MonsterManager.swift */; };
 		C7C348E6217B48850099A7C0 /* BossProjectileNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7C348E5217B48850099A7C0 /* BossProjectileNode.swift */; };
 		C7DCF51F204D5F6600CB1903 /* Util.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7DCF51E204D5F6600CB1903 /* Util.swift */; };
@@ -108,6 +109,7 @@
 		C7BCCA8E227F9477001C14B5 /* CountdownView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountdownView.swift; sourceTree = "<group>"; };
 		C7BCCA9022805A45001C14B5 /* GameSceneOverlay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameSceneOverlay.swift; sourceTree = "<group>"; };
 		C7BCCA92228AE1D9001C14B5 /* TutorialView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TutorialView.swift; sourceTree = "<group>"; };
+		C7BCCA94228C3141001C14B5 /* GameCenterManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameCenterManager.swift; sourceTree = "<group>"; };
 		C7C348E3217B34D40099A7C0 /* MonsterManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonsterManager.swift; sourceTree = "<group>"; };
 		C7C348E5217B48850099A7C0 /* BossProjectileNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BossProjectileNode.swift; sourceTree = "<group>"; };
 		C7DCF51E204D5F6600CB1903 /* Util.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Util.swift; sourceTree = "<group>"; };
@@ -356,6 +358,7 @@
 				C7DCF520204D624100CB1903 /* GameManager.swift */,
 				C7C348E3217B34D40099A7C0 /* MonsterManager.swift */,
 				C7ECD832224FE52C00031B01 /* AnimationManager.swift */,
+				C7BCCA94228C3141001C14B5 /* GameCenterManager.swift */,
 			);
 			path = Managers;
 			sourceTree = "<group>";
@@ -553,6 +556,7 @@
 				C7611C6F227085770089B3F5 /* MenuButton.swift in Sources */,
 				C7DCF521204D624100CB1903 /* GameManager.swift in Sources */,
 				C745F08622673EC1008E2D2A /* Shuriken.swift in Sources */,
+				C7BCCA95228C3141001C14B5 /* GameCenterManager.swift in Sources */,
 				C737083B202213F20053F640 /* ProjectileNode.swift in Sources */,
 				C7611C6C227083DF0089B3F5 /* MainMenuViewController.swift in Sources */,
 				C7BAEC782210B838003EE6C8 /* StaminaBar.swift in Sources */,

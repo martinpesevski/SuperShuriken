@@ -10,7 +10,7 @@ import UIKit
 import SpriteKit
 
 class MonsterManager: NSObject {
-    static let sharedInstance = MonsterManager()
+    static let shared = MonsterManager()
     
     var monsterSpawner = SKSpriteNode()
     var monsterGoal = MonsterGoalNode()

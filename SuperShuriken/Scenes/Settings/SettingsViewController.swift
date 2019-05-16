@@ -91,13 +91,13 @@ class SettingsViewController: UIViewController, ToggleViewDelegate, UICollection
         }
         shurikenCollectionView.fadeIn()
         
-        AdsManager.sharedInstance.rewardedVideoDelegate = self
+        AdsManager.shared.rewardedVideoDelegate = self
     }
     
     func onToggle(sender: ToggleView, selected: Bool) {
         switch sender {
         case adsToggle:
-            selected ? AdsManager.sharedInstance.showAds() : AdsManager.sharedInstance.removeAds()
+            selected ? AdsManager.shared.showAds() : AdsManager.shared.removeAds()
         case soundToggle:
             Global.sharedInstance.isSoundOn = selected
         default:
@@ -131,7 +131,7 @@ class SettingsViewController: UIViewController, ToggleViewDelegate, UICollection
 
         if !shuriken.isUnlocked {
             selectedShuriken = shuriken
-            AdsManager.sharedInstance.showRewardedVideo()
+            AdsManager.shared.showRewardedVideo()
             return
         }
         

@@ -19,7 +19,7 @@ class MonsterNode: SKSpriteNode {
     var type: MonsterType!
     private var hitPoints: Int = 1
     var monsterDelegate: MonsterDelegate?
-    internal let monsterManager = MonsterManager.sharedInstance
+    internal let monsterManager = MonsterManager.shared
     internal let animationManager = AnimationManager.sharedInstance
     private var bloodSplatterNode: SKSpriteNode!
     private var runAction = SKAction()

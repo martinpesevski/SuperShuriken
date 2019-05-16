@@ -63,6 +63,7 @@ class GameManager: NSObject {
     }
     
     func endGame() {
+        GameCenterManager.shared.submitScore(score)
         isGameFinished = true
         
         NotificationCenter.default.post(Notification(name: Notification.Name.gameOver))

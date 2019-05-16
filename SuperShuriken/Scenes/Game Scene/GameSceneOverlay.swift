@@ -9,7 +9,7 @@
 import UIKit
 
 class GameSceneOverlay: UIView {
-    lazy var scoreLabel = OverlayLabel(text: "Score")
+    lazy var scoreLabel = OverlayLabel(text: "Score: ")
     
     lazy var staminaBar = StaminaBar()
     

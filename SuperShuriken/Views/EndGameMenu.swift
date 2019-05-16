@@ -29,7 +29,6 @@ class EndGameMenu: UIView {
     
     lazy var messageLabel: UILabel = {
         let label = UILabel()
-        label.text = "Your total score is \(GameManager.sharedInstance.score)"
         label.textColor = .white
         label.textAlignment = .center
         label.font = UIFont.boldSystemFont(ofSize: 30)
@@ -87,6 +86,11 @@ class EndGameMenu: UIView {
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    func show() {
+        fadeIn()
+        messageLabel.text = "Your total score is: \(GameManager.sharedInstance.score)"
     }
     
     @objc func onMenuTap() {

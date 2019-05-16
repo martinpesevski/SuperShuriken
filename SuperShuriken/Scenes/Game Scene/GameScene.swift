@@ -22,7 +22,7 @@ class GameScene: SKScene, adMobInterstitialDelegate, GameManagerDelegate, Monste
     private var background = PlayBackground()
     
     var gameManager = GameManager.sharedInstance
-    var monsterManager = MonsterManager.sharedInstance
+    var monsterManager = MonsterManager.shared
     var playerProjectilesArray = [ProjectileNode]()
     var enemyProjectilesArray = [ProjectileNode]()
 
@@ -85,7 +85,7 @@ class GameScene: SKScene, adMobInterstitialDelegate, GameManagerDelegate, Monste
         NotificationCenter.default.addObserver(self, selector: #selector(startNextlevel), name: .newLevelStarted, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(levelFinished), name: .levelFinished, object: nil)
 
-        AdsManager.sharedInstance.interstitialDelegate = self
+        AdsManager.shared.interstitialDelegate = self
     }
     
     @objc func startNextlevel(){
@@ -139,7 +139,7 @@ class GameScene: SKScene, adMobInterstitialDelegate, GameManagerDelegate, Monste
         
         gameManager.endGame()
         if Global.sharedInstance.adsEnabled {
-            AdsManager.sharedInstance.showInterstitial()
+            AdsManager.shared.showInterstitial()
         } else {
             showGameOverScreen()
         }
@@ -164,7 +164,7 @@ class GameScene: SKScene, adMobInterstitialDelegate, GameManagerDelegate, Monste
     }
     
     func showEndGameMenu() {
-        endGameMenu.fadeIn()
+        endGameMenu.show()
     }
     
     func showGameOverScreen() {
