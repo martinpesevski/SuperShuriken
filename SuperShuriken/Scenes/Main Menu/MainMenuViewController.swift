@@ -78,6 +78,6 @@ class MainMenuViewController: UIViewController {
     }
     
     @objc func onLeaderboard() {
-        GameCenterManager.shared.showLeaderboard(viewController: self)
+        performSegue(withIdentifier: "leaderboard", sender: nil)
     }
 }

@@ -17,12 +17,17 @@ class GameCenterManager: NSObject, GKGameCenterControllerDelegate {
     let localPLayer = GKLocalPlayer.localPlayer()
 
     func authenticate(viewController: UIViewController?){
-        GKLocalPlayer.localPlayer().authenticateHandler = { gcAuthVC, error in
-            if GKLocalPlayer.localPlayer().isAuthenticated {
+//        guard localPLayer.authenticateHandler == nil else {
+//            localPLayer.authenticateHandler
+//        }
+        localPLayer.authenticateHandler = { [weak self] gcAuthVC, error in
+            guard let self = self else {return}
+            
+            if self.localPLayer.isAuthenticated {
                 print("Authenticated to Game Center!")
                 
                 // Get the default leaderboard ID
-                GKLocalPlayer.localPlayer().loadDefaultLeaderboardIdentifier(completionHandler: { (leaderboardIdentifer, error) in
+                self.localPLayer.loadDefaultLeaderboardIdentifier(completionHandler: { (leaderboardIdentifer, error) in
                     guard error == nil else {
                         print(error?.localizedDescription ?? "error getting leaderboard")
                         return
@@ -57,11 +62,15 @@ class GameCenterManager: NSObject, GKGameCenterControllerDelegate {
         gameCenterViewController.dismiss(animated: true, completion: nil)
     }
     
-    func showLeaderboard(viewController: UIViewController) {
-        let gcVC = GKGameCenterViewController()
-        gcVC.gameCenterDelegate = self
-        gcVC.viewState = .leaderboards
-        gcVC.leaderboardIdentifier = GameCenterManager.leaderboardId
-        viewController.present(gcVC, animated: true, completion: nil)
+    func getHighScores(completion: @escaping ([GKScore]?, Error?) -> ()) {
+        let leaderBoardRequest = GKLeaderboard()
+        leaderBoardRequest.identifier = GameCenterManager.leaderboardId // my GC Leaderboard ID
+        leaderBoardRequest.playerScope = GKLeaderboardPlayerScope.global
+        leaderBoardRequest.timeScope = GKLeaderboardTimeScope.allTime
+        leaderBoardRequest.range = NSMakeRange(1,10)
+        
+        leaderBoardRequest.loadScores { scores, error in
+            completion(scores, error)
+        }
     }
 }
