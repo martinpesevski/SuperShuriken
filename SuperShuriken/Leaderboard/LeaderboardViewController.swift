@@ -12,6 +12,13 @@ import GameKit
 class LeaderboardViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     var scoresArray: [GKScore] = []
     
+    let backgroundImageView: UIImageView = {
+        let image = UIImageView(image: UIImage(named: "splashScreen"))
+        image.contentMode = .scaleAspectFill
+        
+        return image
+    }()
+    
     lazy var tableView: UITableView = {
         let table = UITableView()
         table.register(LeaderboardCell.self, forCellReuseIdentifier: "leaderboardCell")
@@ -37,12 +44,10 @@ class LeaderboardViewController: UIViewController, UITableViewDelegate, UITableV
         return button
     }()
     
-    lazy var backgroundImage = UIImageView(image: UIImage(named: "splashScreen"))
-    
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.view.addSubview(backgroundImage)
-        backgroundImage.snp.makeConstraints { make in
+        self.view.addSubview(backgroundImageView)
+        backgroundImageView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }
         

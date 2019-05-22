@@ -15,32 +15,28 @@ class GameCenterManager: NSObject, GKGameCenterControllerDelegate {
     static let shared = GameCenterManager()
     var defaultLeaderboard: String?
     let localPLayer = GKLocalPlayer.localPlayer()
-
-    func authenticate(viewController: UIViewController?){
-//        guard localPLayer.authenticateHandler == nil else {
-//            localPLayer.authenticateHandler
-//        }
+    
+    func isAuthenticated() -> Bool {
+        return localPLayer.isAuthenticated
+    }
+    
+    func authenticate(viewController: UIViewController?, completion: @escaping (Bool)->() = {_ in }){
         localPLayer.authenticateHandler = { [weak self] gcAuthVC, error in
-            guard let self = self else {return}
+            guard let self = self else {
+                completion(false)
+                return
+            }
             
             if self.localPLayer.isAuthenticated {
                 print("Authenticated to Game Center!")
-                
-                // Get the default leaderboard ID
-                self.localPLayer.loadDefaultLeaderboardIdentifier(completionHandler: { (leaderboardIdentifer, error) in
-                    guard error == nil else {
-                        print(error?.localizedDescription ?? "error getting leaderboard")
-                        return
-                    }
-                    
-                    self.defaultLeaderboard = leaderboardIdentifer
-                })
+                completion(true)
             } else if let vc = gcAuthVC {
                 viewController?.present(vc, animated: true)
             }
             else {
                 print("Error authentication to GameCenter: " +
                     "\(error?.localizedDescription ?? "none")")
+                completion(false)
             }
         }
     }
