@@ -99,4 +99,12 @@ class GameCenterManager: NSObject, GKGameCenterControllerDelegate {
             }
         })
     }
+    
+    func reportAchievement(_ achievement: Achievement) {
+        guard let achievement = achievement.achievement else { return }
+        
+        GKAchievement.report([achievement]) { error in
+            if let error = error { print("achievement error" + error.localizedDescription) }
+        }
+    }
 }

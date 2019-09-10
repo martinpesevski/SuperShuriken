@@ -10,6 +10,12 @@ import Foundation
 import GameKit
 
 struct Achievement {
+    enum AchievementType {
+        case ninjaApprentice
+        case ninjaNovice
+        case bossKiller
+    }
+    
     var achievement: GKAchievement?
     var details: GKAchievementDescription?
 }

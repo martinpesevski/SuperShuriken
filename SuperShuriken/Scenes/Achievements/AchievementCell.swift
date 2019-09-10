@@ -17,7 +17,12 @@ class AchievementCell: UITableViewCell {
             titleLabel.text = newValue.details?.title
             descriptionLabel.text = newValue.achievement?.isCompleted ?? false ? newValue.details?.achievedDescription : newValue.details?.unachievedDescription
             achievementImage.image = UIImage(named: "ic_shuriken3")
-            checkmarkImage.isHidden = newValue.achievement?.isCompleted ?? true
+            
+            guard let completed = newValue.achievement?.isCompleted else {
+                checkmarkImage.isHidden = true
+                return
+            }
+            checkmarkImage.isHidden = !completed
         }
     }
     

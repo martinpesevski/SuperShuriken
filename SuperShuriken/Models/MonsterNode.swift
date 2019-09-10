@@ -82,7 +82,11 @@ class MonsterNode: SKSpriteNode {
         
         hitPoints -= 1
         
-        return hitPoints == 0
+        if hitPoints == 0 {
+            AchievementManager.shared.didKillMonster(type: type)
+            return true
+        }
+        return false
     }
     
     func playDeathAnimation() {

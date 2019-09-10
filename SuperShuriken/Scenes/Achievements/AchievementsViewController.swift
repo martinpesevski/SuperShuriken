@@ -21,7 +21,6 @@ class AchievementsViewControlelr: UIViewController, UITableViewDataSource, UITab
     lazy var tableView: UITableView = {
         let table = UITableView()
         table.register(AchievementCell.self, forCellReuseIdentifier: "achievementCell")
-//        table.register(SectionHeader.self, forHeaderFooterViewReuseIdentifier: "header")
         table.dataSource = self
         table.delegate = self
         table.tableFooterView = UIView()
@@ -69,9 +68,7 @@ class AchievementsViewControlelr: UIViewController, UITableViewDataSource, UITab
     
     func loadScores(){
         GameCenterManager.shared.getAchievements { [weak self] achievements, error in
-            guard let self = self, let achievements = achievements, error == nil else {
-                return
-            }
+            guard let self = self, let achievements = achievements, error == nil else { return }
             
             self.achievementsArray = achievements
             self.tableView.reloadData()
@@ -95,13 +92,4 @@ class AchievementsViewControlelr: UIViewController, UITableViewDataSource, UITab
         cell.achievement = achievementsArray[indexPath.row]
         return cell
     }
-    
-//    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-//        guard let view = tableView.dequeueReusableHeaderFooterView(withIdentifier: "header") as? SectionHeader else {
-//            return UIView()
-//        }
-//
-//        view.title = "HALL OF FAME"
-//        return view
-//    }
 }
