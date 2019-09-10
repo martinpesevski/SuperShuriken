@@ -9,13 +9,21 @@
 import Foundation
 import GameKit
 
+enum AchievementType: String {
+    case ninjaApprentice = "com.mpesevski.superShuriken.ninjaApprentice"
+    case ninjaNovice = "com.mpesevski.superShuriken.ninjaNovice"
+    case bossKiller = "com.mpesevski.superShuriken.bossKiller"
+}
+
 struct Achievement {
-    enum AchievementType {
-        case ninjaApprentice
-        case ninjaNovice
-        case bossKiller
-    }
-    
     var achievement: GKAchievement?
     var details: GKAchievementDescription?
+}
+
+extension GKAchievement {
+    convenience init(type: AchievementType, percent: Double) {
+        self.init(identifier: type.rawValue)
+        percentComplete = percent
+        showsCompletionBanner = true
+    }
 }

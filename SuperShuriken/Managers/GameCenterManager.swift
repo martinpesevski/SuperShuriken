@@ -15,6 +15,8 @@ class GameCenterManager: NSObject, GKGameCenterControllerDelegate {
     static let shared = GameCenterManager()
     var defaultLeaderboard: String?
     let localPLayer = GKLocalPlayer.localPlayer()
+    var achievements = [Achievement]()
+    var highScores = [GKScore]()
     
     func isAuthenticated() -> Bool {
         return localPLayer.isAuthenticated
@@ -58,44 +60,50 @@ class GameCenterManager: NSObject, GKGameCenterControllerDelegate {
         gameCenterViewController.dismiss(animated: true, completion: nil)
     }
     
-    func getHighScores(completion: @escaping ([GKScore]?, Error?) -> ()) {
+    func getHighScores(completion: (([GKScore]?, Error?) -> ())?) {
         let leaderBoardRequest = GKLeaderboard()
         leaderBoardRequest.identifier = GameCenterManager.leaderboardId // my GC Leaderboard ID
         leaderBoardRequest.playerScope = GKLeaderboardPlayerScope.global
         leaderBoardRequest.timeScope = GKLeaderboardTimeScope.allTime
         leaderBoardRequest.range = NSMakeRange(1,10)
         
-        leaderBoardRequest.loadScores { scores, error in
-            completion(scores, error)
-        }
-    }
-    
-    func getAchievements(completion: @escaping ([Achievement]?, Error?) -> ()) {
-        
-        GKAchievementDescription.loadAchievementDescriptions(completionHandler: { (descriptions, error) in
-            guard let descriptions = descriptions else {
-                completion(nil, nil)
+        leaderBoardRequest.loadScores { [weak self] scores, error in
+            guard let self = self, let scores = scores else {
+                completion?(nil, nil)
                 return
             }
             
-            var array = [Achievement]()
-            for index in 0 ..< descriptions.count {
-                array.append(Achievement(achievement: nil, details: descriptions[index]))
+            self.highScores = scores
+            completion?(scores, error)
+        }
+    }
+    
+    func getAchievements(completion: (([Achievement]?, Error?) -> ())?) {
+        
+        GKAchievementDescription.loadAchievementDescriptions(completionHandler: { [weak self] (descriptions, error) in
+            guard let self = self, let descriptions = descriptions else {
+                completion?(nil, nil)
+                return
             }
             
-            GKAchievement.loadAchievements { achievements, error in
-                guard let achievements = achievements else {
-                    completion(nil, nil)
+            self.achievements = [Achievement]()
+            for index in 0 ..< descriptions.count {
+                self.achievements.append(Achievement(achievement: nil, details: descriptions[index]))
+            }
+            
+            GKAchievement.loadAchievements { [weak self] achievements, error in
+                guard let self = self, let achievements = achievements else {
+                    completion?(nil, nil)
                     return
                 }
                 
-                for i in 0..<achievements.count {
-                    for j in 0 ..< array.count {
-                        if array[j].details?.identifier == achievements[i].identifier { array[j].achievement = achievements[i] }
+                for i in 0 ..< achievements.count {
+                    for j in 0 ..< self.achievements.count {
+                        if self.achievements[j].details?.identifier == achievements[i].identifier { self.achievements[j].achievement = achievements[i] }
                     }
                 }
                 
-                completion(array, error)
+                completion?(self.achievements, error)
             }
         })
     }
@@ -106,5 +114,24 @@ class GameCenterManager: NSObject, GKGameCenterControllerDelegate {
         GKAchievement.report([achievement]) { error in
             if let error = error { print("achievement error" + error.localizedDescription) }
         }
+    }
+    
+    func showAuthenticationDialog() {
+        let alert = UIAlertController(title: "You need to log in to game center to be able to track your scores and achievements", message: "please login to the Game Center from settings if you wish to use the leaderboard feature", preferredStyle: .alert)
+        let loginButton = UIAlertAction(title: "Log in", style: .default) { _ in
+            guard let settingsUrl = URL(string: UIApplicationOpenSettingsURLString) else {
+                return
+            }
+            
+            if UIApplication.shared.canOpenURL(settingsUrl) {
+                UIApplication.shared.open(settingsUrl, completionHandler: { (success) in
+                    print("Settings opened: \(success)") // Prints true
+                })
+            }
+        }
+        let cancelButton = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+        alert.addAction(loginButton)
+        alert.addAction(cancelButton)
+        UIApplication.getTopViewController()?.present(alert, animated: true, completion: nil)
     }
 }

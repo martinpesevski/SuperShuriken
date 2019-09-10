@@ -61,10 +61,6 @@ class MainMenuViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        GameCenterManager.shared.authenticate(viewController: self) { [weak self] completed in
-            if !completed { self?.showAuthenticationDialog() }
-        }
-        
         view.addSubview(backgroundImageView)
         view.addSubview(buttonContainer)
         
@@ -88,7 +84,7 @@ class MainMenuViewController: UIViewController {
     
     @objc func onLeaderboard() {
         guard GameCenterManager.shared.isAuthenticated() else {
-            showAuthenticationDialog()
+            GameCenterManager.shared.showAuthenticationDialog()
             return
         }
         performSegue(withIdentifier: "leaderboard", sender: nil)
@@ -96,28 +92,9 @@ class MainMenuViewController: UIViewController {
     
     @objc func onAchievements() {
         guard GameCenterManager.shared.isAuthenticated() else {
-            showAuthenticationDialog()
+            GameCenterManager.shared.showAuthenticationDialog()
             return
         }
         performSegue(withIdentifier: "achievements", sender: nil)
-    }
-    
-    func showAuthenticationDialog() {
-        let alert = UIAlertController(title: "You need to log in to game center to be able to track your scores and achievements", message: "please login to the Game Center from settings if you wish to use the leaderboard feature", preferredStyle: .alert)
-        let loginButton = UIAlertAction(title: "Log in", style: .default) { _ in
-            guard let settingsUrl = URL(string: UIApplicationOpenSettingsURLString) else {
-                return
-            }
-            
-            if UIApplication.shared.canOpenURL(settingsUrl) {
-                UIApplication.shared.open(settingsUrl, completionHandler: { (success) in
-                    print("Settings opened: \(success)") // Prints true
-                })
-            }
-        }
-        let cancelButton = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
-        alert.addAction(loginButton)
-        alert.addAction(cancelButton)
-        self.present(alert, animated: true, completion: nil)
     }
 }

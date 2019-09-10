@@ -13,9 +13,7 @@ class AchievementManager {
     static let shared = AchievementManager()
 
     func didKillMonster(type: MonsterType) {
-        let achievement = GKAchievement(identifier: "com.mpesevski.superShuriken.ninjaApprentice")
-        achievement.percentComplete = 100
-        achievement.showsCompletionBanner = true
+        let achievement = GKAchievement(type: .ninjaNovice, percent: 100)
         GameCenterManager.shared.reportAchievement(Achievement(achievement: achievement, details: nil))
     }
 }
