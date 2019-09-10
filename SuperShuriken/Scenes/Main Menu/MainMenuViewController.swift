@@ -42,8 +42,16 @@ class MainMenuViewController: UIViewController {
         return button
     }()
     
+    lazy var achievementsButton: MenuButton = {
+        let button = MenuButton()
+        button.addTarget(self, action: #selector(onAchievements), for: .touchUpInside)
+        button.setTitle("Achievements", for: .normal)
+        
+        return button
+    }()
+    
     lazy var buttonContainer: UIStackView = {
-        let stack = UIStackView(arrangedSubviews: [playButton, settingsButton, leaderboardButton])
+        let stack = UIStackView(arrangedSubviews: [playButton, settingsButton, leaderboardButton, achievementsButton])
         stack.axis = .vertical
         stack.spacing = 20
         
@@ -86,8 +94,16 @@ class MainMenuViewController: UIViewController {
         performSegue(withIdentifier: "leaderboard", sender: nil)
     }
     
+    @objc func onAchievements() {
+        guard GameCenterManager.shared.isAuthenticated() else {
+            showAuthenticationDialog()
+            return
+        }
+        performSegue(withIdentifier: "achievements", sender: nil)
+    }
+    
     func showAuthenticationDialog() {
-        let alert = UIAlertController(title: "You need to log in to game center to be able to track your scores", message: "please login to the Game Center from settings if you wish to use the leaderboard feature", preferredStyle: .alert)
+        let alert = UIAlertController(title: "You need to log in to game center to be able to track your scores and achievements", message: "please login to the Game Center from settings if you wish to use the leaderboard feature", preferredStyle: .alert)
         let loginButton = UIAlertAction(title: "Log in", style: .default) { _ in
             guard let settingsUrl = URL(string: UIApplicationOpenSettingsURLString) else {
                 return

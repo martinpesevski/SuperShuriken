@@ -12,6 +12,8 @@
 		B69BBFDA222236171FF70C0A /* Pods_SuperShuriken.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FFAE01823C307487EE0B93EF /* Pods_SuperShuriken.framework */; };
 		C71E033B20430682001C61C2 /* MonsterNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = C71E033A20430682001C61C2 /* MonsterNode.swift */; };
 		C72035D221283D07000D7C89 /* Consants.swift in Sources */ = {isa = PBXBuildFile; fileRef = C72035D121283D07000D7C89 /* Consants.swift */; };
+		C72E286C2295705E00486719 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C72E286B2295705E00486719 /* StoreKit.framework */; };
+		C72E286E2296C91F00486719 /* StoreManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C72E286D2296C91F00486719 /* StoreManager.swift */; };
 		C7345C94200F5FB900A24A16 /* AdsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7345C93200F5FB900A24A16 /* AdsManager.swift */; };
 		C737083B202213F20053F640 /* ProjectileNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = C737083A202213F20053F640 /* ProjectileNode.swift */; };
 		C745F08622673EC1008E2D2A /* Shuriken.swift in Sources */ = {isa = PBXBuildFile; fileRef = C745F08522673EC1008E2D2A /* Shuriken.swift */; };
@@ -24,6 +26,9 @@
 		C7611C75227533CE0089B3F5 /* EndGameMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7611C74227533CE0089B3F5 /* EndGameMenu.swift */; };
 		C766D7F7200BC66400648287 /* CustomLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C766D7F6200BC66400648287 /* CustomLabel.swift */; };
 		C766D7FD200C0D2E00648287 /* GameScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = C766D7FC200C0D2E00648287 /* GameScene.sks */; };
+		C77D8C73229EE43500575245 /* AchievementsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C77D8C72229EE43500575245 /* AchievementsViewController.swift */; };
+		C77D8C75229EE46E00575245 /* AchievementCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C77D8C74229EE46E00575245 /* AchievementCell.swift */; };
+		C77D8C77229EE9DE00575245 /* Achievement.swift in Sources */ = {isa = PBXBuildFile; fileRef = C77D8C76229EE9DE00575245 /* Achievement.swift */; };
 		C7806EE6224FAF5C00B5CE41 /* vampire_boss_walking.atlas in Resources */ = {isa = PBXBuildFile; fileRef = C7806EE2224FAF5B00B5CE41 /* vampire_boss_walking.atlas */; };
 		C7806EE7224FAF5C00B5CE41 /* vampire_boss_run_shooting.atlas in Resources */ = {isa = PBXBuildFile; fileRef = C7806EE3224FAF5B00B5CE41 /* vampire_boss_run_shooting.atlas */; };
 		C7806EE8224FAF5C00B5CE41 /* vampire_boss_running.atlas in Resources */ = {isa = PBXBuildFile; fileRef = C7806EE4224FAF5C00B5CE41 /* vampire_boss_running.atlas */; };
@@ -77,6 +82,8 @@
 		47C2856E36B2852627AA8E0A /* Pods-SuperShuriken.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SuperShuriken.release.xcconfig"; path = "Pods/Target Support Files/Pods-SuperShuriken/Pods-SuperShuriken.release.xcconfig"; sourceTree = "<group>"; };
 		C71E033A20430682001C61C2 /* MonsterNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonsterNode.swift; sourceTree = "<group>"; };
 		C72035D121283D07000D7C89 /* Consants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Consants.swift; sourceTree = "<group>"; };
+		C72E286B2295705E00486719 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
+		C72E286D2296C91F00486719 /* StoreManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreManager.swift; sourceTree = "<group>"; };
 		C7345C93200F5FB900A24A16 /* AdsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdsManager.swift; sourceTree = "<group>"; };
 		C737083A202213F20053F640 /* ProjectileNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectileNode.swift; sourceTree = "<group>"; };
 		C745F08522673EC1008E2D2A /* Shuriken.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Shuriken.swift; sourceTree = "<group>"; };
@@ -89,6 +96,9 @@
 		C7611C74227533CE0089B3F5 /* EndGameMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EndGameMenu.swift; sourceTree = "<group>"; };
 		C766D7F6200BC66400648287 /* CustomLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomLabel.swift; sourceTree = "<group>"; };
 		C766D7FC200C0D2E00648287 /* GameScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = GameScene.sks; sourceTree = "<group>"; };
+		C77D8C72229EE43500575245 /* AchievementsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AchievementsViewController.swift; sourceTree = "<group>"; };
+		C77D8C74229EE46E00575245 /* AchievementCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AchievementCell.swift; sourceTree = "<group>"; };
+		C77D8C76229EE9DE00575245 /* Achievement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Achievement.swift; sourceTree = "<group>"; };
 		C7806EE2224FAF5B00B5CE41 /* vampire_boss_walking.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = vampire_boss_walking.atlas; sourceTree = "<group>"; };
 		C7806EE3224FAF5B00B5CE41 /* vampire_boss_run_shooting.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = vampire_boss_run_shooting.atlas; sourceTree = "<group>"; };
 		C7806EE4224FAF5C00B5CE41 /* vampire_boss_running.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = vampire_boss_running.atlas; sourceTree = "<group>"; };
@@ -143,6 +153,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C72E286C2295705E00486719 /* StoreKit.framework in Frameworks */,
 				B69BBFDA222236171FF70C0A /* Pods_SuperShuriken.framework in Frameworks */,
 				C7E7B5B42217135E00BBE894 /* GameKit.framework in Frameworks */,
 			);
@@ -154,6 +165,8 @@
 		0F73506E200CBEE100EEFDD7 /* Scenes */ = {
 			isa = PBXGroup;
 			children = (
+				C77D8C71229EE42000575245 /* Achievements */,
+				C7BCCA96228D8D9C001C14B5 /* Leaderboard */,
 				C745F088226740AA008E2D2A /* Settings */,
 				C7BCCA89227F8F83001C14B5 /* Game Scene */,
 				C745F08722674098008E2D2A /* Main Menu */,
@@ -181,6 +194,7 @@
 		4184BDFA07D24570576DC0D7 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				C72E286B2295705E00486719 /* StoreKit.framework */,
 				C7E7B5B32217135E00BBE894 /* GameKit.framework */,
 				FFAE01823C307487EE0B93EF /* Pods_SuperShuriken.framework */,
 			);
@@ -271,6 +285,16 @@
 			path = Views;
 			sourceTree = "<group>";
 		};
+		C77D8C71229EE42000575245 /* Achievements */ = {
+			isa = PBXGroup;
+			children = (
+				C77D8C72229EE43500575245 /* AchievementsViewController.swift */,
+				C77D8C74229EE46E00575245 /* AchievementCell.swift */,
+				C77D8C76229EE9DE00575245 /* Achievement.swift */,
+			);
+			path = Achievements;
+			sourceTree = "<group>";
+		};
 		C7884A2D207291D1005D01AB /* Animations */ = {
 			isa = PBXGroup;
 			children = (
@@ -309,7 +333,6 @@
 				C796D21F1F7AACAC00F770CF /* AppDelegate.swift */,
 				C7611C6D227085650089B3F5 /* Views */,
 				0F73506E200CBEE100EEFDD7 /* Scenes */,
-				C7BCCA96228D8D9C001C14B5 /* Leaderboard */,
 				C72F6C1E20791F1B004E9D19 /* CustomNodes */,
 				C7DCF51D204D5F3E00CB1903 /* Managers */,
 				0F73506F200CBF2700EEFDD7 /* Models */,
@@ -373,6 +396,7 @@
 				C7C348E3217B34D40099A7C0 /* MonsterManager.swift */,
 				C7ECD832224FE52C00031B01 /* AnimationManager.swift */,
 				C7BCCA94228C3141001C14B5 /* GameCenterManager.swift */,
+				C72E286D2296C91F00486719 /* StoreManager.swift */,
 			);
 			path = Managers;
 			sourceTree = "<group>";
@@ -446,6 +470,9 @@
 						ProvisioningStyle = Automatic;
 						SystemCapabilities = {
 							com.apple.GameCenter.iOS = {
+								enabled = 1;
+							};
+							com.apple.InAppPurchase = {
 								enabled = 1;
 							};
 						};
@@ -566,6 +593,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C77D8C73229EE43500575245 /* AchievementsViewController.swift in Sources */,
 				C72035D221283D07000D7C89 /* Consants.swift in Sources */,
 				C7BCCA9A228ED63B001C14B5 /* LeaderboardCell.swift in Sources */,
 				C7611C6F227085770089B3F5 /* MenuButton.swift in Sources */,
@@ -577,6 +605,7 @@
 				C7BCCA98228D8DBA001C14B5 /* LeaderboardViewController.swift in Sources */,
 				C7BAEC782210B838003EE6C8 /* StaminaBar.swift in Sources */,
 				C796D2261F7AACAC00F770CF /* GameScene.swift in Sources */,
+				C72E286E2296C91F00486719 /* StoreManager.swift in Sources */,
 				C75A375A21737A5700293FFF /* BossNode.swift in Sources */,
 				C7A4DF381FE6BD6C007DA58E /* ButtonNode.swift in Sources */,
 				C7BCCA8B227F8F9C001C14B5 /* GameScene+Collisions.swift in Sources */,
@@ -593,6 +622,7 @@
 				C7611C712271D2690089B3F5 /* SettingsViewController.swift in Sources */,
 				C7611C75227533CE0089B3F5 /* EndGameMenu.swift in Sources */,
 				C7C348E4217B34D40099A7C0 /* MonsterManager.swift in Sources */,
+				C77D8C77229EE9DE00575245 /* Achievement.swift in Sources */,
 				0F735071200CBF5200EEFDD7 /* PlayerNode.swift in Sources */,
 				C788A11F2250009A009CCA08 /* PlayBackground.swift in Sources */,
 				C7611C732271D3900089B3F5 /* ToggleView.swift in Sources */,
@@ -601,6 +631,7 @@
 				C7BCCA93228AE1D9001C14B5 /* TutorialView.swift in Sources */,
 				0F735075200CF24100EEFDD7 /* Global.swift in Sources */,
 				C796D2201F7AACAC00F770CF /* AppDelegate.swift in Sources */,
+				C77D8C75229EE46E00575245 /* AchievementCell.swift in Sources */,
 				C7ECD831224FCCD700031B01 /* MonsterModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

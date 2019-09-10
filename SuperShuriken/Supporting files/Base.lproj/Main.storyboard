@@ -9,6 +9,24 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
+        <!--Achievements View Controlelr-->
+        <scene sceneID="dOw-zg-GMd">
+            <objects>
+                <viewController id="ycp-SP-Rxz" customClass="AchievementsViewControlelr" customModule="SuperShuriken" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="xsq-EB-X14"/>
+                        <viewControllerLayoutGuide type="bottom" id="tml-1P-Ram"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="jO1-to-aM5">
+                        <rect key="frame" x="0.0" y="0.0" width="896" height="414"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="hvu-H8-uhF" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-683" y="-879"/>
+        </scene>
         <!--Main Menu View Controller-->
         <scene sceneID="hPk-8k-sme">
             <objects>
@@ -26,6 +44,7 @@
                         <segue destination="BV1-FR-VrT" kind="show" identifier="play" id="gdc-9T-H5H"/>
                         <segue destination="lPh-hN-9z4" kind="show" identifier="settings" id="eyk-67-QZ1"/>
                         <segue destination="XJd-fA-Mnf" kind="show" identifier="leaderboard" id="Q2g-Rd-RvU"/>
+                        <segue destination="ycp-SP-Rxz" kind="show" identifier="achievements" id="lTe-kt-o0e"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="xiS-vK-y9z" userLabel="First Responder" sceneMemberID="firstResponder"/>

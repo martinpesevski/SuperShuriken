@@ -75,6 +75,20 @@ class SettingsViewController: UIViewController, ToggleViewDelegate, UICollection
         view.addSubview(container)
         view.addSubview(shurikenCollectionView)
         
+        StoreManager.shared.fetchAvailableProducts()
+        
+        StoreManager.shared.purchaseStatusBlock = {[weak self] (type) in
+            guard let self = self else{ return }
+            if type == .purchased {
+                let alertView = UIAlertController(title: "", message: type.message(), preferredStyle: .alert)
+                let action = UIAlertAction(title: "OK", style: .default, handler: { (alert) in
+                    
+                })
+                alertView.addAction(action)
+                self.present(alertView, animated: true, completion: nil)
+            }
+        }
+        
         backgroundImageView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }
@@ -97,7 +111,8 @@ class SettingsViewController: UIViewController, ToggleViewDelegate, UICollection
     func onToggle(sender: ToggleView, selected: Bool) {
         switch sender {
         case adsToggle:
-            selected ? AdsManager.shared.showAds() : AdsManager.shared.removeAds()
+            
+            selected ? StoreManager.shared.purchase(index: 0) : StoreManager.shared.restorePurchase()
         case soundToggle:
             Global.sharedInstance.isSoundOn = selected
         default:

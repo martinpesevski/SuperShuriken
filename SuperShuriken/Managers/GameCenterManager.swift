@@ -69,4 +69,34 @@ class GameCenterManager: NSObject, GKGameCenterControllerDelegate {
             completion(scores, error)
         }
     }
+    
+    func getAchievements(completion: @escaping ([Achievement]?, Error?) -> ()) {
+        
+        GKAchievementDescription.loadAchievementDescriptions(completionHandler: { (descriptions, error) in
+            guard let descriptions = descriptions else {
+                completion(nil, nil)
+                return
+            }
+            
+            var array = [Achievement]()
+            for index in 0 ..< descriptions.count {
+                array.append(Achievement(achievement: nil, details: descriptions[index]))
+            }
+            
+            GKAchievement.loadAchievements { achievements, error in
+                guard let achievements = achievements else {
+                    completion(nil, nil)
+                    return
+                }
+                
+                for i in 0..<achievements.count {
+                    for j in 0 ..< array.count {
+                        if array[j].details?.identifier == achievements[i].identifier { array[j].achievement = achievements[i] }
+                    }
+                }
+                
+                completion(array, error)
+            }
+        })
+    }
 }
