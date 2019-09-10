@@ -23,7 +23,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         GADMobileAds.configure(withApplicationID: "ca-app-pub-3254751950638386~5582425980")
         _ = MonsterManager.shared
         _ = AdsManager.shared
-        
+        StoreManager.shared.fetchAvailableProducts()
+
         return true
     }
 

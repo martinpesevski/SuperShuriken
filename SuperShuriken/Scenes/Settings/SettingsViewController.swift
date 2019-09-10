@@ -13,6 +13,7 @@ import GoogleMobileAds
 class SettingsViewController: UIViewController, ToggleViewDelegate, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, adMobRewardedVideoDelegate {
     
     var selectedShuriken = Global.sharedInstance.selectedPlayerShuriken
+    let storeManager = StoreManager.shared
     
     let backgroundImageView: UIImageView = {
         let image = UIImageView(image: UIImage(named: "splashScreen"))
@@ -45,12 +46,14 @@ class SettingsViewController: UIViewController, ToggleViewDelegate, UICollection
         return button
     }()
     
-    lazy var adsToggle: ToggleView = {
-        let togView = ToggleView(title: "Ads enabled")
-        togView.toggle.isOn = Global.sharedInstance.adsEnabled
-        togView.delegate = self
-        
-        return togView
+    lazy var disableAdsButton: MenuButton = {
+        let button = MenuButton()
+        let purchased = storeManager.isPurchased(.disableAds)
+        button.setTitle("Disable ads", for: .normal)
+        button.setTitleColor(purchased ? .gray : .white, for: .normal)
+        button.isUserInteractionEnabled = !purchased
+        button.addTarget(self, action: #selector(onDisableAds), for: .touchUpInside)
+        return button
     }()
     
     lazy var soundToggle: ToggleView = {
@@ -62,7 +65,7 @@ class SettingsViewController: UIViewController, ToggleViewDelegate, UICollection
     }()
     
     lazy var container: UIStackView = {
-       let stack = UIStackView(arrangedSubviews: [menuButton, adsToggle, soundToggle])
+       let stack = UIStackView(arrangedSubviews: [menuButton, disableAdsButton, soundToggle])
         stack.spacing = 20
         stack.axis = .vertical
         
@@ -75,18 +78,10 @@ class SettingsViewController: UIViewController, ToggleViewDelegate, UICollection
         view.addSubview(container)
         view.addSubview(shurikenCollectionView)
         
-        StoreManager.shared.fetchAvailableProducts()
-        
-        StoreManager.shared.purchaseStatusBlock = {[weak self] (type) in
-            guard let self = self else{ return }
-            if type == .purchased {
-                let alertView = UIAlertController(title: "", message: type.message(), preferredStyle: .alert)
-                let action = UIAlertAction(title: "OK", style: .default, handler: { (alert) in
-                    
-                })
-                alertView.addAction(action)
-                self.present(alertView, animated: true, completion: nil)
-            }
+        storeManager.purchaseStatusBlock = { [weak self] type in
+            guard let self = self else { return }
+            
+            self.disableAdsButton.setLoading(false)
         }
         
         backgroundImageView.snp.makeConstraints { make in
@@ -110,9 +105,6 @@ class SettingsViewController: UIViewController, ToggleViewDelegate, UICollection
     
     func onToggle(sender: ToggleView, selected: Bool) {
         switch sender {
-        case adsToggle:
-            
-            selected ? StoreManager.shared.purchase(index: 0) : StoreManager.shared.restorePurchase()
         case soundToggle:
             Global.sharedInstance.isSoundOn = selected
         default:
@@ -122,6 +114,11 @@ class SettingsViewController: UIViewController, ToggleViewDelegate, UICollection
     
     @objc func onMenu(){
         dismiss(animated: true)
+    }
+    
+    @objc func onDisableAds() {
+        storeManager.purchase(index: 0)
+        disableAdsButton.setLoading(true)
     }
     
     //MARK: - collectionView
@@ -142,7 +139,6 @@ class SettingsViewController: UIViewController, ToggleViewDelegate, UICollection
         guard let shuriken = Shuriken(rawValue: indexPath.item) else {
             return
         }
-
 
         if !shuriken.isUnlocked {
             selectedShuriken = shuriken

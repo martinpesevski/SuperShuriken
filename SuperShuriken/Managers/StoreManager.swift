@@ -9,23 +9,26 @@
 import Foundation
 import StoreKit
 
-enum IAPHandlerAlertType{
+enum AvailableProducts: String {
+    case disableAds = "com.mpesevski.superShuriken.disableads"
+}
+
+enum IAPHandlerAlertType {
     case disabled
-    case restored
     case purchased
+    case canceled
     
-    func message() -> String{
+    func message() -> String {
         switch self {
         case .disabled: return "Purchases are disabled in your device!"
-        case .restored: return "You've successfully restored your purchase!"
         case .purchased: return "You've successfully purchased this item!"
+        case .canceled: return "Purchase cancelled!"
         }
     }
 }
 
 class StoreManager: NSObject, SKProductsRequestDelegate, SKPaymentTransactionObserver {
     static let shared = StoreManager()
-    private static let disableAdsIdentifier = "com.mpesevski.superShuriken.disableads"
     
     private var productID = ""
     private var products = [SKProduct]()
@@ -52,17 +55,20 @@ class StoreManager: NSObject, SKProductsRequestDelegate, SKPaymentTransactionObs
         productID = product.productIdentifier
     }
     
-    func restorePurchase() {
-        SKPaymentQueue.default().add(self)
-        SKPaymentQueue.default().restoreCompletedTransactions()
-    }
-    
     func fetchAvailableProducts() {
-        let productIDS: Set<String> = [StoreManager.disableAdsIdentifier]
+        let productIDS: Set<String> = [AvailableProducts.disableAds.rawValue]
         
         productRequest = SKProductsRequest(productIdentifiers: productIDS)
         productRequest.delegate = self
         productRequest.start()
+    }
+    
+    func isPurchased(_ product: AvailableProducts) -> Bool {
+        var purchased = false
+        for prod in products where prod.productIdentifier == product.rawValue {
+            purchased = true
+        }
+        return purchased
     }
     
     //MARK: - delegate
@@ -78,25 +84,14 @@ class StoreManager: NSObject, SKProductsRequestDelegate, SKPaymentTransactionObs
         for product in products {
             numberFormatter.locale = product.priceLocale
             let price1Str = numberFormatter.string(from: product.price) ?? ""
-            print(product.localizedDescription + "\nfor just \(price1Str)")
+            print(product.localizedDescription + " for just \(price1Str)")
         }
-    }
-    
-    func paymentQueueRestoreCompletedTransactionsFinished(_ queue: SKPaymentQueue) {
-        purchaseStatusBlock?(.restored)
     }
     
     func paymentQueue(_ queue: SKPaymentQueue, updatedTransactions transactions: [SKPaymentTransaction]) {
         for transaction in transactions {
             switch transaction.transactionState {
-            case .purchased:
-                print("purchased")
-                SKPaymentQueue.default().finishTransaction(transaction)
-                purchaseStatusBlock?(.purchased)
-            case .failed:
-                print("failed")
-                SKPaymentQueue.default().finishTransaction(transaction)
-            case .restored:
+            case .purchased, .failed:
                 SKPaymentQueue.default().finishTransaction(transaction)
             default:
                 break
@@ -104,4 +99,14 @@ class StoreManager: NSObject, SKProductsRequestDelegate, SKPaymentTransactionObs
         }
     }
     
+    func paymentQueue(_ queue: SKPaymentQueue, removedTransactions transactions: [SKPaymentTransaction]) {
+        for transaction in transactions {
+            switch transaction.transactionState {
+            case .purchased:
+                purchaseStatusBlock?(.purchased)
+            default:
+                purchaseStatusBlock?(.canceled)
+            }
+        }
+    }
 }
