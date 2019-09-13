@@ -9,6 +9,21 @@
 import UIKit
 import GameKit
 
+class AchievementLabel: UILabel {
+    init(fontSize: CGFloat = 25, alignment: NSTextAlignment = .left) {
+        super.init(frame: .zero)
+        textColor = .white
+        font = UIFont.boldSystemFont(ofSize: fontSize)
+        textAlignment = alignment
+        numberOfLines = 0
+        lineBreakMode = .byWordWrapping
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+}
+
 class AchievementCell: UITableViewCell {
     var achievement: Achievement? {
         willSet {
@@ -18,35 +33,21 @@ class AchievementCell: UITableViewCell {
             descriptionLabel.text = newValue.achievement?.isCompleted ?? false ? newValue.details?.achievedDescription : newValue.details?.unachievedDescription
             achievementImage.image = UIImage(named: "ic_shuriken3")
             
-            guard let completed = newValue.achievement?.isCompleted else {
-                checkmarkImage.isHidden = true
+            if newValue.achievement?.isCompleted == true {
+                checkmarkImage.isHidden = false
+                progressLabel.isHidden = true
                 return
+            } else {
+                checkmarkImage.isHidden = true
+                progressLabel.isHidden = false
+                progressLabel.text = newValue.achievement?.progressString
             }
-            checkmarkImage.isHidden = !completed
         }
     }
     
-    lazy var titleLabel: UILabel = {
-        let label = UILabel()
-        label.textColor = .white
-        label.font = UIFont.boldSystemFont(ofSize: 25)
-        label.textAlignment = .left
-        label.numberOfLines = 0
-        label.lineBreakMode = .byWordWrapping
-        
-        return label
-    }()
-    
-    lazy var descriptionLabel: UILabel = {
-        let label = UILabel()
-        label.textColor = .white
-        label.font = UIFont.systemFont(ofSize: 15)
-        label.textAlignment = .left
-        label.numberOfLines = 0
-        label.lineBreakMode = .byWordWrapping
-        
-        return label
-    }()
+    lazy var titleLabel = AchievementLabel()
+    lazy var descriptionLabel = AchievementLabel(fontSize: 15)
+    lazy var progressLabel = AchievementLabel(fontSize: 15, alignment: .right)
     
     lazy var achievementImage: UIImageView = {
         let image = UIImageView()
@@ -73,7 +74,7 @@ class AchievementCell: UITableViewCell {
     }()
     
     lazy var horizontalStack: UIStackView = {
-        let stack = UIStackView(arrangedSubviews: [achievementImage, verticalStack, checkmarkImage])
+        let stack = UIStackView(arrangedSubviews: [achievementImage, verticalStack, checkmarkImage, progressLabel])
         stack.axis = .horizontal
         stack.distribution = .fill
         stack.alignment = .center

@@ -81,7 +81,7 @@ class MonsterNode: SKSpriteNode {
         hitPoints -= 1
         
         if hitPoints == 0 {
-            app.achievementManager.didKillMonster(type: type)
+            type == .boss ? app.achievementManager.didKillBoss() : app.achievementManager.didKillMonster(type: type)
             return true
         }
         return false

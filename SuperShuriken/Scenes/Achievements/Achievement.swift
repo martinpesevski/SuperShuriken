@@ -26,4 +26,14 @@ extension GKAchievement {
         percentComplete = percent
         showsCompletionBanner = true
     }
+    
+    var progressString: String {
+        guard let identifier = identifier, let type = AchievementType(rawValue: identifier) else { return "" }
+        switch type {
+        case .ninjaNovice:
+            return "\(Int(percentComplete / 2))/50"
+        default:
+            return "\(100 - (100 - percentComplete))/1"
+        }
+    }
 }
