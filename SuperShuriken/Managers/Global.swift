@@ -14,7 +14,7 @@ let basicMobSpeed : CGFloat = 500
 let bigMobSpeed : CGFloat = 400
 
 class Global: NSObject {
-    static let sharedInstance = Global()
+    static let shared = Global()
     override init() {
         super.init()
 //        if isFirstRun {

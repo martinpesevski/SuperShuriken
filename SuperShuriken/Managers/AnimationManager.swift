@@ -10,7 +10,7 @@ import Foundation
 import SpriteKit
 
 class AnimationManager: NSObject {
-    static let sharedInstance = AnimationManager()
+    static let shared = AnimationManager()
 
     var barbarianRunningFrames : [SKTexture] = []
     var barbarianDyingFrames : [SKTexture] = []

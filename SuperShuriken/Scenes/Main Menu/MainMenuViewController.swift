@@ -83,16 +83,16 @@ class MainMenuViewController: UIViewController {
     }
     
     @objc func onLeaderboard() {
-        guard GameCenterManager.shared.isAuthenticated() else {
-            GameCenterManager.shared.showAuthenticationDialog()
+        guard app.gameCenterManager.isAuthenticated() else {
+            app.gameCenterManager.showAuthenticationDialog()
             return
         }
         performSegue(withIdentifier: "leaderboard", sender: nil)
     }
     
     @objc func onAchievements() {
-        guard GameCenterManager.shared.isAuthenticated() else {
-            GameCenterManager.shared.showAuthenticationDialog()
+        guard app.gameCenterManager.isAuthenticated() else {
+            app.gameCenterManager.showAuthenticationDialog()
             return
         }
         performSegue(withIdentifier: "achievements", sender: nil)

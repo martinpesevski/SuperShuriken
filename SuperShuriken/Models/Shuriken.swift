@@ -8,14 +8,13 @@
 
 import UIKit
 
-enum Shuriken: Int, Codable {
+enum Shuriken: Int, Codable, Application {
     case basic
     case straight
     case red
     
-    static var count: Int {
-        return 3
-    }
+    static var count: Int { return 3 }
+    var app: App { return App.shared }
     
     var image: UIImage {
         switch self {
@@ -48,23 +47,23 @@ enum Shuriken: Int, Codable {
     
     var isSelected: Bool {
         get {
-            return Global.sharedInstance.selectedPlayerShuriken == self
+            return app.global.selectedPlayerShuriken == self
         }
         
         set {
-            if newValue { Global.sharedInstance.selectedPlayerShuriken = self }
+            if newValue { app.global.selectedPlayerShuriken = self }
         }
     }
     
     var isUnlocked: Bool {
         get {
-            return !Global.sharedInstance.lockedShurikenAssets.contains(self)
+            return !app.global.lockedShurikenAssets.contains(self)
         }
     }
     
     func unlock() {
-        var shurikens = Global.sharedInstance.lockedShurikenAssets
+        var shurikens = app.global.lockedShurikenAssets
         shurikens = shurikens.filter{$0 != self}
-        Global.sharedInstance.lockedShurikenAssets = shurikens
+        app.global.lockedShurikenAssets = shurikens
     }
 }

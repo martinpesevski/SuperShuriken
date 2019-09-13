@@ -33,7 +33,6 @@ class PlayerNode: SKSpriteNode, GKAgentDelegate {
     private var deathAction = SKAction()
     private var idleAction = SKAction()
     private var runSlashAction = SKAction()
-    private var animationManager = AnimationManager.sharedInstance
 
     private var isJumping = false;
     private var isDragging = false;
@@ -98,20 +97,20 @@ class PlayerNode: SKSpriteNode, GKAgentDelegate {
     
     func setupActions() {
         walkAction = SKAction.repeatForever(
-            SKAction.animate(with: animationManager.playerWalkingFrames,
+            SKAction.animate(with: app.animationManager.playerWalkingFrames,
                              timePerFrame: 0.03,
                              resize: false,
                              restore: true))
         
-        shootAction = SKAction.animate(with: animationManager.playerShootingFrames, timePerFrame: 0.03, resize: false, restore: true)
+        shootAction = SKAction.animate(with: app.animationManager.playerShootingFrames, timePerFrame: 0.03, resize: false, restore: true)
         
-        runShootAction = SKAction.animate(with: animationManager.playerRunShootFrames, timePerFrame: 0.03, resize: false, restore: true)
+        runShootAction = SKAction.animate(with: app.animationManager.playerRunShootFrames, timePerFrame: 0.03, resize: false, restore: true)
         
-        deathAction = SKAction.animate(with: animationManager.playerDeathFrames, timePerFrame: 0.05, resize: false, restore: false)
+        deathAction = SKAction.animate(with: app.animationManager.playerDeathFrames, timePerFrame: 0.05, resize: false, restore: false)
         
-        idleAction = SKAction.repeatForever(SKAction.animate(with: animationManager.playerIdleFrames, timePerFrame: 0.05, resize: false, restore: false))
+        idleAction = SKAction.repeatForever(SKAction.animate(with: app.animationManager.playerIdleFrames, timePerFrame: 0.05, resize: false, restore: false))
         
-        runSlashAction = SKAction.animate(with: animationManager.playerRunSlashFrames, timePerFrame: 0.05, resize: false, restore: false)
+        runSlashAction = SKAction.animate(with: app.animationManager.playerRunSlashFrames, timePerFrame: 0.05, resize: false, restore: false)
     }
     
     //MARK: - touches
@@ -130,7 +129,7 @@ class PlayerNode: SKSpriteNode, GKAgentDelegate {
     
     
     func handleTouchMoved(location: CGPoint) {
-        if GameManager.sharedInstance.isGameFinished {
+        if app.gameManager.isGameFinished {
             self.stopAllAnimationsExcept(animationType: .Death)
             return;
         }
@@ -146,7 +145,7 @@ class PlayerNode: SKSpriteNode, GKAgentDelegate {
     func handleTouchEnded(location: CGPoint) {
         isDragging = false
 
-        if GameManager.sharedInstance.isGameFinished {
+        if app.gameManager.isGameFinished {
             stopAllAnimationsExcept(animationType: .Death)
             return;
         }

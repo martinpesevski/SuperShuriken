@@ -16,7 +16,7 @@ protocol EndGameDelegate: class {
 
 class EndGameMenu: UIView {
     weak var delegate: EndGameDelegate?
-
+    
     lazy var titleLabel: UILabel = {
         let label = UILabel()
         label.text = "Game Over"
@@ -90,7 +90,7 @@ class EndGameMenu: UIView {
     
     func show() {
         fadeIn()
-        messageLabel.text = "Your total score is: \(GameManager.sharedInstance.score)"
+        messageLabel.text = "Your total score is: \(app.gameManager.score)"
     }
     
     @objc func onMenuTap() {

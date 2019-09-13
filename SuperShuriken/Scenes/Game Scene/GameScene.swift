@@ -21,8 +21,6 @@ class GameScene: SKScene, adMobInterstitialDelegate, GameManagerDelegate, Monste
     
     private var background = PlayBackground()
     
-    var gameManager = GameManager.sharedInstance
-    var monsterManager = MonsterManager.shared
     var playerProjectilesArray = [ProjectileNode]()
     var enemyProjectilesArray = [ProjectileNode]()
 
@@ -47,7 +45,7 @@ class GameScene: SKScene, adMobInterstitialDelegate, GameManagerDelegate, Monste
             return
         }
         
-        gameManager.delegate = self
+        app.gameManager.delegate = self
         
         physicsWorld.gravity = CGVector.zero
         physicsWorld.contactDelegate = self
@@ -56,15 +54,14 @@ class GameScene: SKScene, adMobInterstitialDelegate, GameManagerDelegate, Monste
         player.setupWithNode(node: spawnPoint)
         player.setup()
         
-        monsterManager.monsterGoal.setupWithNode(node: monsterGoalPlaceholder)
-        monsterManager.monsterGoal.setup()
-        
-        monsterManager.monsterSpawner.setupWithNode(node: enemySpawner)
+        app.monsterManager.monsterGoal.setupWithNode(node: monsterGoalPlaceholder)
+        app.monsterManager.monsterGoal.setup()
+        app.monsterManager.monsterSpawner.setupWithNode(node: enemySpawner)
                 
         addChild(background)
         addChild(player)
-        addChild(monsterManager.monsterGoal.copy() as! SKNode)
-        addChild(monsterManager.monsterSpawner.copy() as! SKNode)
+        addChild(app.monsterManager.monsterGoal.copy() as! SKNode)
+        addChild(app.monsterManager.monsterSpawner.copy() as! SKNode)
         
         view.addSubview(overlay)
         overlay.snp.makeConstraints { make in
@@ -76,7 +73,7 @@ class GameScene: SKScene, adMobInterstitialDelegate, GameManagerDelegate, Monste
             make.center.equalToSuperview()
         }
                 
-        if Global.sharedInstance.isSoundOn {
+        if app.global.isSoundOn {
             let backgroundMusic = SKAudioNode.init(fileNamed: "background-music-aac.caf")
             backgroundMusic.autoplayLooped = true
             addChild(backgroundMusic)
@@ -85,19 +82,19 @@ class GameScene: SKScene, adMobInterstitialDelegate, GameManagerDelegate, Monste
         NotificationCenter.default.addObserver(self, selector: #selector(startNextlevel), name: .newLevelStarted, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(levelFinished), name: .levelFinished, object: nil)
 
-        AdsManager.shared.interstitialDelegate = self
+        app.adsManager.interstitialDelegate = self
     }
     
     @objc func startNextlevel(){
-        guard !gameManager.isGameFinished else { return }
+        guard !app.gameManager.isGameFinished else { return }
 
         overlay.nextLevelLabel.fadeOut()
-        gameManager.isBossLevel ? background.stopScrolling() : background.startScrolling()
-        run(SKAction.repeat(SKAction.sequence([SKAction.run(addMonster), SKAction.wait(forDuration: TimeInterval(1.0))]), count: gameManager.numberOfMonstersForCurrentLevel()), withKey:"spawnAction")
+        app.gameManager.isBossLevel ? background.stopScrolling() : background.startScrolling()
+        run(SKAction.repeat(SKAction.sequence([SKAction.run(addMonster), SKAction.wait(forDuration: TimeInterval(1.0))]), count: app.gameManager.numberOfMonstersForCurrentLevel()), withKey:"spawnAction")
     }
     
     func addMonster() {
-        monsterManager.addMonsterToScene(scene: self)
+        app.monsterManager.addMonsterToScene(scene: self)
     }
     
     func shootProjectile(location: CGPoint) {
@@ -105,7 +102,7 @@ class GameScene: SKScene, adMobInterstitialDelegate, GameManagerDelegate, Monste
         
         let projectile = ProjectileNode()
         projectile.position = player.position
-        projectile.setup(type: .friendly, shuriken: Global.sharedInstance.selectedPlayerShuriken)
+        projectile.setup(type: .friendly, shuriken: app.global.selectedPlayerShuriken)
         
         let offset = location - projectile.position
         
@@ -121,7 +118,7 @@ class GameScene: SKScene, adMobInterstitialDelegate, GameManagerDelegate, Monste
     }
     
     func updateScoreLabel() {
-        overlay.scoreLabel.text = "Score: \(gameManager.score)"
+        overlay.scoreLabel.text = "Score: \(app.gameManager.score)"
     }
     
     @objc func levelFinished() {
@@ -129,7 +126,7 @@ class GameScene: SKScene, adMobInterstitialDelegate, GameManagerDelegate, Monste
     }
     
     func endGame() {
-        guard !gameManager.isGameFinished else {return}
+        guard !app.gameManager.isGameFinished else {return}
         
         background.stopScrolling()
         scene?.view?.isPaused = true
@@ -137,9 +134,9 @@ class GameScene: SKScene, adMobInterstitialDelegate, GameManagerDelegate, Monste
         removeAction(forKey: "startNextLevel")
         removeAction(forKey: "spawnAction")
         
-        gameManager.endGame()
-        if Global.sharedInstance.adsEnabled {
-            AdsManager.shared.showInterstitial()
+        app.gameManager.endGame()
+        if app.global.adsEnabled {
+            app.adsManager.showInterstitial()
         } else {
             showGameOverScreen()
         }
@@ -154,8 +151,9 @@ class GameScene: SKScene, adMobInterstitialDelegate, GameManagerDelegate, Monste
     }
     
     func restart() {
-        overlay.countDownView.startCounting { [unowned self] in
-            self.gameManager.restart()
+        overlay.countDownView.startCounting { [weak self] in
+            guard let self = self else { return }
+            self.app.gameManager.restart()
             self.removeAction(forKey: "startNextLevel")
             self.player.stopAnimation(type: .Death)
             self.updateScoreLabel()
@@ -170,10 +168,10 @@ class GameScene: SKScene, adMobInterstitialDelegate, GameManagerDelegate, Monste
     func showGameOverScreen() {
         scene?.view?.isPaused = false
         
-        for monster in monsterManager.monstersArray {
+        for monster in app.monsterManager.monstersArray {
             monster.removeFromParent()
         }
-        monsterManager.monstersArray.removeAll()
+        app.monsterManager.monstersArray.removeAll()
         
         for projectile in playerProjectilesArray {
             projectile.removeFromParent()

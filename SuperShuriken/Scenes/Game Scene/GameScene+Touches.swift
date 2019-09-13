@@ -10,9 +10,7 @@ import UIKit
 extension GameScene {
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        if gameManager.isGameFinished {
-            return
-        }
+        if app.gameManager.isGameFinished { return }
         
         for touch in touches {
             let touchName = getTouchName(touch: touch)
@@ -23,9 +21,7 @@ extension GameScene {
     
     override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
         for touch in touches {
-            guard let touchName = activeTouches[touch] else {
-                return
-            }
+            guard let touchName = activeTouches[touch] else { return }
             
             tapMovedOn(touchName: touchName, location: touch.location(in: self))
         }

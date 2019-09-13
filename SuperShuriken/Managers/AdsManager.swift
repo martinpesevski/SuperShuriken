@@ -17,7 +17,9 @@ protocol adMobRewardedVideoDelegate {
     func didEarnReward(_ reward: GADAdReward)
 }
 
-class AdsManager: NSObject, GADBannerViewDelegate, GADInterstitialDelegate, GADRewardedAdDelegate {
+class AdsManager: NSObject, Application, GADBannerViewDelegate, GADInterstitialDelegate, GADRewardedAdDelegate {
+    var app: App { return App.shared }
+    
     static let shared = AdsManager()
 
     var rootViewController: UIViewController {
@@ -50,7 +52,7 @@ class AdsManager: NSObject, GADBannerViewDelegate, GADInterstitialDelegate, GADR
     var interstitialDelegate : adMobInterstitialDelegate?
     
     func showInterstitial() {
-        guard Global.sharedInstance.adsEnabled, interstitialView.isReady else {
+        guard app.global.adsEnabled, interstitialView.isReady else {
             interstitialDelegate?.didHideInterstitial()
             return
         }
@@ -80,11 +82,11 @@ class AdsManager: NSObject, GADBannerViewDelegate, GADInterstitialDelegate, GADR
     }
     
     func removeAds() {
-        Global.sharedInstance.adsEnabled = false
+        app.global.adsEnabled = false
     }
     
     func showAds() {
-        Global.sharedInstance.adsEnabled = true
+        app.global.adsEnabled = true
     }
     
     private override init() {

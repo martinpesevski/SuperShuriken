@@ -42,6 +42,15 @@ class AchievementsViewControlelr: UIViewController, UITableViewDataSource, UITab
         return button
     }()
     
+    lazy var resetAchievementsButton: UIButton = {
+        let button = UIButton()
+        button.setTitle("Reset", for: .normal)
+        button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 20)
+        button.setTitleColor(.white, for: .normal)
+        button.addTarget(self, action: #selector(onReset), for: .touchUpInside)
+        return button
+    }()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.addSubview(backgroundImageView)
@@ -63,11 +72,20 @@ class AchievementsViewControlelr: UIViewController, UITableViewDataSource, UITab
             make.height.equalTo(50)
         }
         
+        #if DEBUG
+        self.view.addSubview(resetAchievementsButton)
+        resetAchievementsButton.snp.makeConstraints { make in
+            make.right.top.equalToSuperview().inset(20)
+            make.width.equalTo(100)
+            make.height.equalTo(50)
+        }
+        #endif
+        
         loadScores()
     }
     
     func loadScores(){
-        GameCenterManager.shared.getAchievements { [weak self] achievements, error in
+        app.achievementManager.getAchievements { [weak self] achievements, error in
             guard let self = self, let achievements = achievements, error == nil else { return }
             
             self.achievementsArray = achievements
@@ -77,6 +95,10 @@ class AchievementsViewControlelr: UIViewController, UITableViewDataSource, UITab
     
     @objc func onMenu() {
         dismiss(animated: true, completion: nil)
+    }
+    
+    @objc func onReset() {
+        AchievementManager.shared.resetAchievements()
     }
     
     //MARK: - tableview

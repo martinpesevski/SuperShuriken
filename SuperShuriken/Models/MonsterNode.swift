@@ -19,8 +19,6 @@ class MonsterNode: SKSpriteNode {
     var type: MonsterType!
     private var hitPoints: Int = 1
     var monsterDelegate: MonsterDelegate?
-    internal let monsterManager = MonsterManager.shared
-    internal let animationManager = AnimationManager.sharedInstance
     private var bloodSplatterNode: SKSpriteNode!
     private var runAction = SKAction()
     private var runTextureAction = SKAction()
@@ -55,20 +53,20 @@ class MonsterNode: SKSpriteNode {
     func setupActions() {
         let destroyAction = SKAction.removeFromParent()
         let fadeOutAction = SKAction.fadeOut(withDuration: 0.3)
-        let deathAnimation = SKAction.animate(with: monsterManager.getDeathAnimationTextures(monsterType: type), timePerFrame: 0.04)
+        let deathAnimation = SKAction.animate(with: app.monsterManager.getDeathAnimationTextures(monsterType: type), timePerFrame: 0.04)
         
         deathAction = SKAction.sequence([deathAnimation, fadeOutAction, destroyAction])
         
-        bloodSplatterAction = SKAction.animate(with: animationManager.bloodSplatterTextures, timePerFrame: 0.05, resize: false, restore: true)
+        bloodSplatterAction = SKAction.animate(with: app.animationManager.bloodSplatterTextures, timePerFrame: 0.05, resize: false, restore: true)
         
         hitAction = SKAction.move(by: CGVector(dx: 50, dy: 0), duration: 0.2)
         
-        runTextureAction = SKAction.repeatForever(SKAction.animate(with: monsterManager.getRunAnimationTextures(monsterType: type), timePerFrame: 0.04))
+        runTextureAction = SKAction.repeatForever(SKAction.animate(with: app.monsterManager.getRunAnimationTextures(monsterType: type), timePerFrame: 0.04))
     }
     
     func playRunAnimation() {
         let destination = CGPoint(x: -100, y: position.y)
-        runAction = SKAction.move(to: CGPoint(x: -100, y: startPoint.y), duration: getDuration(pointA: position, pointB: destination, speed: type.speed * GameManager.sharedInstance.speedUpFactor()))
+        runAction = SKAction.move(to: CGPoint(x: -100, y: startPoint.y), duration: getDuration(pointA: position, pointB: destination, speed: type.speed * app.gameManager.speedUpFactor()))
         
         run(runAction, withKey: "moveAction")
         playTextureRunAnimation ()
@@ -83,7 +81,7 @@ class MonsterNode: SKSpriteNode {
         hitPoints -= 1
         
         if hitPoints == 0 {
-            AchievementManager.shared.didKillMonster(type: type)
+            app.achievementManager.didKillMonster(type: type)
             return true
         }
         return false

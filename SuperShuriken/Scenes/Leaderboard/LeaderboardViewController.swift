@@ -69,9 +69,9 @@ class LeaderboardViewController: UIViewController, UITableViewDelegate, UITableV
     }
     
     func loadScores(){
-        self.scoresArray = GameCenterManager.shared.highScores
+        self.scoresArray = app.gameCenterManager.highScores
         self.tableView.reloadData()
-        GameCenterManager.shared.getHighScores { [weak self] scores, error in
+        app.gameCenterManager.getHighScores { [weak self] scores, error in
             guard let self = self, let scores = scores, error == nil else { return }
             
             self.scoresArray = scores

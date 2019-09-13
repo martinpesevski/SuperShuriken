@@ -15,17 +15,17 @@ extension GameScene: SKPhysicsContactDelegate {
         playerProjectilesArray = playerProjectilesArray.filter{$0 != projectile}
         
         if monster.hitAndCheckDead(attackType: .Projectile) {
-            monsterManager.monstersArray = monsterManager.monstersArray.filter{$0 != monster}
+            app.monsterManager.monstersArray = app.monsterManager.monstersArray.filter{$0 != monster}
             monster.playDeathAnimation()
             
-            if gameManager.isBossLevel {
+            if app.gameManager.isBossLevel {
                 for projectile in enemyProjectilesArray {
                     projectile.removeFromParent()
                 }
                 enemyProjectilesArray.removeAll()
             }
             
-            gameManager.updateScore(value: monster.type.scorePoints)
+            app.gameManager.updateScore(value: monster.type.scorePoints)
             updateScoreLabel()
         } else {
             monster.playHitAnimation()
@@ -53,18 +53,18 @@ extension GameScene: SKPhysicsContactDelegate {
     
     func monsterDidReachGoal(monster: MonsterNode, goal: MonsterGoalNode) {
         monster.removeFromParent()
-        monsterManager.monstersArray = monsterManager.monstersArray.filter{$0 != monster}
+        app.monsterManager.monstersArray = app.monsterManager.monstersArray.filter{$0 != monster}
         
         endGame()
     }
     
     func monsterDidCollideWithPlayer(monster: MonsterNode, player: PlayerNode) {
-        monsterManager.monstersArray = monsterManager.monstersArray.filter{$0 != monster}
+        app.monsterManager.monstersArray = app.monsterManager.monstersArray.filter{$0 != monster}
         monster.playDeathAnimation()
         
         if monster.hitAndCheckDead(attackType: .Melee) {
             player.handleSlash()
-            gameManager.updateScore(value: monster.type.scorePoints)
+            app.gameManager.updateScore(value: monster.type.scorePoints)
             updateScoreLabel()
         } else {
             player.handleGotHit()

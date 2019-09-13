@@ -74,7 +74,7 @@ class TutorialView: UIView {
             delegate?.didComplete()
             self.fadeOut()
             self.removeFromSuperview()
-            Global.sharedInstance.hasFinishedTutorial = true
+            app.global.hasFinishedTutorial = true
             return
         }
         

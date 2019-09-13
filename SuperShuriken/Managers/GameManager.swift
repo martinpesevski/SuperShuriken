@@ -23,8 +23,10 @@ extension Notification.Name {
     static let newLevelStarted = Notification.Name("NewLevelStartedNotification")
 }
 
-class GameManager: NSObject {
-    static let sharedInstance = GameManager()
+class GameManager: NSObject, Application {
+    var app: App { return App.shared }
+    
+    static let shared = GameManager()
     
     var delegate : GameManagerDelegate?
     var monstersForCurrentLevel = 0
@@ -63,7 +65,7 @@ class GameManager: NSObject {
     }
     
     func endGame() {
-        GameCenterManager.shared.submitScore(score)
+        app.gameCenterManager.submitScore(score)
         isGameFinished = true
         
         NotificationCenter.default.post(Notification(name: Notification.Name.gameOver))
