@@ -33,6 +33,7 @@ class StoreManager: NSObject, SKProductsRequestDelegate, SKPaymentTransactionObs
     private var productID = ""
     private var products = [SKProduct]()
     private var productRequest = SKProductsRequest()
+    private var productHandler: (() -> ())? = nil
     
     var purchaseStatusBlock: ((IAPHandlerAlertType) -> Void)?
     
@@ -55,7 +56,8 @@ class StoreManager: NSObject, SKProductsRequestDelegate, SKPaymentTransactionObs
         productID = product.productIdentifier
     }
     
-    func fetchAvailableProducts() {
+    func fetchAvailableProducts(completion: (() -> ())?) {
+        productHandler = completion
         let productIDS: Set<String> = [AvailableProducts.disableAds.rawValue]
         
         productRequest = SKProductsRequest(productIdentifiers: productIDS)
@@ -74,6 +76,7 @@ class StoreManager: NSObject, SKProductsRequestDelegate, SKPaymentTransactionObs
     //MARK: - delegate
     
     func productsRequest(_ request: SKProductsRequest, didReceive response: SKProductsResponse) {
+        productHandler?()
         guard response.products.count > 0 else { return }
         
         products = response.products

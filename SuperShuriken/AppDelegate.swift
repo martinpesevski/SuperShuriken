@@ -8,26 +8,12 @@
 //
 
 import UIKit
-import GoogleMobileAds
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
     let app = App.shared
-
-    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
-
-        // Initialize the Google Mobile Ads SDK.
-        // Sample AdMob app ID: ca-app-pub-3940256099942544~1458002511
-        GADMobileAds.configure(withApplicationID: "ca-app-pub-3254751950638386~5582425980")
-        app.gameCenterManager.authenticate(viewController: UIApplication.getTopViewController()) { [weak self] completed in
-            if !completed { self?.app.gameCenterManager.showAuthenticationDialog() }
-            else { self?.app.achievementManager.getAchievements(completion: nil) }
-        }
-        app.storeManager.fetchAvailableProducts()
-        return true
-    }
 
     func applicationDidEnterBackground(_ application: UIApplication) {
         app.global.isFirstRun = false

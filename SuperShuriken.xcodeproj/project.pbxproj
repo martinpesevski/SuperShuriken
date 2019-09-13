@@ -59,6 +59,7 @@
 		C7DCF521204D624100CB1903 /* GameManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7DCF520204D624100CB1903 /* GameManager.swift */; };
 		C7DCF523204D629900CB1903 /* MonsterGoalNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7DCF522204D629900CB1903 /* MonsterGoalNode.swift */; };
 		C7E3B93C232AB506004CB359 /* App.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7E3B93B232AB506004CB359 /* App.swift */; };
+		C7E3B93E232B3212004CB359 /* LoadingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7E3B93D232B3212004CB359 /* LoadingViewController.swift */; };
 		C7E7B5B42217135E00BBE894 /* GameKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C7E7B5B32217135E00BBE894 /* GameKit.framework */; };
 		C7E7B5B62218AC7A00BBE894 /* bloodSplatter.atlas in Resources */ = {isa = PBXBuildFile; fileRef = C7E7B5B52218AC7A00BBE894 /* bloodSplatter.atlas */; };
 		C7ECD7EF224FC46B00031B01 /* melee_ogre_dying.atlas in Resources */ = {isa = PBXBuildFile; fileRef = C7ECD7ED224FC46B00031B01 /* melee_ogre_dying.atlas */; };
@@ -133,6 +134,7 @@
 		C7DCF520204D624100CB1903 /* GameManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameManager.swift; sourceTree = "<group>"; };
 		C7DCF522204D629900CB1903 /* MonsterGoalNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonsterGoalNode.swift; sourceTree = "<group>"; };
 		C7E3B93B232AB506004CB359 /* App.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = App.swift; sourceTree = "<group>"; };
+		C7E3B93D232B3212004CB359 /* LoadingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingViewController.swift; sourceTree = "<group>"; };
 		C7E7B5B32217135E00BBE894 /* GameKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GameKit.framework; path = System/Library/Frameworks/GameKit.framework; sourceTree = SDKROOT; };
 		C7E7B5B52218AC7A00BBE894 /* bloodSplatter.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = bloodSplatter.atlas; sourceTree = "<group>"; };
 		C7ECD7ED224FC46B00031B01 /* melee_ogre_dying.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = melee_ogre_dying.atlas; sourceTree = "<group>"; };
@@ -169,6 +171,7 @@
 		0F73506E200CBEE100EEFDD7 /* Scenes */ = {
 			isa = PBXGroup;
 			children = (
+				C7E3B93D232B3212004CB359 /* LoadingViewController.swift */,
 				C77D8C71229EE42000575245 /* Achievements */,
 				C7BCCA96228D8D9C001C14B5 /* Leaderboard */,
 				C745F088226740AA008E2D2A /* Settings */,
@@ -631,6 +634,7 @@
 				C7C348E4217B34D40099A7C0 /* MonsterManager.swift in Sources */,
 				C77D8C77229EE9DE00575245 /* Achievement.swift in Sources */,
 				0F735071200CBF5200EEFDD7 /* PlayerNode.swift in Sources */,
+				C7E3B93E232B3212004CB359 /* LoadingViewController.swift in Sources */,
 				C788A11F2250009A009CCA08 /* PlayBackground.swift in Sources */,
 				C7E3B93C232AB506004CB359 /* App.swift in Sources */,
 				C7611C732271D3900089B3F5 /* ToggleView.swift in Sources */,
