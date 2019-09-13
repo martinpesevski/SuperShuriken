@@ -54,6 +54,7 @@ class MainMenuViewController: UIViewController {
         let stack = UIStackView(arrangedSubviews: [playButton, settingsButton, leaderboardButton, achievementsButton])
         stack.axis = .vertical
         stack.spacing = 20
+        stack.alpha = 0
         
         return stack
     }()
@@ -72,6 +73,11 @@ class MainMenuViewController: UIViewController {
             make.right.equalTo(view.safeAreaLayoutGuide).inset(20)
             make.top.equalTo(view.safeAreaLayoutGuide).offset(20)
         }
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        buttonContainer.fadeIn()
     }
     
     @objc func onPlay() {

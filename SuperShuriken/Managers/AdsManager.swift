@@ -21,18 +21,6 @@ class AdsManager: NSObject, Application, GADBannerViewDelegate, GADInterstitialD
     var app: App { return App.shared }
     
     static let shared = AdsManager()
-
-    var rootViewController: UIViewController {
-        get {
-            let appDelegate  = UIApplication.shared.delegate as! AppDelegate
-
-            guard let root = appDelegate.window?.rootViewController else {
-                return UIViewController()
-            }
-            
-            return root.presentedViewController ?? root
-        }
-    }
     
     var interstitialView: GADInterstitial!
     var rewardedVideo: GADRewardedAd!
@@ -52,33 +40,36 @@ class AdsManager: NSObject, Application, GADBannerViewDelegate, GADInterstitialD
     var interstitialDelegate : adMobInterstitialDelegate?
     
     func showInterstitial() {
-        guard app.global.adsEnabled, interstitialView.isReady else {
-            interstitialDelegate?.didHideInterstitial()
-            return
+        guard app.global.adsEnabled,
+            interstitialView.isReady,
+            let topViewController = UIApplication.getTopViewController() else {
+                interstitialDelegate?.didHideInterstitial()
+                return
         }
         
-        interstitialView.present(fromRootViewController: rootViewController)
+        interstitialView.present(fromRootViewController: topViewController)
     }
 
     
     func showRewardedVideo() {
+        guard let topViewController = UIApplication.getTopViewController() else { return }
         guard rewardedVideo.isReady else {
             let alert = UIAlertController(title: "Could not load video, please try again later", message: nil, preferredStyle: .alert)
             let okButton = UIAlertAction(title: "OK", style: .cancel, handler: nil)
             alert.addAction(okButton)
-            rootViewController.present(alert, animated: true, completion: nil)
+            topViewController.present(alert, animated: true, completion: nil)
             
             return
         }
         
         let alert = UIAlertController(title: "Would you like to watch a video to receive this reward?", message: nil, preferredStyle: .alert)
         let okButton = UIAlertAction(title: "Watch", style: .default, handler: { [unowned self] action in
-            self.rewardedVideo.present(fromRootViewController: self.rootViewController, delegate: self)
+            self.rewardedVideo.present(fromRootViewController: topViewController, delegate: self)
         })
         let cancelButton = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
         alert.addAction(okButton)
         alert.addAction(cancelButton)
-        rootViewController.present(alert, animated: true, completion: nil)
+        topViewController.present(alert, animated: true, completion: nil)
     }
     
     func removeAds() {
@@ -97,15 +88,14 @@ class AdsManager: NSObject, Application, GADBannerViewDelegate, GADInterstitialD
     }
     
     func addBannerViewToView(_ bannerView: GADBannerView) {
+        guard let topViewController = UIApplication.getTopViewController() else { return }
         bannerView.translatesAutoresizingMaskIntoConstraints = false
-        rootViewController.view.addSubview(bannerView)
+        topViewController.view.addSubview(bannerView)
         positionBannerViewFullWidthAtBottomOfSafeArea(bannerView)
     }
     
     func positionBannerViewFullWidthAtBottomOfSafeArea(_ bannerView: UIView) {
-        // Position the banner. Stick it to the bottom of the Safe Area.
-        // Make it constrained to the edges of the safe area.
-        let guide = rootViewController.view.safeAreaLayoutGuide
+        guard let guide = UIApplication.getTopViewController()?.view.safeAreaLayoutGuide else { return }
         NSLayoutConstraint.activate([
             guide.leftAnchor.constraint(equalTo: bannerView.leftAnchor),
             guide.rightAnchor.constraint(equalTo: bannerView.rightAnchor),
