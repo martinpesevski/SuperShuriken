@@ -10,11 +10,8 @@ import UIKit
 
 class GameSceneOverlay: UIView {
     lazy var scoreLabel = OverlayLabel(text: "Score: ")
-    
     lazy var staminaBar = StaminaBar()
-    
-    lazy var nextLevelLabel = OverlayLabel(text: "GET READY FOR NEXT LEVEL", alpha: 0, textColor: .white)
-    
+    lazy var nextLevelLabel = OverlayLabel(text: "GET READY FOR THE NEXT LEVEL", alpha: 0, textColor: .white)
     lazy var countDownView = CountdownView()
 
     

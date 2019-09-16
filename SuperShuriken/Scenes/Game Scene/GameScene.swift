@@ -90,7 +90,7 @@ class GameScene: SKScene, adMobInterstitialDelegate, GameManagerDelegate, Monste
 
         overlay.nextLevelLabel.fadeOut()
         app.gameManager.isBossLevel ? background.stopScrolling() : background.startScrolling()
-        run(SKAction.repeat(SKAction.sequence([SKAction.run(addMonster), SKAction.wait(forDuration: TimeInterval(1.0))]), count: app.gameManager.numberOfMonstersForCurrentLevel()), withKey:"spawnAction")
+        run(SKAction.repeat(SKAction.sequence([SKAction.run(addMonster), SKAction.wait(forDuration: TimeInterval(0.1))]), count: app.gameManager.numberOfMonstersForCurrentLevel()), withKey:"spawnAction")
     }
     
     func addMonster() {

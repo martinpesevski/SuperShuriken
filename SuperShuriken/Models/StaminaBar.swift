@@ -64,7 +64,7 @@ class StaminaBar: UIView {
             return
         }
         
-        stamina -= 1
+        stamina -= 0.6
         if stamina < 0 {
             stamina = 0
             handleExhausted()

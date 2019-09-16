@@ -13,8 +13,8 @@ protocol GameManagerDelegate {
     func levelFinished()
 }
 
-let enemyLevelMultiplier = 2//increment in number of enemies for each level
-let bossLevelMultiplier = 2//how many levels does it take to encounter a boss
+let enemyLevelMultiplier = 20//increment in number of enemies for each level
+let bossLevelMultiplier = 4//how many levels does it take to encounter a boss
 
 extension Notification.Name {
     static let gameOver = Notification.Name("GameOverNotification")
@@ -77,9 +77,5 @@ class GameManager: NSObject, Application {
         } else {
             return level  * enemyLevelMultiplier
         }
-    }
-    
-    func speedUpFactor() -> CGFloat {
-        return level > 10 ? 3 : CGFloat(level / 5 + 1)
     }
 }

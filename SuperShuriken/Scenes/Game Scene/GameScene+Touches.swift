@@ -29,9 +29,7 @@ extension GameScene {
     
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         for touch in touches {
-            guard let touchName = activeTouches[touch] else {
-                return
-            }
+            guard let touchName = activeTouches[touch] else { return }
             
             activeTouches[touch] = nil
             tapEndedOn(touchName: touchName, location: touch.location(in: self))

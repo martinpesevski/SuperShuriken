@@ -66,7 +66,7 @@ class MonsterNode: SKSpriteNode {
     
     func playRunAnimation() {
         let destination = CGPoint(x: -100, y: position.y)
-        runAction = SKAction.move(to: CGPoint(x: -100, y: startPoint.y), duration: getDuration(pointA: position, pointB: destination, speed: type.speed * app.gameManager.speedUpFactor()))
+        runAction = SKAction.move(to: CGPoint(x: -100, y: startPoint.y), duration: getDuration(pointA: position, pointB: destination, speed: type.speed))
         
         run(runAction, withKey: "moveAction")
         playTextureRunAnimation ()

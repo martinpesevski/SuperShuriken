@@ -27,17 +27,8 @@ class GameViewController: UIViewController, GADBannerViewDelegate, GameSceneDele
             scene.scaleMode = .fill
             scene.gameSceneDelegate = self
             skView.presentScene(scene)
+            app.global.hasFinishedTutorial ? scene.restart() : scene.playTutorial()
         }
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        guard app.global.hasFinishedTutorial else {
-            scene?.playTutorial()
-            return
-        }
-            
-        scene?.restart()
     }
 
     override var prefersStatusBarHidden: Bool {
