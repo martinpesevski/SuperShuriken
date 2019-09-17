@@ -30,7 +30,7 @@ class MonsterManager: NSObject, Application {
             monster = BossNode()
             (monster as! BossNode).setupRandom()
         } else {
-            type = MonsterType.random()
+            type = MonsterType(rawValue: app.gameManager.level % 4) ?? MonsterType.basicMob
         }
         
         monster.setup(startPoint: CGPoint(x: scene.size.width + monster.size.width/2, y: actualY), type: type)

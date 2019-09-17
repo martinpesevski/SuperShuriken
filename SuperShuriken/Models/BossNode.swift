@@ -126,11 +126,7 @@ class BossNode: MonsterNode {
     
     func getShootAction(scene:SKScene, attackType:BossAttackType, offset: CGFloat) -> SKAction {
         let shootAction = SKAction.run { [unowned self] in
-            if self.attackType == .splitShot {
-                self.createAndShootSplitShot()
-            } else {
-                self.createAndShootSingleShot(attackType: attackType, offset: offset, angle: 0)
-            }
+            self.createAndShootSplitShot()
         }
         
         return shootAction
@@ -160,8 +156,8 @@ class BossNode: MonsterNode {
     }
     
     func getBossRepeatedShootAction(scene:SKScene) -> SKAction{
-        let shootAction = getShootAction(scene: scene, attackType: attackType,offset: 0)
-        let shotFrequency = random(min: 0.2, max: 0.7)
+        let shootAction = getShootAction(scene: scene, attackType: attackType, offset: 0)
+        let shotFrequency = 0.3
         
         let normalShootAction = SKAction.sequence([shootAction, SKAction.wait(forDuration: TimeInterval(shotFrequency))])
         return SKAction.repeatForever(normalShootAction)

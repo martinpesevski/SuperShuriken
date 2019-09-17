@@ -10,6 +10,7 @@ import UIKit
 import SnapKit
 
 let staminaWidth = 140.0
+let maxStamina = 10.0
 
 class StaminaBar: UIView {
     let red = 1.0
@@ -28,15 +29,15 @@ class StaminaBar: UIView {
     }()
     
     private var staminaBarRightConstraint: Constraint?
-    private var stamina = 10.0
+    private var stamina = maxStamina
     private lazy var timer = Timer(timeInterval: 0.03, repeats: true) { timer in
         self.increaseStamina()
     }
 
     init() {
         super.init(frame: .zero)
-        stamina = 10.0
         isExhausted = false
+        
         layer.borderColor = UIColor.white.cgColor
         layer.borderWidth = 2
         
@@ -64,7 +65,7 @@ class StaminaBar: UIView {
             return
         }
         
-        stamina -= 0.6
+        stamina -= 0.4
         if stamina < 0 {
             stamina = 0
             handleExhausted()

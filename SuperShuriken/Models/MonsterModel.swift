@@ -31,11 +31,11 @@ enum MobAnimationType: CaseIterable {
     }
 }
 
-enum MonsterType: UInt32 {
-    case basicMob
-    case bigMob
-    case meleeMob
-    case boss
+enum MonsterType: Int {
+    case basicMob = 1
+    case bigMob = 2
+    case meleeMob = 3
+    case boss = 4
     
     var scorePoints: Int {
         switch self {
@@ -115,10 +115,23 @@ enum MonsterType: UInt32 {
         }
     }
     
-    static func random() -> MonsterType {
-        let rand = arc4random_uniform(self.count)
-        return MonsterType(rawValue: rand) ?? .basicMob
+    var runFrameTime: TimeInterval {
+        switch self {
+        case .basicMob:
+            return 0.07
+        case .bigMob:
+            return 0.07
+        case .meleeMob:
+            return 0.04
+        case .boss:
+            return 0.04
+        }
     }
     
-    static var count: UInt32 { return 3 }
+    static func random() -> MonsterType {
+        let rand = arc4random_uniform(UInt32(self.count))
+        return MonsterType(rawValue: Int(rand)) ?? .basicMob
+    }
+    
+    static var count: Int { return 3 }
 }

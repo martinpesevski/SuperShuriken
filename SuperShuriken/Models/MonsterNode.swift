@@ -19,12 +19,24 @@ class MonsterNode: SKSpriteNode {
     var type: MonsterType!
     private var hitPoints: Int = 1
     var monsterDelegate: MonsterDelegate?
-    private var bloodSplatterNode: SKSpriteNode!
+    
+    private lazy var bloodSplatterNode: SKSpriteNode = {
+        let node = SKSpriteNode(color: .clear, size: CGSize(width: 90, height: 60))
+        node.anchorPoint = CGPoint(x: 0, y: 0)
+        node.zPosition = zPosition
+        node.position = CGPoint(x: 0, y: 0)
+        return node
+    }()
+    
     private var runAction = SKAction()
-    private var runTextureAction = SKAction()
-    private var hitAction = SKAction()
-    private var bloodSplatterAction = SKAction()
-    private var deathAction = SKAction()
+    private lazy var runTextureAction = SKAction.repeatForever(SKAction.animate(with: app.monsterManager.getRunAnimationTextures(monsterType: type), timePerFrame: type.runFrameTime))
+    private lazy var hitAction = SKAction.move(by: CGVector(dx: 50, dy: 0), duration: 0.2)
+    private lazy var bloodSplatterAction = SKAction.animate(with: app.animationManager.bloodSplatterTextures, timePerFrame: 0.05, resize: false, restore: true)
+    
+    private lazy var destroyAction = SKAction.removeFromParent()
+    private lazy var fadeOutAction = SKAction.fadeOut(withDuration: 0.3)
+    private lazy var deathAnimation = SKAction.animate(with: app.monsterManager.getDeathAnimationTextures(monsterType: type), timePerFrame: 0.04)
+    private lazy var deathAction = SKAction.sequence([deathAnimation, fadeOutAction, destroyAction])
 
     func setup(startPoint: CGPoint, type: MonsterType) {
         self.type = type
@@ -35,10 +47,7 @@ class MonsterNode: SKSpriteNode {
         self.startPoint = startPoint
         position = startPoint
         
-        bloodSplatterNode = SKSpriteNode(color: .clear, size: CGSize(width: 90, height: 60))
-        bloodSplatterNode.anchorPoint = CGPoint(x: 0, y: 0)
-        bloodSplatterNode.zPosition = zPosition
-        bloodSplatterNode.position = CGPoint(x: 0, y: 0)
+        
         addChild(bloodSplatterNode)
         
         physicsBody = SKPhysicsBody(rectangleOf: type.hitBoxSize.size, center: type.hitBoxSize.center)
@@ -47,21 +56,6 @@ class MonsterNode: SKSpriteNode {
         physicsBody?.contactTestBitMask = PhysicsCategory.Projectile | PhysicsCategory.Goal
         physicsBody?.collisionBitMask = PhysicsCategory.None
 
-        setupActions()
-    }
-    
-    func setupActions() {
-        let destroyAction = SKAction.removeFromParent()
-        let fadeOutAction = SKAction.fadeOut(withDuration: 0.3)
-        let deathAnimation = SKAction.animate(with: app.monsterManager.getDeathAnimationTextures(monsterType: type), timePerFrame: 0.04)
-        
-        deathAction = SKAction.sequence([deathAnimation, fadeOutAction, destroyAction])
-        
-        bloodSplatterAction = SKAction.animate(with: app.animationManager.bloodSplatterTextures, timePerFrame: 0.05, resize: false, restore: true)
-        
-        hitAction = SKAction.move(by: CGVector(dx: 50, dy: 0), duration: 0.2)
-        
-        runTextureAction = SKAction.repeatForever(SKAction.animate(with: app.monsterManager.getRunAnimationTextures(monsterType: type), timePerFrame: 0.04))
     }
     
     func playRunAnimation() {
@@ -69,7 +63,7 @@ class MonsterNode: SKSpriteNode {
         runAction = SKAction.move(to: CGPoint(x: -100, y: startPoint.y), duration: getDuration(pointA: position, pointB: destination, speed: type.speed))
         
         run(runAction, withKey: "moveAction")
-        playTextureRunAnimation ()
+        playTextureRunAnimation()
     }
     
     // reduces the hitpoints of the monster and returns boolean indicating if it is dead or not

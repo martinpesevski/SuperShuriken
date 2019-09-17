@@ -9,9 +9,9 @@
 import UIKit
 
 let projectileSpeed : CGFloat = 1000
-let meleeMobSpeed : CGFloat = 500
+let meleeMobSpeed : CGFloat = 300
 let basicMobSpeed : CGFloat = 100
-let bigMobSpeed : CGFloat = 80
+let bigMobSpeed : CGFloat = 60
 
 class Global: NSObject {
     static let shared = Global()
@@ -54,17 +54,13 @@ class Global: NSObject {
     
     var lockedShurikenAssets: [Shuriken] {
         get {
-            guard let decoded = UserDefaults.standard.array(forKey: "lockedShurikenAssets") as? [Int] else {
-                return []
-            }
+            guard let decoded = UserDefaults.standard.array(forKey: "lockedShurikenAssets") as? [Int] else { return [] }
             
             var shurikens: [Shuriken] = []
             for name in decoded {
-                if let shuriken = Shuriken(rawValue: name) {
-                    shurikens.append(shuriken)
-                }
+                if let shuriken = Shuriken(rawValue: name) { shurikens.append(shuriken) }
             }
-            return  shurikens
+            return shurikens
         }
         
         set {
