@@ -12,6 +12,7 @@ import SpriteKit
 class BossProjectileNode: ProjectileNode {
     var attackType = BossAttackType.splitShot
     var angle = 0
+    override var projectileSpeed: Int { return 1000 }
     
     func setupWithBossAttackType(attackType: BossAttackType, angle: Int){
         self.attackType = attackType
@@ -29,7 +30,7 @@ class BossProjectileNode: ProjectileNode {
     
     func createStraightMovement(angle: Int) -> SKAction {
         let newDestination = CGPoint(x: destination.x, y: destination.y + CGFloat(angle))
-        let actionMove = SKAction.move(to: newDestination, duration: getDuration(pointA: position, pointB: destination, speed: projectileSpeed))
+        let actionMove = SKAction.move(to: newDestination, duration: getDuration(pointA: position, pointB: destination, speed: CGFloat(projectileSpeed)))
         let actionMoveDone = SKAction.removeFromParent()
         return SKAction.sequence([actionMove, actionMoveDone])
     }
@@ -45,7 +46,7 @@ class BossProjectileNode: ProjectileNode {
             offset -= 300
         }
         
-        let actionMoveZigZag = SKAction.follow(path, asOffset: true, orientToPath: false, duration:  getDuration(pointA: position, pointB: destination, speed: projectileSpeed))
+        let actionMoveZigZag = SKAction.follow(path, asOffset: true, orientToPath: false, duration:  getDuration(pointA: position, pointB: destination, speed: CGFloat(projectileSpeed)))
         let actionMoveDone = SKAction.removeFromParent()
         return SKAction.sequence([actionMoveZigZag, actionMoveDone])
     }

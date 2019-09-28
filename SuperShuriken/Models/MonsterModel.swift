@@ -92,13 +92,13 @@ enum MonsterType: Int {
     var weaknesses: [AttackType] {
         switch self {
         case .basicMob:
-            return [.Melee, .Projectile]
+            return [.Melee, .Projectile(shuriken: .basic), .Projectile(shuriken: .straight), .Projectile(shuriken: .red)]
         case .bigMob:
-            return [.Projectile]
+            return [.Projectile(shuriken: .basic), .Projectile(shuriken: .straight), .Projectile(shuriken: .red)]
         case .meleeMob:
             return [.Melee]
         case .boss:
-            return [.Projectile]
+            return [.Projectile(shuriken: .basic), .Projectile(shuriken: .straight), .Projectile(shuriken: .red)]
         }
     }
     

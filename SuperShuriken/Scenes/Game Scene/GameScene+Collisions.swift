@@ -12,11 +12,10 @@ extension GameScene: SKPhysicsContactDelegate {
     
     func projectileDidColideWithMonster (projectile: ProjectileNode, monster: MonsterNode) {
         projectile.removeFromParent()
-        playerProjectilesArray = playerProjectilesArray.filter{$0 != projectile}
-        
-        if monster.hitAndCheckDead(attackType: .Projectile) {
+        playerProjectilesArray = playerProjectilesArray.filter{ $0 != projectile }
+        let attackType = AttackType.Projectile(shuriken: app.global.selectedPlayerShuriken)
+        if monster.hitAndCheckDead(attackType: attackType) {
             app.monsterManager.monstersArray = app.monsterManager.monstersArray.filter{$0 != monster}
-            monster.playDeathAnimation()
             
             if app.gameManager.isBossLevel {
                 for projectile in enemyProjectilesArray {
@@ -28,7 +27,7 @@ extension GameScene: SKPhysicsContactDelegate {
             app.gameManager.updateScore(value: monster.type.scorePoints)
             updateScoreLabel()
         } else {
-            monster.playHitAnimation()
+            monster.playHitAnimation(attackType: attackType)
         }
     }
     
@@ -60,7 +59,6 @@ extension GameScene: SKPhysicsContactDelegate {
     
     func monsterDidCollideWithPlayer(monster: MonsterNode, player: PlayerNode) {
         app.monsterManager.monstersArray = app.monsterManager.monstersArray.filter{$0 != monster}
-        monster.playDeathAnimation()
         
         if monster.hitAndCheckDead(attackType: .Melee) {
             player.handleSlash()

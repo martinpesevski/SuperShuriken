@@ -20,9 +20,9 @@ enum PlayerAnimationType: String, CaseIterable {
     case walkToPoint = "playerWalkToPointAnimation"
 }
 
-enum AttackType: Int {
-    case Melee = 0
-    case Projectile = 1
+enum AttackType: Equatable {
+    case Melee
+    case Projectile(shuriken: Shuriken)
 }
 
 class PlayerNode: SKSpriteNode, GKAgentDelegate {

@@ -55,11 +55,11 @@ class BossNode: MonsterNode {
         return SKAction.run { [weak self] in self?.isInvulnerable = invulnerable }
     }
     
-    override func playHitAnimation() {
+    override func playHitAnimation(attackType: AttackType) {
         playBloodSplatterAnimation()
     }
     
-    override func playDeathAnimation() {
+    override func playDeathAnimation(attackType: AttackType) {
         removeAction(forKey: "bossAction")
         physicsBody?.contactTestBitMask = PhysicsCategory.None
         physicsBody?.categoryBitMask = PhysicsCategory.None

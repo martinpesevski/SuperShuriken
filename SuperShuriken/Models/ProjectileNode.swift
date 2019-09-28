@@ -24,6 +24,8 @@ class ProjectileNode: SKSpriteNode {
     let distance : CGFloat = 2000
     var type: ProjectileType!
     var style: projectileStyle!
+    var shuriken: Shuriken!
+    var projectileSpeed: Int { return 2000 }
     
     func setup(type: ProjectileType, shuriken: Shuriken) {
         self.texture = SKTexture(image: shuriken.image)
@@ -34,6 +36,7 @@ class ProjectileNode: SKSpriteNode {
         default:
             style = .rotating
         }
+        self.shuriken = shuriken
 
         size = CGSize.init(width: style == .straight ? 110 : 75, height: style == .straight ? 45 : 75)
         physicsBody = SKPhysicsBody(circleOfRadius: size.width/2)
@@ -58,7 +61,7 @@ class ProjectileNode: SKSpriteNode {
     }
     
     func getProjectileMovement () -> SKAction {
-        let actionMove = SKAction.move(to: destination, duration: getDuration(pointA: self.position, pointB: destination, speed: 1000))
+        let actionMove = SKAction.move(to: destination, duration: getDuration(pointA: self.position, pointB: destination, speed: CGFloat(projectileSpeed)))
         let actionMoveDone = SKAction.removeFromParent()
         return SKAction.sequence([actionMove, actionMoveDone])
     }

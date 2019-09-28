@@ -37,7 +37,9 @@ class MonsterNode: SKSpriteNode {
     private lazy var destroyAction = SKAction.removeFromParent()
     private lazy var fadeOutAction = SKAction.fadeOut(withDuration: 0.3)
     private lazy var deathAnimation = SKAction.animate(with: app.monsterManager.getDeathAnimationTextures(monsterType: type), timePerFrame: 0.04)
+    private lazy var flyBack = SKAction.moveBy(x: 200, y: 0, duration: 0.3)
     private lazy var deathAction = SKAction.sequence([deathAnimation, fadeOutAction, destroyAction])
+    private lazy var flyBackDeath = SKAction.group([flyBack, deathAction])
 
     func setup(startPoint: CGPoint, type: MonsterType) {
         self.type = type
@@ -68,33 +70,37 @@ class MonsterNode: SKSpriteNode {
     }
     
     // reduces the hitpoints of the monster and returns boolean indicating if it is dead or not
-    func hitAndCheckDead(attackType: AttackType) -> Bool{
-        if !type.weaknesses.contains(attackType) || isInvulnerable {
-            return false
+    func hitAndCheckDead(attackType: AttackType) -> Bool {
+        guard type.weaknesses.contains(attackType), !isInvulnerable else { return false }
+        
+        switch attackType {
+        case .Melee:
+            hitPoints -= 1
+        case .Projectile(let shuriken):
+            hitPoints -= shuriken.damage
         }
         
-        hitPoints -= 1
-        
-        if hitPoints == 0 {
+        if hitPoints <= 0 {
             type == .boss ? app.achievementManager.didKillBoss() : app.achievementManager.didKillMonster(type: type)
+            playDeathAnimation(attackType: attackType)
             return true
         }
+        
         return false
     }
     
-    func playDeathAnimation() {
-        removeAction(forKey: "moveAction")
+    func playDeathAnimation(attackType: AttackType) {
         physicsBody?.contactTestBitMask = PhysicsCategory.None
         physicsBody?.categoryBitMask = PhysicsCategory.None
 
         removeAllActions()
-        run(deathAction)
+        run(attackType == .Melee ? deathAction : flyBackDeath)
         playBloodSplatterAnimation()
     }
     
-    func playHitAnimation(){
+    func playHitAnimation(attackType: AttackType) {
         removeAction(forKey: "moveAction")
-        playBloodSplatterAnimation()
+        if type.weaknesses.contains(attackType) { playBloodSplatterAnimation() }
         
         run(hitAction) { [unowned self] in
             self.playRunAnimation()
