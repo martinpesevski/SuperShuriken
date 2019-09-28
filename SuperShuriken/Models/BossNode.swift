@@ -37,17 +37,22 @@ class BossNode: MonsterNode {
     }
     
     func playBossAnimation() {
+        guard let scene = scene else { return }
+
+        let invulnerable = SKAction.sequence([setInvulnerable(true), SKAction.wait(forDuration: 2), setInvulnerable(false)])
         let actionWalkOnScreen = SKAction.group([getWalkAnimationForType(bossType: bossType),
                                                  SKAction.move(to: CGPoint(x: startPoint.x - bossMoveDistance, y: startPoint.y), duration: TimeInterval(1))])
-        guard let scene = scene else {
-            return
-        }
         
         let walkAndShootAction = getWalkAndShootAction(scene: scene)
 
         let bossMoveAnimation = SKAction.sequence([actionWalkOnScreen, walkAndShootAction])
+        run(invulnerable)
         run(bossMoveAnimation, withKey: "bossAction")
         runSpecialAttackTimer(scene: scene)
+    }
+    
+    func setInvulnerable(_ invulnerable: Bool) -> SKAction {
+        return SKAction.run { [weak self] in self?.isInvulnerable = invulnerable }
     }
     
     override func playHitAnimation() {

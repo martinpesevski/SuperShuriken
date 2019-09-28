@@ -19,6 +19,7 @@ class MonsterNode: SKSpriteNode {
     var type: MonsterType!
     private var hitPoints: Int = 1
     var monsterDelegate: MonsterDelegate?
+    var isInvulnerable = false
     
     private lazy var bloodSplatterNode: SKSpriteNode = {
         let node = SKSpriteNode(color: .clear, size: CGSize(width: 90, height: 60))
@@ -68,7 +69,7 @@ class MonsterNode: SKSpriteNode {
     
     // reduces the hitpoints of the monster and returns boolean indicating if it is dead or not
     func hitAndCheckDead(attackType: AttackType) -> Bool{
-        if !type.weaknesses.contains(attackType) {
+        if !type.weaknesses.contains(attackType) || isInvulnerable {
             return false
         }
         

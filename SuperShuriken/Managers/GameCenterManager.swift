@@ -21,7 +21,7 @@ class GameCenterManager: NSObject, GKGameCenterControllerDelegate {
         return localPLayer.isAuthenticated
     }
     
-    func authenticate(viewController: UIViewController?, completion: @escaping (Bool)->() = {_ in }){
+    func authenticate(viewController: UIViewController?, completion: @escaping (Bool)->() = {_ in }) {
         localPLayer.authenticateHandler = { [weak self] gcAuthVC, error in
             guard let self = self else {
                 completion(false)
