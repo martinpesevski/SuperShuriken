@@ -12,6 +12,7 @@
 		B69BBFDA222236171FF70C0A /* Pods_SuperShuriken.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FFAE01823C307487EE0B93EF /* Pods_SuperShuriken.framework */; };
 		C71E033B20430682001C61C2 /* MonsterNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = C71E033A20430682001C61C2 /* MonsterNode.swift */; };
 		C72035D221283D07000D7C89 /* Consants.swift in Sources */ = {isa = PBXBuildFile; fileRef = C72035D121283D07000D7C89 /* Consants.swift */; };
+		C72307E823929DBC00A8CFF3 /* GoogleMobileAds.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C72307E723929DBC00A8CFF3 /* GoogleMobileAds.framework */; };
 		C72E286C2295705E00486719 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C72E286B2295705E00486719 /* StoreKit.framework */; };
 		C72E286E2296C91F00486719 /* StoreManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C72E286D2296C91F00486719 /* StoreManager.swift */; };
 		C7345C94200F5FB900A24A16 /* AdsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7345C93200F5FB900A24A16 /* AdsManager.swift */; };
@@ -55,6 +56,7 @@
 		C7BCCA9A228ED63B001C14B5 /* LeaderboardCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7BCCA99228ED63B001C14B5 /* LeaderboardCell.swift */; };
 		C7C348E4217B34D40099A7C0 /* MonsterManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7C348E3217B34D40099A7C0 /* MonsterManager.swift */; };
 		C7C348E6217B48850099A7C0 /* BossProjectileNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7C348E5217B48850099A7C0 /* BossProjectileNode.swift */; };
+		C7D69B91234008FD00CEC808 /* ShurikenDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7D69B90234008FD00CEC808 /* ShurikenDetailViewController.swift */; };
 		C7DCF51F204D5F6600CB1903 /* Util.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7DCF51E204D5F6600CB1903 /* Util.swift */; };
 		C7DCF521204D624100CB1903 /* GameManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7DCF520204D624100CB1903 /* GameManager.swift */; };
 		C7DCF523204D629900CB1903 /* MonsterGoalNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7DCF522204D629900CB1903 /* MonsterGoalNode.swift */; };
@@ -85,6 +87,8 @@
 		47C2856E36B2852627AA8E0A /* Pods-SuperShuriken.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SuperShuriken.release.xcconfig"; path = "Pods/Target Support Files/Pods-SuperShuriken/Pods-SuperShuriken.release.xcconfig"; sourceTree = "<group>"; };
 		C71E033A20430682001C61C2 /* MonsterNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonsterNode.swift; sourceTree = "<group>"; };
 		C72035D121283D07000D7C89 /* Consants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Consants.swift; sourceTree = "<group>"; };
+		C72307E523929D4900A8CFF3 /* GoogleUtilities.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = GoogleUtilities.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		C72307E723929DBC00A8CFF3 /* GoogleMobileAds.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GoogleMobileAds.framework; path = "Pods/Google-Mobile-Ads-SDK/Frameworks/frameworks/GoogleMobileAds.framework"; sourceTree = "<group>"; };
 		C72E286B2295705E00486719 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		C72E286D2296C91F00486719 /* StoreManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreManager.swift; sourceTree = "<group>"; };
 		C7345C93200F5FB900A24A16 /* AdsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdsManager.swift; sourceTree = "<group>"; };
@@ -130,6 +134,7 @@
 		C7BCCA99228ED63B001C14B5 /* LeaderboardCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LeaderboardCell.swift; sourceTree = "<group>"; };
 		C7C348E3217B34D40099A7C0 /* MonsterManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonsterManager.swift; sourceTree = "<group>"; };
 		C7C348E5217B48850099A7C0 /* BossProjectileNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BossProjectileNode.swift; sourceTree = "<group>"; };
+		C7D69B90234008FD00CEC808 /* ShurikenDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShurikenDetailViewController.swift; sourceTree = "<group>"; };
 		C7DCF51E204D5F6600CB1903 /* Util.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Util.swift; sourceTree = "<group>"; };
 		C7DCF520204D624100CB1903 /* GameManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameManager.swift; sourceTree = "<group>"; };
 		C7DCF522204D629900CB1903 /* MonsterGoalNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonsterGoalNode.swift; sourceTree = "<group>"; };
@@ -159,6 +164,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C72307E823929DBC00A8CFF3 /* GoogleMobileAds.framework in Frameworks */,
 				C72E286C2295705E00486719 /* StoreKit.framework in Frameworks */,
 				B69BBFDA222236171FF70C0A /* Pods_SuperShuriken.framework in Frameworks */,
 				C7E7B5B42217135E00BBE894 /* GameKit.framework in Frameworks */,
@@ -201,6 +207,8 @@
 		4184BDFA07D24570576DC0D7 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				C72307E723929DBC00A8CFF3 /* GoogleMobileAds.framework */,
+				C72307E523929D4900A8CFF3 /* GoogleUtilities.framework */,
 				C72E286B2295705E00486719 /* StoreKit.framework */,
 				C7E7B5B32217135E00BBE894 /* GameKit.framework */,
 				FFAE01823C307487EE0B93EF /* Pods_SuperShuriken.framework */,
@@ -277,6 +285,7 @@
 			children = (
 				C745F089226740CE008E2D2A /* ShurikenCell.swift */,
 				C7611C702271D2690089B3F5 /* SettingsViewController.swift */,
+				C7D69B90234008FD00CEC808 /* ShurikenDetailViewController.swift */,
 			);
 			path = Settings;
 			sourceTree = "<group>";
@@ -451,7 +460,6 @@
 				C796D2191F7AACAC00F770CF /* Frameworks */,
 				C796D21A1F7AACAC00F770CF /* Resources */,
 				3A2BD65AC49A8D7B0582CBDE /* [CP] Embed Pods Frameworks */,
-				15859B2F0C7CAC4E39162B7B /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -540,28 +548,13 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		15859B2F0C7CAC4E39162B7B /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-SuperShuriken/Pods-SuperShuriken-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
 		3A2BD65AC49A8D7B0582CBDE /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
-				"${SRCROOT}/Pods/Target Support Files/Pods-SuperShuriken/Pods-SuperShuriken-frameworks.sh",
+				"${PODS_ROOT}/Target Support Files/Pods-SuperShuriken/Pods-SuperShuriken-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/GoogleUtilities/GoogleUtilities.framework",
 				"${BUILT_PRODUCTS_DIR}/SnapKit/SnapKit.framework",
 				"${BUILT_PRODUCTS_DIR}/nanopb/nanopb.framework",
@@ -574,7 +567,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-SuperShuriken/Pods-SuperShuriken-frameworks.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-SuperShuriken/Pods-SuperShuriken-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		564F0A44324DBBFE1FB833A9 /* [CP] Check Pods Manifest.lock */ = {
@@ -616,6 +609,7 @@
 				C796D2261F7AACAC00F770CF /* GameScene.swift in Sources */,
 				C72E286E2296C91F00486719 /* StoreManager.swift in Sources */,
 				C75A375A21737A5700293FFF /* BossNode.swift in Sources */,
+				C7D69B91234008FD00CEC808 /* ShurikenDetailViewController.swift in Sources */,
 				C78E441023282D9A00E7A844 /* AchivementManager.swift in Sources */,
 				C7A4DF381FE6BD6C007DA58E /* ButtonNode.swift in Sources */,
 				C7BCCA8B227F8F9C001C14B5 /* GameScene+Collisions.swift in Sources */,
@@ -792,6 +786,10 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 73B4229N3R;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Pods/Google-Mobile-Ads-SDK/Frameworks/frameworks",
+				);
 				INFOPLIST_FILE = SuperShuriken/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -813,6 +811,10 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 73B4229N3R;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Pods/Google-Mobile-Ads-SDK/Frameworks/frameworks",
+				);
 				INFOPLIST_FILE = SuperShuriken/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";

@@ -111,3 +111,36 @@ extension Collection {
         return indices.contains(index) ? self[index] : nil
     }
 }
+
+extension UIButton {
+    convenience init(title: String? = nil, titleColor: UIColor = .white, target: Any?, selector: Selector) {
+        self.init()
+        setTitle(title, for: .normal)
+        setTitleColor(titleColor, for: .normal)
+        addTarget(target, action: selector, for: .touchUpInside)
+    }
+}
+
+extension UIStackView {
+    convenience init(views: [UIView], axis: UILayoutConstraintAxis, spacing: CGFloat = 0, layoutMargins: UIEdgeInsets = .zero) {
+        self.init(frame: .zero)
+        for view in views {
+            addArrangedSubview(view)
+        }
+        self.axis = axis
+        self.spacing = spacing
+        self.layoutMargins = layoutMargins
+        self.isLayoutMarginsRelativeArrangement = true
+    }
+}
+
+extension UILabel {
+    convenience init(_ text: String? = nil, font: UIFont = UIFont.systemFont(ofSize: 14), textColor: UIColor = .white,
+                     alignment: NSTextAlignment = .left) {
+        self.init(frame: .zero)
+        self.text = text
+        self.font = font
+        self.textColor = textColor
+        self.textAlignment = alignment
+    }
+}

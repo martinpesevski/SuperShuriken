@@ -30,6 +30,11 @@ class LoadingViewController: UIViewController {
         load()
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        self.performSegue(withIdentifier: "mainMenu", sender: self)
+    }
+    
     func load() {
         // Initialize the Google Mobile Ads SDK.
         // Sample AdMob app ID: ca-app-pub-3940256099942544~1458002511

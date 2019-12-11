@@ -15,6 +15,7 @@ protocol adMobInterstitialDelegate {
 
 protocol adMobRewardedVideoDelegate {
     func didEarnReward(_ reward: GADAdReward)
+    func didDismiss()
 }
 
 class AdsManager: NSObject, Application, GADBannerViewDelegate, GADInterstitialDelegate, GADRewardedAdDelegate {
@@ -193,7 +194,7 @@ class AdsManager: NSObject, Application, GADBannerViewDelegate, GADInterstitialD
     
     func rewardedAdDidDismiss(_ rewardedAd: GADRewardedAd) {
         print("rewardedAdDidDismiss")
-        
+        rewardedVideoDelegate?.didDismiss()
         createAndLoadRewardedVideo()
     }
 }

@@ -8,9 +8,8 @@
 
 import UIKit
 import SnapKit
-import GoogleMobileAds
 
-class SettingsViewController: UIViewController, ToggleViewDelegate, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, adMobRewardedVideoDelegate {
+class SettingsViewController: UIViewController, ToggleViewDelegate, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, ShurikenDetailDelegate {
     
     let backgroundImageView: UIImageView = {
         let image = UIImageView(image: UIImage(named: "splashScreen"))
@@ -61,13 +60,7 @@ class SettingsViewController: UIViewController, ToggleViewDelegate, UICollection
         return togView
     }()
     
-    lazy var container: UIStackView = {
-       let stack = UIStackView(arrangedSubviews: [menuButton, disableAdsButton, soundToggle])
-        stack.spacing = 20
-        stack.axis = .vertical
-        
-        return stack
-    }()
+    lazy var container = UIStackView(views: [menuButton, disableAdsButton, soundToggle], axis: .vertical, spacing: 20)
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -75,15 +68,8 @@ class SettingsViewController: UIViewController, ToggleViewDelegate, UICollection
         view.addSubview(container)
         view.addSubview(shurikenCollectionView)
         
-        app.storeManager.purchaseStatusBlock = { [weak self] type in
-            guard let self = self else { return }
-            
-            self.disableAdsButton.setLoading(false)
-        }
-        
-        backgroundImageView.snp.makeConstraints { make in
-            make.edges.equalToSuperview()
-        }
+        app.storeManager.purchaseStatusBlock = { [weak self] type in self?.disableAdsButton.setLoading(false) }
+        backgroundImageView.snp.makeConstraints { make in make.edges.equalToSuperview()}
         
         container.snp.makeConstraints { make in
             make.right.equalTo(view.safeAreaLayoutGuide).inset(20)
@@ -96,8 +82,6 @@ class SettingsViewController: UIViewController, ToggleViewDelegate, UICollection
             make.height.equalTo(120)
         }
         shurikenCollectionView.fadeIn()
-        
-        app.adsManager.rewardedVideoDelegate = self
     }
     
     func onToggle(sender: ToggleView, selected: Bool) {
@@ -118,6 +102,10 @@ class SettingsViewController: UIViewController, ToggleViewDelegate, UICollection
         disableAdsButton.setLoading(true)
     }
     
+    func didCloseDetailVC() {
+        shurikenCollectionView.reloadData()
+    }
+    
     //MARK: - collectionView
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -133,30 +121,14 @@ class SettingsViewController: UIViewController, ToggleViewDelegate, UICollection
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        guard let shuriken = Shuriken(rawValue: indexPath.item) else {
-            return
-        }
-
-        if !shuriken.isUnlocked {
-            app.global.selectedPlayerShuriken = shuriken
-            app.adsManager.showRewardedVideo()
-            return
-        }
+        guard let shuriken = Shuriken(rawValue: indexPath.item) else { return }
         
-        selectShuriken(shuriken)
-    }
-    
-    func selectShuriken(_ shuriken: Shuriken) {
-        app.global.selectedPlayerShuriken = shuriken
-        shurikenCollectionView.reloadData()
+        let shurikenDetail = ShurikenDetailViewController(shuriken: shuriken)
+        shurikenDetail.delegate = self
+        present(shurikenDetail, animated: false, completion: nil)
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return Shuriken.count
-    }
-    
-    func didEarnReward(_ reward: GADAdReward) {
-        app.global.selectedPlayerShuriken.unlock()
-        selectShuriken(app.global.selectedPlayerShuriken)
     }
 }
