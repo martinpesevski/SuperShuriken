@@ -18,8 +18,8 @@ class GameViewController: UIViewController, GADBannerViewDelegate, GameSceneDele
     override func viewDidLoad() {
         super.viewDidLoad()
         let skView = view as! SKView
-        skView.showsFPS = true
-        skView.showsNodeCount = true
+//        skView.showsFPS = true
+//        skView.showsNodeCount = true
         skView.ignoresSiblingOrder = true
 //        skView.showsPhysics = true
 
